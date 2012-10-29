@@ -5,6 +5,7 @@ require 'authy'
 
 module Devise
   mattr_accessor :api_key
+  @@api_key = 'authy-api-key'
 end
 
 module DeviseAuthy

@@ -12,6 +12,7 @@ group :development do
   gem "bundler"
   gem "jeweler"
   gem "simplecov"
+  gem "sass-rails"
 end
 
 group :test do

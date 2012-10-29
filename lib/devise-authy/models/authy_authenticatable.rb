@@ -21,6 +21,7 @@ module Devise
         def find_by_authy_id(authy_id)
           find(:first, :conditions => {:authy_id => authy_id})
         end
+        ::Devise::Models.config(self, :api_key)
       end
     end
   end
