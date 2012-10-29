@@ -14,8 +14,8 @@ require 'rake'
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
-  gem.name = "authy-authentication"
-  gem.homepage = "http://github.com/senekis/authy-authentication"
+  gem.name = "devise-authy"
+  gem.homepage = "http://github.com/senekis/devise-authy"
   gem.license = "MIT"
   gem.summary = %Q{TODO: one-line summary of your gem}
   gem.description = %Q{TODO: longer description of your gem}
