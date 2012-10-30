@@ -1,0 +1,6 @@
+%h2= I18n.t('authy_register_title', {:scope => 'devise'})
+
+= form_for(resource, :as => resource_name, :url => [resource_name, :devise_authy], :html => { :method => :post }) do |f|
+  = f.text_field :cellphone, :autocomplete => :off, :placeholder => "Enter your cellphone", :id => "authy-cellphone"
+  = f.text_field :country_code, :autocomplete => :off, :placeholder => "Enter you country", :id => "authy-countries"
+  = f.submit I18n.t('enable_authy', {:scope => 'devise'})

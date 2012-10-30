@@ -4,3 +4,5 @@ en:
     submit_token_title: "Please enter your Authy token:"
     authy_register_title: 'Enable Two factor authentication'
     enable_authy: 'Enable'
+    cellphone: 'Enter your cellphone'
+    country: 'Enter you country'
