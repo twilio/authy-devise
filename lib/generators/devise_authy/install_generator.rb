@@ -31,7 +31,11 @@ module DeviseAuthy
       end
 
       def copy_assets
-
+        if options.sass?
+          copy_file '../../../app/assets/stylesheet/devise_authy.sass', 'app/assets/stylesheet/devise_authy.sass'
+        else
+          copy_file '../../../app/assets/stylesheet/devise_authy.css', 'app/assets/stylesheet/devise_authy.css'
+        end
       end
     end
   end
