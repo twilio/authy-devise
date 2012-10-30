@@ -5,7 +5,9 @@ module Devise
       extend ActiveSupport::Concern
 
       def with_authy_authentication?(request)
-        self.authy_id.present?
+        self.authy_id.present? &&
+        (request.cookies[:authy_authentication].blank? || 1.month.ago.to_datetime > self.last_sign_in_with_authy &&
+        request.cookies[:authy_authentication] == true)
       end
 
       module ClassMethods

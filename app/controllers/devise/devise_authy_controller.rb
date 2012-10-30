@@ -11,6 +11,9 @@ class Devise::DeviseAuthyController < DeviseController
     resource = resource_class.find_by_authy_id(params[resource_name]['authy_id'])
     token = Authy::API.verify(:id => params[resource_name][:authy_id], :token => params[resource_name][:token])
     if !resource.nil? && token.ok?
+      resource.last_sign_in_with_authy = DateTime.now
+      resource.save
+      cookies[:authy_authentication] = {:value => true, :expires => Time.now + 1.month}
       set_flash_message(:notice, :signed_in) if is_navigational_format?
       sign_in(resource_name, resource)
       respond_with resource, :location => after_sign_in_path_for(resource)
