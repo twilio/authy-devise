@@ -18,4 +18,5 @@ end
 group :test do
   gem "sqlite3"
   gem 'rspec-rails'
+  gem 'database_cleaner'
 end

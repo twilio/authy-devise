@@ -48,6 +48,7 @@ GEM
     bcrypt-ruby (3.0.1)
     builder (3.0.4)
     coderay (1.0.8)
+    database_cleaner (0.9.1)
     dcu-typhoeus (0.4.3)
       activesupport (~> 3.2)
       ffi (~> 1.0)
@@ -152,6 +153,7 @@ PLATFORMS
 DEPENDENCIES
   authy!
   bundler
+  database_cleaner
   devise (~> 2.1.2)
   devise-authy!
   jeweler
