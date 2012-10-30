@@ -3,11 +3,6 @@ require 'devise-authy/version'
 require 'devise'
 require 'authy'
 
-module Devise
-  mattr_accessor :api_key
-  @@api_key = 'authy-api-key'
-end
-
 module DeviseAuthy
   module Controllers
     autoload :Helpers, 'devise-authy/controllers/helpers'
