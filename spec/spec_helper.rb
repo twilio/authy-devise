@@ -5,6 +5,7 @@ require "rails_app/config/environment"
 
 require 'rspec/rails'
 require 'devise-authy'
+require 'orm/active_record'
 require 'database_cleaner'
 
 # Requires supporting files with custom matchers and macros, etc,
