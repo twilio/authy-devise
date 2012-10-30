@@ -1,0 +1,6 @@
+en:
+  devise:
+    submit_token: "Check Token"
+    submit_token_title: "Please enter your Authy token"
+    authy_register_title: 'Enable Two factor authentication'
+    enable_authy: 'Enable'
