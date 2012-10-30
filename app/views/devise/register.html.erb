@@ -1,7 +1,10 @@
 <h2><%= I18n.t('authy_register_title', {:scope => 'devise'}) %></h2>
 
 <%= form_for(resource, :as => resource_name, :url => [resource_name, :devise_authy], :html => { :method => :post }) do |f| %>
-  <%= f.text_field :cellphone, :autocomplete => :off%>
-  <%= f.text_field :country_code, :autocomplete => :off%>
+
+  <%= f.text_field :cellphone, :autocomplete => :off, :placeholder =>
+I18n.t('devise.cellphone'), :id => "authy-cellphone"%>
+  <%= f.text_field :country_code, :autocomplete => :off, :placeholder =>
+I18n.t('devise.country'), :id => "authy-countries"%>
   <p><%= f.submit I18n.t('enable_authy', {:scope => 'devise'}) %></p>
 <% end %>

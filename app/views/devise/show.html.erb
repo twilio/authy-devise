@@ -1,10 +1,10 @@
-<h2><%= I18n.t('authy_register_title', {:scope => 'devise'}) %></h2>
-
-<%= form_for(resource, :as => resource_name, :url => [resource_name, :devise_authy], :html => { :method => :post }) do |f| %>
-
-  <%= f.text_field :cellphone, :autocomplete => :off, :placeholder =>
-"Enter your cellphone", :id => "authy-cellphone"%>
-  <%= f.text_field :country_code, :autocomplete => :off, :placeholder =>
-"Enter you country", :id => "authy-countries"%>
-  <p><%= f.submit I18n.t('enable_authy', {:scope => 'devise'}) %></p>
-<% end %>
+<div class="devise_authy">
+  <%= form_for(resource, :as => resource_name, :url => [resource_name, :devise_authy], :html => { :method => :put }) do |f| %>
+    <legend><%= I18n.t('submit_token_title', {:scope => 'devise'}) %></legend>
+    <%= f.hidden_field :authy_id, {:value => @authy_id} %>
+    <%= f.label :token %>
+    <%= f.text_field :token, :autocomplete => :off, :id => 'authy-token'%>
+    <%= link_to '?', '#', :id => 'authy-help' %>
+    <%= f.submit I18n.t('submit_token', {:scope => 'devise'}), :class => 'btn' %>
+  <% end %>
+</div>
