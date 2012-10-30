@@ -49,3 +49,5 @@ pkg
 #*.rbc
 
 spec/rails_app/tmp
+spec/rails_app/log
+*.sqlite3
