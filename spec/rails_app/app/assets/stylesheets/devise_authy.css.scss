@@ -16,9 +16,11 @@ legend {
 }
 
 label,
-input,
+input[type="submit"],
 button {
   font-size: 14px;
   font-weight: normal;
   line-height: 20px;
+  padding: 8px;
+  margin: 8px;
 }
