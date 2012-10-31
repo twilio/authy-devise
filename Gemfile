@@ -13,6 +13,7 @@ group :development do
   gem "jeweler"
   gem "simplecov"
   gem "sass-rails"
+  gem "jquery-rails"
 end
 
 group :test do
