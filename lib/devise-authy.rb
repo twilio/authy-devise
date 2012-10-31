@@ -3,6 +3,11 @@ require 'devise-authy/version'
 require 'devise'
 require 'authy'
 
+module Devise
+  mattr_accessor :authy_expires_at
+  @@authy_expires_at = 1.month
+end
+
 module DeviseAuthy
   module Controllers
     autoload :Helpers, 'devise-authy/controllers/helpers'

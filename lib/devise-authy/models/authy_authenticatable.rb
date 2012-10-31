@@ -15,6 +15,8 @@ module Devise
           find(:first, :conditions => {:authy_id => authy_id})
         end
       end
+
+      Devise::Models.config(self, :authy_expires_at)
     end
   end
 end
