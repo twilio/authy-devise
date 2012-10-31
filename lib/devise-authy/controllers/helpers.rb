@@ -10,7 +10,7 @@ module DeviseAuthy
       private
 
       def handle_devise_authy
-        if !request.format.nil? and request.format.html? and !devise_controller?
+        if !request.format.nil? && request.format.html? && devise_controller?
           Devise.mappings.keys.flatten.any? do |scope|
             if signed_in?(scope) && warden.session(scope)[:with_authy_authentication]
               id = warden.session(scope)[:id]

@@ -1,5 +1,6 @@
 class Devise::DeviseAuthyController < DeviseController
   prepend_before_filter :require_no_authentication, :only => [:show, :update]
+  prepend_before_filter :authenticate_scope!, :only => [:register, :create]
   include Devise::Controllers::Helpers
 
   def show
@@ -27,8 +28,6 @@ class Devise::DeviseAuthyController < DeviseController
   end
 
   def create
-    resource = send("current_#{resource_name}")
-
     @authy_user = Authy::API.register_user(
       :email => resource.email,
       :cellphone => params[:user][:cellphone],
@@ -36,7 +35,7 @@ class Devise::DeviseAuthyController < DeviseController
     )
 
     if @authy_user.ok?
-      resource.authy_id = @authy_id.id
+      resource.authy_id = @authy_user.id
       resource.save
       set_flash_message(:notice, 'Two factor authentication was enable')
       redirect_to :root
@@ -44,5 +43,12 @@ class Devise::DeviseAuthyController < DeviseController
       set_flash_message(:error, 'Something went wrong while enabling two factor authentication')
       render :register
     end
+  end
+
+  private
+
+  def authenticate_scope!
+    send(:"authenticate_#{resource_name}!", :force => true)
+    self.resource = send("current_#{resource_name}")
   end
 end
