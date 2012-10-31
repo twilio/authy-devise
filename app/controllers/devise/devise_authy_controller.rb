@@ -30,17 +30,17 @@ class Devise::DeviseAuthyController < DeviseController
   def create
     @authy_user = Authy::API.register_user(
       :email => resource.email,
-      :cellphone => params[:user][:cellphone],
-      :country_code => params[:user][:country_code]
+      :cellphone => params[:cellphone],
+      :country_code => params[:country_code]
     )
 
     if @authy_user.ok?
       resource.authy_id = @authy_user.id
       resource.save
-      set_flash_message(:notice, 'Two factor authentication was enable')
+      set_flash_message(:notice, :enabled)
       redirect_to :root
     else
-      set_flash_message(:error, 'Something went wrong while enabling two factor authentication')
+      set_flash_message(:error, :not_enabled)
       render :register
     end
   end

@@ -6,3 +6,8 @@ en:
     enable_authy: 'Enable'
     cellphone: 'Enter your cellphone'
     country: 'Enter you country'
+
+    devise_authy:
+      user:
+        enabled: 'Two factor authentication was enable'
+        not_enabled: 'Something went wrong while enabling two factor authentication'
