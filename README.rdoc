@@ -1,9 +1,60 @@
-= authy-authentication
+= Devise Authy
 
-Description goes here.
+This is a devise[https://github.com/plataformatec/devise] extension to allow your app to utilise Authy[http://authy.com] for two-factor authentication
 
-== Contributing to authy-authentication
- 
+== Pre-requisites
+
+Authy API Key: https://www.authy.com/signup
+
+== Getting started
+
+Add the gem to your Gemfile:
+
+* gem 'devise'
+* gem 'devise_authy', '0.0.1'
+
+Run "Bundle install"
+
+Install devise in case you haven't it, you need to do the following (but refer to https://github.com/plataformatec/devise for more information)
+
+* rails g devise:install
+* rails g devise MODEL
+
+Installation of Devise Authy:
+* rails g devise_authy:install
+
+--haml: Generate the views in Haml
+--sass: Generate the stylesheets in Sass
+
+Configuring Models:
+
+Configure your Devise user models, run:
+* rails g devise_authy MODEL
+
+or
+
+add :authy_authenticatable
+
+Example
+* devise :authy_authenticatable, :database_authenticatable
+
+Don't forget to migrate:
+
+* rake db:migrate
+
+== Custom Views
+
+If you want to customise your views, you can modify the files that are located at:
+* app/views/devise/devise_authy/register.html.erb
+* app/views/devise/devise_authy/show.html.erb
+
+== I18n
+
+The install generator also copy a Devise Authy i18n file. This can be modified and is  located at:
+config/locales/devise.authy.en.yml
+
+== Contributing to devise_google_authenticator
+
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
 * Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it.
 * Fork the project.
@@ -16,4 +67,3 @@ Description goes here.
 
 Copyright (c) 2012 Johanna Mantilla Duque. See LICENSE.txt for
 further details.
-
