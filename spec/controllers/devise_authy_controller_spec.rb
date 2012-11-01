@@ -67,10 +67,7 @@ describe Devise::DeviseAuthyController do
       response.should_receive(:id).and_return('99')
       Authy::API.should_receive(:register_user).with(:email => @user.email, :cellphone => '3010008090', :country_code => '57').and_return(response)
 
-      post :create, :user => {
-        :cellphone => '3010008090',
-        :country_code => '57'
-      }
+      post :create, :cellphone => '3010008090', :country_code => '57'
 
       flash.now[:notice].should_not be_nil
       response.should redirect_to(root_url)

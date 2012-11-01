@@ -18,6 +18,6 @@ describe "generators for devise_authy" do
     @output.include?('config/locales/devise.authy.en.yml').should be_true
     @output.include?('app/views/devise/devise_authy/register.html.erb').should be_true
     @output.include?('app/views/devise/devise_authy/show.html.erb').should be_true
-    @output.include?('create\e app/assets/stylesheets/devise_authy.css')
+    @output.include?('app/assets/stylesheets/devise_authy.css')
   end
 end
