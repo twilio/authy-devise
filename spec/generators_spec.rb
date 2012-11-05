@@ -15,9 +15,10 @@ describe "generators for devise_authy" do
 
   it "rails g devise_authy:install" do
     @output = `cd #{RAILS_APP_PATH} && rails g devise_authy:install -p`
+    @output.include?('config/initializers/devise.rb').should be_true
     @output.include?('config/locales/devise.authy.en.yml').should be_true
     @output.include?('app/views/devise/devise_authy/register.html.erb').should be_true
     @output.include?('app/views/devise/devise_authy/show.html.erb').should be_true
-    @output.include?('app/assets/stylesheets/devise_authy.css')
+    @output.include?('app/assets/stylesheets/devise_authy.css').should be_true
   end
 end
