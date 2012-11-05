@@ -2,13 +2,7 @@ require 'spec_helper'
 
 describe Devise::Models::AuthyAuthenticatable do
   before(:each) do
-    @user = User.create(:email => 'joha@senekis.co', :authy_id => '20')
-  end
-
-  describe "#with_authy_authentication?" do
-    it "should return false when user haven't authy_id" do
-      # @user.with_authy_authentication?(response).should_be false
-    end
+    @user = create_user(:authy_id => '20')
   end
 
   describe "User#find_by_authy_id" do

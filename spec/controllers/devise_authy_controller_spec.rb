@@ -3,8 +3,8 @@ require 'spec_helper'
 describe Devise::DeviseAuthyController do
   include Devise::TestHelpers
 
-  before(:each) do
-    @user = User.create(:email => 'joha@senekis.co', :authy_id => '80', :password => 'sorting7')
+  before :each do
+    @user = create_user(:authy_id => '80')
   end
 
   describe "GET #show" do
