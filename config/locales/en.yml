@@ -11,3 +11,4 @@ en:
       user:
         enabled: 'Two factor authentication was enable'
         not_enabled: 'Something went wrong while enabling two factor authentication'
+        signed_in: 'Signed in with Authy successfully.'
