@@ -19,42 +19,70 @@ describe "Authy Autnenticatable", :type => :request do
     end
   end
 
-  describe "If user have two factor authentication should login with email, password and authy token" do
+  describe "If user have two factor authentication" do
     before :each do
       @user = create_user(:authy_id => '90')
     end
 
-    it "Sign in should succeed" do
-      authy_response = mock('authy_response', :ok? => true)
-      Authy::API.should_receive(:verify).with(:id => '90', :token => '324567').and_return(authy_response)
+    describe "Without cookie['authy_authentication']" do
+      it "Sign in should succeed" do
+        authy_response = mock('authy_response', :ok? => true)
+        Authy::API.should_receive(:verify).with(:id => '90', :token => '324567').and_return(authy_response)
 
-      visit new_user_session_path
-      fill_sign_in_form(@user.email, '12345678')
-      current_path.should == user_devise_authy_path
-      page.should have_content('Please enter your Authy token')
+        visit new_user_session_path
+        fill_sign_in_form(@user.email, '12345678')
+        current_path.should == user_devise_authy_path
+        page.should have_content('Please enter your Authy token')
 
-      within('#devise_authy') do
-        fill_in 'authy-token', :with => '324567'
+        within('#devise_authy') do
+          fill_in 'authy-token', :with => '324567'
+        end
+        click_on 'Check Token'
+        current_path.should == root_path
+        page.should have_content(I18n.t('devise.devise_authy.user.signed_in'))
+        @user.reload
+        @user.last_sign_in_with_authy.should_not be_nil
       end
-      click_on 'Check Token'
-      current_path.should == root_path
-      page.should have_content(I18n.t('devise.devise_authy.user.signed_in'))
+
+      it "Sign in shouldn't success" do
+        authy_response = mock('authy_response', :ok? => false)
+        Authy::API.should_receive(:verify).with(:id => '90', :token => '324567').and_return(authy_response)
+
+        visit new_user_session_path
+        fill_sign_in_form(@user.email, '12345678')
+        current_path.should == user_devise_authy_path
+        page.should have_content('Please enter your Authy token')
+
+        within('#devise_authy') do
+          fill_in 'authy-token', :with => '324567'
+        end
+        click_on 'Check Token'
+        current_path.should == new_user_session_path
+        @user.reload
+        @user.last_sign_in_with_authy.should be_nil
+      end
     end
 
-    it "Sign in shouldn't success" do
-      authy_response = mock('authy_response', :ok? => false)
-      Authy::API.should_receive(:verify).with(:id => '90', :token => '324567').and_return(authy_response)
+    it "With cookie['authy_authentication'] and last_sign_in_with_authy less than one month shouldn't show the request token view" do
+      page.driver.browser.set_cookie('authy_authentication=true')
+      @user.last_sign_in_with_authy = 2.days.ago
+      @user.save
+      @user.reload
+
+      visit new_user_session_path
+      fill_sign_in_form(@user.email, '12345678')
+      current_path.should == root_path
+    end
+
+    it "With cookie['authy_authentication'] and last_sign_in_with_authy greater than one month should Show the request token view" do
+      page.driver.browser.set_cookie('authy_authentication=true')
+      @user.last_sign_in_with_authy = 2.months.ago
+      @user.save
+      @user.reload
 
       visit new_user_session_path
       fill_sign_in_form(@user.email, '12345678')
       current_path.should == user_devise_authy_path
-      page.should have_content('Please enter your Authy token')
-
-      within('#devise_authy') do
-        fill_in 'authy-token', :with => '324567'
-      end
-      click_on 'Check Token'
-      current_path.should == new_user_session_path
     end
   end
 end
