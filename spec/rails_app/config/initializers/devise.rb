@@ -229,4 +229,12 @@ Devise.setup do |config|
   # When using omniauth, Devise cannot automatically set Omniauth path,
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = "/my_engine/users/auth"
+
+  # ==> Devise Authy Authentication Extension
+  # Configure extension for devise
+
+  # How long should the user have to enter their token. To change the default, uncomment and change the below:
+  # config.authy_expires_at = 1.month
+
+
 end
