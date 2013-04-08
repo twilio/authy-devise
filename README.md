@@ -23,7 +23,7 @@ Next add the gem to your Gemfile:
 
 Run `bundle install`
 
-Installation of Devise Authy:
+Add Devise Authy to your App:
 
     rails g devise_authy:install
 
