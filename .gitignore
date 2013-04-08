@@ -50,4 +50,4 @@ pkg
 
 spec/rails_app/tmp
 spec/rails_app/log
-*.sqlite3
+*.sqlite3DS_Store

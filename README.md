@@ -1,46 +1,42 @@
-# Devise Authy
+# Authy Devise 
 
-This is a devise[https://github.com/plataformatec/devise] extension to allow your app to utilise Authy[http://authy.com] for two-factor authentication
+This is a [https://github.com/plataformatec/devise](devise) extension to add Two-Factor Authentication with Authy to your App. 
 
 ## Pre-requisites
 
-Authy API Key: https://www.authy.com/signup
-
-and create an initializer with
-
-    require 'authy'
-
-    Authy.api_key = 'your-api-key'
-
+Get a Authy API Key: [https://www.authy.com/signup](https://www.authy.com/signup)
 
 ## Getting started
 
-Add the gem to your Gemfile:
+First create an initializer, in config/initializer/authy.rb
+
+    require 'authy'
+
+    Authy.api_key = ENV['AUTHY_API_KEY'] || 'your_authy_api_key'
+
+You can get the `AUTHY_API_KEY` at https://www.authy.com/signup 
+
+Next add the gem to your Gemfile:
 
     gem 'devise'
     gem 'devise_authy', '0.0.1'
 
-Run `Bundle install`
-
-Install devise in case you haven't it, you need to do the following (but refer to https://github.com/plataformatec/devise for more information)
-
-    rails g devise:install
-    rails g devise MODEL
+Run `bundle install`
 
 Installation of Devise Authy:
 
     rails g devise_authy:install
 
---haml: Generate the views in Haml
---sass: Generate the stylesheets in Sass
+    --haml: Generate the views in Haml
+    --sass: Generate the stylesheets in Sass
 
 Configuring Models:
 
-Configure your Devise user models, run:
+Configure your Devise user model, run:
 
-    rails g devise_authy MODEL
+    rails g devise_authy [MODEL_NAME]
 
-or add
+or add this line to your  User model
 
     :authy_authenticatable
 
@@ -48,7 +44,8 @@ Example
 
     devise :authy_authenticatable, :database_authenticatable
 
-Don't forget to migrate:
+
+Finally run the migrations:
 
     rake db:migrate
 
@@ -62,10 +59,13 @@ The install generator adds some options to the end of your Devise config file `c
 
 Authy javascripts and css file of forms authy-form-helpers[https://github.com/authy/authy-form-helpers]
 
-Add this in your HTML <head>
+Add this in your HTML 
+    
+    <head>
 
     <link href="https://www.authy.com/form.authy.min.css" media="screen" rel="stylesheet" type="text/css">
     <script src="https://www.authy.com/form.authy.min.js" type="text/javascript"></script>
+
 
 ## Custom Views
 
