@@ -1,6 +1,6 @@
 # Authy Devise 
 
-This is a [https://github.com/plataformatec/devise](devise) extension to add Two-Factor Authentication with Authy to your App. 
+This is a [Devise](https://github.com/plataformatec/devise) extension to add Two-Factor Authentication with Authy to your App. 
 
 ## Pre-requisites
 
