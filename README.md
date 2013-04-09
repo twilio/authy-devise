@@ -44,6 +44,9 @@ Example
 
     devise :authy_authenticatable, :database_authenticatable
 
+Change the default routes to point to something sane like: 
+
+  devise_for :users, :path_names => {:devise_authy => "/authy"}
 
 Then run the migrations:
 
@@ -58,11 +61,15 @@ Add this in your HTML
     <link href="https://www.authy.com/form.authy.min.css" media="screen" rel="stylesheet" type="text/css">
     <script src="https://www.authy.com/form.authy.min.js" type="text/javascript"></script>
 
+
 Now whenever a user wants to enable two-factor authentication he can go
 to:
 
-    http://your-app/users/enable-authy
+    http://your-app/users/enable-two-factor
 
+And when the user log's in he will be redirected to:
+
+    http://your-app/users/authy
 
 ## Configuration Options
 
