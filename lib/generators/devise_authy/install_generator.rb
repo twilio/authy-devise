@@ -29,6 +29,33 @@ module DeviseAuthy
         else
           copy_file '../../../app/assets/stylesheets/devise_authy.css', 'app/assets/stylesheets/devise_authy.css'
         end
+        copy_file '../../../app/assets/javascripts/devise_authy.js', 'app/assets/javascripts/devise_authy.js'
+      end
+
+      def inject_assets_in_layout
+        {
+          :haml => {
+            :before => %r{%body\s*$},
+            :content => %@    
+    =javascript_include_tag "https://www.authy.com/form.authy.min.js"
+    =stylesheet_link_tag "https://www.authy.com/form.authy.min.css"
+    =javascript_include_tag "devise_authy.js"
+@
+          },
+          :erb => {
+            :before => %r{\s*</\s*head\s*>\s*},
+            :content => %@    
+  <%=javascript_include_tag "https://www.authy.com/form.authy.min.js" %>
+  <%=stylesheet_link_tag "https://www.authy.com/form.authy.min.css" %>
+  <%=javascript_include_tag "devise_authy.js" %>
+@
+          }
+        }.each do |extension, opts|
+          file_path = "app/views/layouts/application.html.#{extension}"
+          if File.exists?(file_path) && !File.read(file_path).include?("devise_authy.js")
+            inject_into_file(file_path, opts.delete(:content), opts) 
+          end
+        end
       end
     end
   end
