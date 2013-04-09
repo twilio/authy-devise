@@ -44,12 +44,40 @@ Example
 
     devise :authy_authenticatable, :database_authenticatable
 
+Change the default routes to point to something sane like: 
 
-Finally run the migrations:
+  devise_for :users, :path_names => {:devise_authy => "/authy"}
+
+Then run the migrations:
 
     rake db:migrate
 
-## CND
+Now add the authy form helpers to your App:
+
+Add this in your HTML 
+    
+    <head>
+
+    <link href="https://www.authy.com/form.authy.min.css" media="screen" rel="stylesheet" type="text/css">
+    <script src="https://www.authy.com/form.authy.min.js" type="text/javascript"></script>
+
+
+Now whenever a user wants to enable two-factor authentication he can go
+to:
+
+    http://your-app/users/enable-two-factor
+
+And when the user log's in he will be redirected to:
+
+    http://your-app/users/devise_authy
+
+## Configuration Options
+
+The install generator adds some options to the end of your Devise config file `config/initializers/devise.rb`
+
+    config.authy_expires_at - How long should the user have to enter their Authy token. By default is 1 month.
+
+## CDN
 
 Authy javascripts and css file of forms authy-form-helpers[https://github.com/authy/authy-form-helpers]
 
@@ -86,5 +114,5 @@ The install generator also copy a Devise Authy i18n file. This can be modified a
 
 ## Copyright
 
-Copyright (c) 2012 Johanna Mantilla Duque. See LICENSE.txt for
+Copyright (c) 2013 Authy Inc. See LICENSE.txt for
 further details.
