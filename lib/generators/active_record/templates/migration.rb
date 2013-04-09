@@ -3,6 +3,7 @@ class DeviseAuthyAddTo<%= table_name.camelize %> < ActiveRecord::Migration
     change_table :<%= table_name %> do |t|
       t.string    :authy_id
       t.datetime  :last_sign_in_with_authy
+      t.boolean   :authy_enabled, :default => false
     end
 
     add_index :<%= table_name %>, :authy_id
@@ -10,7 +11,8 @@ class DeviseAuthyAddTo<%= table_name.camelize %> < ActiveRecord::Migration
 
   def self.down
     change_table :<%= table_name %> do |t|
-      t.remove :authy_id, :last_sign_in_with_authy
+      t.remove :authy_id, :last_sign_in_with_authy, :authy_enabled
     end
   end
 end
+
