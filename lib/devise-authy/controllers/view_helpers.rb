@@ -11,6 +11,19 @@ module DeviseAuthy
           :remote => true
         )
       end
+
+      def verify_authy_form(&block)
+        form_tag([resource_name, :verify_authy], {:id => 'devise_authy', :method => :post}) do
+          buffer = hidden_field_tag(:"#{resource_name}_id", @resource.id)
+          buffer << capture(&block)
+        end
+      end
+
+      def enable_authy_form(&block)
+        form_tag([resource_name, :enable_authy], :method => :post) do
+          capture(&block)
+        end
+      end
     end
   end
 end
