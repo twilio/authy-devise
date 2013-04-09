@@ -5,7 +5,7 @@ class DeviseAuthyAddTo<%= table_name.camelize %> < ActiveRecord::Migration
       t.datetime  :last_sign_in_with_authy
     end
 
-    add_index :<%= table_name %>, :authy_id, :unique => true
+    add_index :<%= table_name %>, :authy_id
   end
 
   def self.down

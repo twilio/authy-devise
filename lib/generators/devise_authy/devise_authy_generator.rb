@@ -9,7 +9,7 @@ module DeviseAuthy
 			def inject_devise_authy_content
 				path = File.join("app","models","#{file_path}.rb")
 				inject_into_file(path, "authy_authenticatable, :", :after => "devise :") if File.exists?(path)
-				inject_into_file(path, ":authy_id, :last_sign_in_with_authy", :after => "attr_accessible :") if File.exists?(path)
+				inject_into_file(path, ":authy_id, :last_sign_in_with_authy", :after => "attr_accessible ") if File.exists?(path)
 			end
 
 			hook_for :orm
