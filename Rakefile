@@ -17,10 +17,10 @@ Jeweler::Tasks.new do |gem|
   gem.name = "devise-authy"
   gem.homepage = "http://github.com/senekis/devise-authy"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
-  gem.email = "johanna1431@gmail.com"
-  gem.authors = ["Johanna Mantilla Duque"]
+  gem.summary = %Q{Authy plugin for Devise}
+  gem.description = %Q{Authy plugin for Devise}
+  gem.email = "support@authy.com"
+  gem.authors = ["Authy Inc."]
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
