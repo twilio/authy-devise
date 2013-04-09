@@ -1,6 +1,6 @@
 <h2><%= I18n.t('authy_register_title', {:scope => 'devise'}) %></h2>
 
-<%= form_tag([resource_name, :devise_authy], :html => { :method => :post }) do %>
+<%= form_tag([resource_name, :enable_authy], :html => { :method => :post }) do %>
 
   <%= text_field_tag :cellphone, '', :autocomplete => :off, :placeholder =>
 I18n.t('devise.cellphone'), :id => "authy-cellphone"%>

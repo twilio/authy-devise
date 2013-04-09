@@ -6,6 +6,7 @@ en:
     enable_authy: 'Enable'
     cellphone: 'Enter your cellphone'
     country: 'Enter you country'
+    request_sms: 'Request SMS'
 
     devise_authy:
       user:

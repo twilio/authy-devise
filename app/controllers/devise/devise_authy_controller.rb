@@ -1,21 +1,21 @@
 class Devise::DeviseAuthyController < DeviseController
-  prepend_before_filter :require_no_authentication, :only => [:show, :update]
-  prepend_before_filter :authenticate_scope!, :only => [:register, :create]
+  prepend_before_filter :require_no_authentication, :only => [:GET_verify_authy, :POST_verify_authy]
+  prepend_before_filter :authenticate_scope!, :only => [:GET_enable_authy, :POST_enable_authy]
   include Devise::Controllers::Helpers
 
-  def show
+  def GET_verify_authy
     @resource = resource_class.find_by_id(session["#{resource_name}_id"])
 
     if @resource && session[:"#{resource_name}_password_checked"].to_s == "true"
       @authy_id = @resource.authy_id
-      render :show
+      render :verify_authy
     else
       redirect_to :root
     end
   end
 
   # verify 2fa
-  def update
+  def POST_verify_authy
     @resource = resource_class.find_by_id(session["#{resource_name}_id"])
     if !@resource
       redirect_to :root and return
@@ -34,16 +34,16 @@ class Devise::DeviseAuthyController < DeviseController
       sign_in(resource_name, @resource)
       respond_with resource, :location => after_sign_in_path_for(@resource)
     else
-      render :show
+      render :verify_authy
     end
   end
 
   # enable 2fa
-  def register
-    render :register
+  def GET_enable_authy
+    render :enable_authy
   end
 
-  def create
+  def POST_enable_authy
     @authy_user = Authy::API.register_user(
       :email => resource.email,
       :cellphone => params[:cellphone],
@@ -60,8 +60,13 @@ class Devise::DeviseAuthyController < DeviseController
       redirect_to :root
     else
       set_flash_message(:error, :not_enabled)
-      render :register
+      render :enable_authy
     end
+  end
+
+  def request_sms
+    response = Authy::API.request_sms(:id => @resource.id, :force => true)
+    render :json => {:sent => response.ok?, :message => response.message}
   end
 
   private

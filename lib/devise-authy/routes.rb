@@ -3,8 +3,12 @@ module ActionDispatch::Routing
     protected
 
     def devise_authy(mapping, controllers)
-      resource :devise_authy, :only => [:show, :update, :create], :path => mapping.path_names[:devise_authy], :controller => controllers[:devise_authy]
-      match '/enable-two-factor', :controller => controllers[:devise_authy], :action => :register, :as => :enable_authy, :via => :get
+      match "/#{mapping.path_names[:verify_authy]}", :controller => controllers[:devise_authy], :action => :GET_verify_authy, :as => :verify_authy, :via => :get
+      match "/#{mapping.path_names[:verify_authy]}", :controller => controllers[:devise_authy], :action => :POST_verify_authy, :as => :verify_authy, :via => :post
+
+      match "/#{mapping.path_names[:enable_authy]}", :controller => controllers[:devise_authy], :action => :GET_enable_authy, :as => :enable_authy, :via => :get
+      match "/#{mapping.path_names[:enable_authy]}", :controller => controllers[:devise_authy], :action => :POST_enable_authy, :as => :enable_authy, :via => :post
     end
   end
 end
+

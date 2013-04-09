@@ -15,11 +15,11 @@ module DeviseAuthy
 
       def copy_views
         if options.haml?
-          copy_file '../../../app/views/devise/register.html.haml', 'app/views/devise/devise_authy/register.html.haml'
-          copy_file '../../../app/views/devise/show.html.haml', 'app/views/devise/devise_authy/show.html.haml'
+          copy_file '../../../app/views/devise/enable_authy.html.haml', 'app/views/devise/devise_authy/enable_authy.html.haml'
+          copy_file '../../../app/views/devise/verify_authy.html.haml', 'app/views/devise/devise_authy/verify_authy.html.haml'
         else
-          copy_file '../../../app/views/devise/register.html.erb', 'app/views/devise/devise_authy/register.html.erb'
-          copy_file '../../../app/views/devise/show.html.erb', 'app/views/devise/devise_authy/show.html.erb'
+          copy_file '../../../app/views/devise/enable_authy.html.erb', 'app/views/devise/devise_authy/enable_authy.html.erb'
+          copy_file '../../../app/views/devise/verify_authy.html.erb', 'app/views/devise/devise_authy/verify_authy.html.erb'
         end
       end
 

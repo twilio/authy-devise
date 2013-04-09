@@ -4,34 +4,36 @@ module DeviseAuthy
       extend ActiveSupport::Concern
 
       included do
-        before_filter :handle_devise_authy
+        before_filter :check_request_and_redirect_to_verify_token
       end
 
       private
 
-      def handle_devise_authy
-        if !request.format.nil? && request.format.html? && devise_controller?
+      def check_request_and_redirect_to_verify_token
+        if devise_controller? && !request.format.nil? && request.format.html?
           Devise.mappings.keys.flatten.any? do |scope|
             if signed_in?(scope) && warden.session(scope)[:with_authy_authentication]
               # login with 2fa
               id = warden.session(scope)[:id]
               warden.logout
+              warden.reset_session! # make sure the session resetted
               session["#{scope}_id"] = id
+              # this is safe to put in the session because the cookie is signed
               session["#{scope}_password_checked"] = true
               session["#{scope}_return_to"] = request.path if request.get?
 
-              redirect_to devise_authy_path_for(scope)
+              redirect_to verify_authy_path_for(scope)
               return
             end
           end
         end
       end
 
-      def devise_authy_path_for(resource_or_scope = nil)
+      def verify_authy_path_for(resource_or_scope = nil)
         scope = Devise::Mapping.find_scope!(resource_or_scope)
-        change_path = "#{scope}_devise_authy_path"
-        send(change_path)
+        send("#{scope}_verify_authy_path")
       end
     end
   end
 end
+

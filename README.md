@@ -102,7 +102,7 @@ The install generator also copy a Devise Authy i18n file. This can be modified a
 
     config/locales/devise.authy.en.yml
 
-## Contributing to devise_google_authenticator
+## Contributing
 
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
 * Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it.
