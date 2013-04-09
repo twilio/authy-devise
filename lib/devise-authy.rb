@@ -10,6 +10,9 @@ module DeviseAuthy
   module Controllers
     autoload :Helpers, 'devise-authy/controllers/helpers'
   end
+  module Views
+    autoload :Helpers, 'devise-authy/controllers/view_helpers'
+  end
 end
 
 require 'devise-authy/routes'

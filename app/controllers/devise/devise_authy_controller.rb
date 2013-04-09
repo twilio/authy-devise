@@ -65,6 +65,12 @@ class Devise::DeviseAuthyController < DeviseController
   end
 
   def request_sms
+    @resource = resource_class.find_by_id(session["#{resource_name}_id"])
+    if !@resource
+      render :json => {:sent => false, :message => "User couldn't be found."}
+      return
+    end
+
     response = Authy::API.request_sms(:id => @resource.id, :force => true)
     render :json => {:sent => response.ok?, :message => response.message}
   end

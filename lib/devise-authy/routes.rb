@@ -8,6 +8,8 @@ module ActionDispatch::Routing
 
       match "/#{mapping.path_names[:enable_authy]}", :controller => controllers[:devise_authy], :action => :GET_enable_authy, :as => :enable_authy, :via => :get
       match "/#{mapping.path_names[:enable_authy]}", :controller => controllers[:devise_authy], :action => :POST_enable_authy, :as => :enable_authy, :via => :post
+
+      match "/request-sms", :controller => controllers[:devise_authy], :action => :request_sms, :as => :request_sms, :via => :post
     end
   end
 end
