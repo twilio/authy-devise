@@ -4,25 +4,41 @@ class Devise::DeviseAuthyController < DeviseController
   include Devise::Controllers::Helpers
 
   def show
-    @authy_id = session['user_id']
-    render :show
-  end
+    @resource = resource_class.find_by_id(session["#{resource_name}_id"])
 
-  def update
-    resource = resource_class.find_by_authy_id(params[resource_name]['authy_id'])
-    token = Authy::API.verify(:id => params[resource_name][:authy_id], :token => params[resource_name][:token])
-    if !resource.nil? && token.ok?
-      resource.last_sign_in_with_authy = DateTime.now
-      resource.save
-      cookies[:authy_authentication] = {:value => true, :expires => Time.now + 1.month}
-      set_flash_message(:notice, :signed_in) if is_navigational_format?
-      sign_in(resource_name, resource)
-      respond_with resource, :location => after_sign_in_path_for(resource)
+    if @resource && session[:"#{resource_name}_password_checked"].to_s == "true"
+      @authy_id = @resource.authy_id
+      render :show
     else
       redirect_to :root
     end
   end
 
+  # verify 2fa
+  def update
+    @resource = resource_class.find_by_id(session["#{resource_name}_id"])
+    if !@resource
+      redirect_to :root and return
+    end
+
+    token = Authy::API.verify({
+      :id => @resource.authy_id,
+      :token => params[:token],
+      :force => true
+    })
+
+    if token.ok? && session[:"#{resource_name}_password_checked"].to_s == "true"
+      @resource.update_attribute(:last_sign_in_with_authy, DateTime.now)
+
+      set_flash_message(:notice, :signed_in) if is_navigational_format?
+      sign_in(resource_name, @resource)
+      respond_with resource, :location => after_sign_in_path_for(@resource)
+    else
+      render :show
+    end
+  end
+
+  # enable 2fa
   def register
     render :register
   end
@@ -35,9 +51,12 @@ class Devise::DeviseAuthyController < DeviseController
     )
 
     if @authy_user.ok?
-      resource.authy_id = @authy_user.id
-      resource.save
-      set_flash_message(:notice, :enabled)
+      resource.authy_id = @authy_user.authy_id
+      if resource.save
+        set_flash_message(:notice, :enabled)
+      else
+        set_flash_message(:error, :not_enabled)
+      end
       redirect_to :root
     else
       set_flash_message(:error, :not_enabled)

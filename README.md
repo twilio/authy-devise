@@ -49,12 +49,6 @@ Finally run the migrations:
 
     rake db:migrate
 
-## Configuration Options
-
-The install generator adds some options to the end of your Devise config file `config/initializers/devise.rb`
-
-    config.authy_expires_at - How long should the user have to enter their Authy token. By default is 1 month.
-
 ## CND
 
 Authy javascripts and css file of forms authy-form-helpers[https://github.com/authy/authy-form-helpers]

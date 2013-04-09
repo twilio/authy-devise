@@ -13,9 +13,11 @@ module DeviseAuthy
         if !request.format.nil? && request.format.html? && devise_controller?
           Devise.mappings.keys.flatten.any? do |scope|
             if signed_in?(scope) && warden.session(scope)[:with_authy_authentication]
+              # login with 2fa
               id = warden.session(scope)[:id]
               warden.logout
               session["#{scope}_id"] = id
+              session["#{scope}_password_checked"] = true
               session["#{scope}_return_to"] = request.path if request.get?
 
               redirect_to devise_authy_path_for(scope)
