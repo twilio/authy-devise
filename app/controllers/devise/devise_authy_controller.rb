@@ -1,6 +1,11 @@
 class Devise::DeviseAuthyController < DeviseController
-  prepend_before_filter :require_no_authentication, :only => [:GET_verify_authy, :POST_verify_authy]
-  prepend_before_filter :authenticate_scope!, :only => [:GET_enable_authy, :POST_enable_authy]
+  prepend_before_filter :require_no_authentication, :only => [
+    :GET_verify_authy, :POST_verify_authy
+  ]
+  prepend_before_filter :authenticate_scope!, :only => [
+    :GET_enable_authy, :POST_enable_authy, 
+    :GET_verify_authy_installation, :POST_verify_authy_installation
+  ]
   include Devise::Controllers::Helpers
 
   def GET_verify_authy
@@ -51,16 +56,37 @@ class Devise::DeviseAuthyController < DeviseController
     )
 
     if @authy_user.ok?
-      resource.authy_id = @authy_user.authy_id
-      if resource.save
-        set_flash_message(:notice, :enabled)
-      else
+      resource.authy_id = @authy_user.id
+      if !resource.save
         set_flash_message(:error, :not_enabled)
+        redirect_to :root and return
       end
-      redirect_to :root
+
+      redirect_to [resource_name, :verify_authy_installation]
     else
       set_flash_message(:error, :not_enabled)
       render :enable_authy
+    end
+  end
+
+  def GET_verify_authy_installation
+    render :verify_authy_installation
+  end
+
+  def POST_verify_authy_installation
+    token = Authy::API.verify({
+      :id => self.resource.authy_id,
+      :token => params[:token],
+      :force => true
+    })
+
+    self.resource.authy_enabled = token.ok?
+    if !token.ok? || !self.resource.save
+      set_flash_message(:error, :not_enabled)
+      render :verify_authy_installation
+    else
+      set_flash_message(:notice, :enabled)
+      redirect_to :root
     end
   end
 

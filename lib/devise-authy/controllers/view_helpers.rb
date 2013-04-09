@@ -24,6 +24,12 @@ module DeviseAuthy
           capture(&block)
         end
       end
+
+      def verify_authy_installation_form(&block)
+        form_tag([resource_name, :verify_authy_installation], :method => :post) do
+          capture(&block)
+        end
+      end
     end
   end
 end

@@ -8,6 +8,9 @@ en:
     country: 'Enter you country'
     request_sms: 'Request SMS'
 
+    authy_verify_installation_title: "Verify your account"
+    enable_my_account: 'Enable my account'
+
     devise_authy:
       user:
         enabled: 'Two factor authentication was enable'

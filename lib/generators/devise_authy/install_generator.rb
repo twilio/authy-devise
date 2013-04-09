@@ -17,9 +17,11 @@ module DeviseAuthy
         if options.haml?
           copy_file '../../../app/views/devise/enable_authy.html.haml', 'app/views/devise/devise_authy/enable_authy.html.haml'
           copy_file '../../../app/views/devise/verify_authy.html.haml', 'app/views/devise/devise_authy/verify_authy.html.haml'
+          copy_file '../../../app/views/devise/verify_authy_installation.html.haml', 'app/views/devise/devise_authy/verify_authy_installation.html.haml'
         else
           copy_file '../../../app/views/devise/enable_authy.html.erb', 'app/views/devise/devise_authy/enable_authy.html.erb'
           copy_file '../../../app/views/devise/verify_authy.html.erb', 'app/views/devise/devise_authy/verify_authy.html.erb'
+          copy_file '../../../app/views/devise/verify_authy_installation.html.erb', 'app/views/devise/devise_authy/verify_authy_installation.html.erb'
         end
       end
 
