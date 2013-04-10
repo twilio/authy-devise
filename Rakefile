@@ -15,7 +15,7 @@ require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
   gem.name = "devise-authy"
-  gem.homepage = "http://github.com/senekis/devise-authy"
+  gem.homepage = "https://github.com/authy/authy-devise"
   gem.license = "MIT"
   gem.summary = %Q{Authy plugin for Devise}
   gem.description = %Q{Authy plugin for Devise}
