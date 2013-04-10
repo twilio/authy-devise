@@ -2,8 +2,8 @@ source "http://rubygems.org"
 
 gemspec
 
-gem "devise", "~> 2.1.2"
-gem 'authy', :git => 'git://github.com/authy/authy-ruby.git'
+gem "devise"
+gem 'authy'
 
 group :development do
   gem "rspec"

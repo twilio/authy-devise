@@ -1,16 +1,9 @@
-GIT
-  remote: git://github.com/authy/authy-ruby.git
-  revision: 0c39e106356045bb1149e8355f42e0ff9527b955
-  specs:
-    authy (0.0.7)
-      dcu-typhoeus
-
 PATH
   remote: .
   specs:
     devise-authy (1.0.0)
       authy
-      devise (~> 2.1.2)
+      devise
       devise-authy
 
 GEM
@@ -33,6 +26,8 @@ GEM
       i18n (~> 0.6)
       multi_json (~> 1.0)
     addressable (2.3.2)
+    authy (1.1.0)
+      httpclient
     bcrypt-ruby (3.0.1)
     builder (3.0.4)
     capybara (1.1.2)
@@ -46,10 +41,6 @@ GEM
       ffi (~> 1.0, >= 1.0.6)
     coderay (1.0.8)
     database_cleaner (0.9.1)
-    dcu-typhoeus (0.4.3)
-      activesupport (~> 3.2)
-      ffi (~> 1.0)
-      mime-types (~> 1.18)
     devise (2.1.2)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
@@ -60,6 +51,7 @@ GEM
     ffi (1.1.5)
     git (1.2.5)
     hike (1.2.1)
+    httpclient (2.3.3)
     i18n (0.6.1)
     jeweler (1.8.4)
       bundler (~> 1.0)
@@ -145,11 +137,11 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  authy!
+  authy
   bundler
   capybara
   database_cleaner
-  devise (~> 2.1.2)
+  devise
   devise-authy!
   jeweler
   jquery-rails

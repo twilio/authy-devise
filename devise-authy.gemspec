@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Authy Inc."]
-  s.date = "2013-04-09"
+  s.date = "2013-04-10"
   s.description = "Authy plugin for Devise"
   s.email = "support@authy.com"
   s.extra_rdoc_files = [
@@ -24,261 +24,22 @@ Gem::Specification.new do |s|
     "LICENSE.txt",
     "README.md",
     "Rakefile",
-    "app/assets/images/close.gif",
-    "app/assets/images/flags/.directory",
-    "app/assets/images/flags/af93.gif",
-    "app/assets/images/flags/al213.gif",
-    "app/assets/images/flags/al355.gif",
-    "app/assets/images/flags/al358.gif",
-    "app/assets/images/flags/am1684.gif",
-    "app/assets/images/flags/an1264.gif",
-    "app/assets/images/flags/an1268.gif",
-    "app/assets/images/flags/an244.gif",
-    "app/assets/images/flags/an376.gif",
-    "app/assets/images/flags/ar297.gif",
-    "app/assets/images/flags/ar374.gif",
-    "app/assets/images/flags/ar54.gif",
-    "app/assets/images/flags/au43.gif",
-    "app/assets/images/flags/au61.gif",
-    "app/assets/images/flags/az994.gif",
-    "app/assets/images/flags/ba1242.gif",
-    "app/assets/images/flags/ba1246.gif",
-    "app/assets/images/flags/ba880.gif",
-    "app/assets/images/flags/ba973.gif",
-    "app/assets/images/flags/be1441.gif",
-    "app/assets/images/flags/be229.gif",
-    "app/assets/images/flags/be32.gif",
-    "app/assets/images/flags/be375.gif",
-    "app/assets/images/flags/be501.gif",
-    "app/assets/images/flags/bh975.gif",
-    "app/assets/images/flags/bo267.gif",
-    "app/assets/images/flags/bo387.gif",
-    "app/assets/images/flags/bo591.gif",
-    "app/assets/images/flags/br246.gif",
-    "app/assets/images/flags/br55.gif",
-    "app/assets/images/flags/br673.gif",
-    "app/assets/images/flags/bu226.gif",
-    "app/assets/images/flags/bu257.gif",
-    "app/assets/images/flags/bu359.gif",
-    "app/assets/images/flags/ca1.gif",
-    "app/assets/images/flags/ca1345.gif",
-    "app/assets/images/flags/ca237.gif",
-    "app/assets/images/flags/ca238.gif",
-    "app/assets/images/flags/ca855.gif",
-    "app/assets/images/flags/ce236.gif",
-    "app/assets/images/flags/ch235.gif",
-    "app/assets/images/flags/ch56.gif",
-    "app/assets/images/flags/ch61.gif",
-    "app/assets/images/flags/ch86.gif",
-    "app/assets/images/flags/co225.gif",
-    "app/assets/images/flags/co242.gif",
-    "app/assets/images/flags/co243.gif",
-    "app/assets/images/flags/co269.gif",
-    "app/assets/images/flags/co506.gif",
-    "app/assets/images/flags/co57.gif",
-    "app/assets/images/flags/co61.gif",
-    "app/assets/images/flags/co682.gif",
-    "app/assets/images/flags/cr385.gif",
-    "app/assets/images/flags/cu53.gif",
-    "app/assets/images/flags/cy357.gif",
-    "app/assets/images/flags/cz420.gif",
-    "app/assets/images/flags/de45.gif",
-    "app/assets/images/flags/dj253.gif",
-    "app/assets/images/flags/do1767.gif",
-    "app/assets/images/flags/do1849.gif",
-    "app/assets/images/flags/ec593.gif",
-    "app/assets/images/flags/eg20.gif",
-    "app/assets/images/flags/el503.gif",
-    "app/assets/images/flags/england.gif",
-    "app/assets/images/flags/eq240.gif",
-    "app/assets/images/flags/er291.gif",
-    "app/assets/images/flags/es372.gif",
-    "app/assets/images/flags/et251.gif",
-    "app/assets/images/flags/fa298.gif",
-    "app/assets/images/flags/fa500.gif",
-    "app/assets/images/flags/fam.gif",
-    "app/assets/images/flags/fi358.gif",
-    "app/assets/images/flags/fi679.gif",
-    "app/assets/images/flags/fr33.gif",
-    "app/assets/images/flags/fr594.gif",
-    "app/assets/images/flags/fr689.gif",
-    "app/assets/images/flags/ga220.gif",
-    "app/assets/images/flags/ga241.gif",
-    "app/assets/images/flags/ge49.gif",
-    "app/assets/images/flags/ge995.gif",
-    "app/assets/images/flags/gh233.gif",
-    "app/assets/images/flags/gi350.gif",
-    "app/assets/images/flags/gr1473.gif",
-    "app/assets/images/flags/gr299.gif",
-    "app/assets/images/flags/gr30.gif",
-    "app/assets/images/flags/gu1671.gif",
-    "app/assets/images/flags/gu224.gif",
-    "app/assets/images/flags/gu245.gif",
-    "app/assets/images/flags/gu502.gif",
-    "app/assets/images/flags/gu590.gif",
-    "app/assets/images/flags/gu592.gif",
-    "app/assets/images/flags/ha509.gif",
-    "app/assets/images/flags/ho39.gif",
-    "app/assets/images/flags/ho504.gif",
-    "app/assets/images/flags/ho852.gif",
-    "app/assets/images/flags/hu36.gif",
-    "app/assets/images/flags/ic354.gif",
-    "app/assets/images/flags/in62.gif",
-    "app/assets/images/flags/in91.gif",
-    "app/assets/images/flags/ir353.gif",
-    "app/assets/images/flags/ir964.gif",
-    "app/assets/images/flags/ir98.gif",
-    "app/assets/images/flags/is972.gif",
-    "app/assets/images/flags/it39.gif",
-    "app/assets/images/flags/ja1876.gif",
-    "app/assets/images/flags/ja81.gif",
-    "app/assets/images/flags/jo962.gif",
-    "app/assets/images/flags/ka7.gif",
-    "app/assets/images/flags/ke254.gif",
-    "app/assets/images/flags/ki686.gif",
-    "app/assets/images/flags/ko82.gif",
-    "app/assets/images/flags/ko850.gif",
-    "app/assets/images/flags/ku965.gif",
-    "app/assets/images/flags/ky996.gif",
-    "app/assets/images/flags/la371.gif",
-    "app/assets/images/flags/la856.gif",
-    "app/assets/images/flags/le266.gif",
-    "app/assets/images/flags/le961.gif",
-    "app/assets/images/flags/li218.gif",
-    "app/assets/images/flags/li231.gif",
-    "app/assets/images/flags/li370.gif",
-    "app/assets/images/flags/li423.gif",
-    "app/assets/images/flags/lu352.gif",
-    "app/assets/images/flags/ma222.gif",
-    "app/assets/images/flags/ma223.gif",
-    "app/assets/images/flags/ma230.gif",
-    "app/assets/images/flags/ma261.gif",
-    "app/assets/images/flags/ma262.gif",
-    "app/assets/images/flags/ma265.gif",
-    "app/assets/images/flags/ma356.gif",
-    "app/assets/images/flags/ma389.gif",
-    "app/assets/images/flags/ma596.gif",
-    "app/assets/images/flags/ma60.gif",
-    "app/assets/images/flags/ma692.gif",
-    "app/assets/images/flags/ma853.gif",
-    "app/assets/images/flags/ma960.gif",
-    "app/assets/images/flags/me52.gif",
-    "app/assets/images/flags/mi691.gif",
-    "app/assets/images/flags/mo1664.gif",
-    "app/assets/images/flags/mo212.gif",
-    "app/assets/images/flags/mo258.gif",
-    "app/assets/images/flags/mo373.gif",
-    "app/assets/images/flags/mo377.gif",
-    "app/assets/images/flags/mo382.gif",
-    "app/assets/images/flags/mo976.gif",
-    "app/assets/images/flags/my95.gif",
-    "app/assets/images/flags/na264.gif",
-    "app/assets/images/flags/na674.gif",
-    "app/assets/images/flags/ne31.gif",
-    "app/assets/images/flags/ne599.gif",
-    "app/assets/images/flags/ne64.gif",
-    "app/assets/images/flags/ne687.gif",
-    "app/assets/images/flags/ne977.gif",
-    "app/assets/images/flags/ni227.gif",
-    "app/assets/images/flags/ni234.gif",
-    "app/assets/images/flags/ni505.gif",
-    "app/assets/images/flags/ni683.gif",
-    "app/assets/images/flags/no1670.gif",
-    "app/assets/images/flags/no47.gif",
-    "app/assets/images/flags/no672.gif",
-    "app/assets/images/flags/om968.gif",
-    "app/assets/images/flags/pa507.gif",
-    "app/assets/images/flags/pa595.gif",
-    "app/assets/images/flags/pa675.gif",
-    "app/assets/images/flags/pa680.gif",
-    "app/assets/images/flags/pa92.gif",
-    "app/assets/images/flags/pa970.gif",
-    "app/assets/images/flags/pe51.gif",
-    "app/assets/images/flags/ph63.gif",
-    "app/assets/images/flags/pi64.gif",
-    "app/assets/images/flags/po351.gif",
-    "app/assets/images/flags/po48.gif",
-    "app/assets/images/flags/pu1939.gif",
-    "app/assets/images/flags/qa974.gif",
-    "app/assets/images/flags/re262.gif",
-    "app/assets/images/flags/ro40.gif",
-    "app/assets/images/flags/ru7.gif",
-    "app/assets/images/flags/rw250.gif",
-    "app/assets/images/flags/sa1758.gif",
-    "app/assets/images/flags/sa1784.gif",
-    "app/assets/images/flags/sa1869.gif",
-    "app/assets/images/flags/sa239.gif",
-    "app/assets/images/flags/sa290.gif",
-    "app/assets/images/flags/sa378.gif",
-    "app/assets/images/flags/sa508.gif",
-    "app/assets/images/flags/sa685.gif",
-    "app/assets/images/flags/sa966.gif",
-    "app/assets/images/flags/se221.gif",
-    "app/assets/images/flags/se248.gif",
-    "app/assets/images/flags/se381.gif",
-    "app/assets/images/flags/si232.gif",
-    "app/assets/images/flags/si65.gif",
-    "app/assets/images/flags/sl386.gif",
-    "app/assets/images/flags/sl421.gif",
-    "app/assets/images/flags/so252.gif",
-    "app/assets/images/flags/so27.gif",
-    "app/assets/images/flags/so677.gif",
-    "app/assets/images/flags/sp34.gif",
-    "app/assets/images/flags/sr94.gif",
-    "app/assets/images/flags/su249.gif",
-    "app/assets/images/flags/su597.gif",
-    "app/assets/images/flags/sv47.gif",
-    "app/assets/images/flags/sw268.gif",
-    "app/assets/images/flags/sw41.gif",
-    "app/assets/images/flags/sw46.gif",
-    "app/assets/images/flags/sy963.gif",
-    "app/assets/images/flags/ta255.gif",
-    "app/assets/images/flags/ta886.gif",
-    "app/assets/images/flags/ta992.gif",
-    "app/assets/images/flags/th66.gif",
-    "app/assets/images/flags/ti670.gif",
-    "app/assets/images/flags/to228.gif",
-    "app/assets/images/flags/to676.gif",
-    "app/assets/images/flags/to690.gif",
-    "app/assets/images/flags/tr1868.gif",
-    "app/assets/images/flags/tu1649.gif",
-    "app/assets/images/flags/tu216.gif",
-    "app/assets/images/flags/tu688.gif",
-    "app/assets/images/flags/tu90.gif",
-    "app/assets/images/flags/tu993.gif",
-    "app/assets/images/flags/ug256.gif",
-    "app/assets/images/flags/uk380.gif",
-    "app/assets/images/flags/un1.gif",
-    "app/assets/images/flags/un44.gif",
-    "app/assets/images/flags/un971.gif",
-    "app/assets/images/flags/ur598.gif",
-    "app/assets/images/flags/uz998.gif",
-    "app/assets/images/flags/va678.gif",
-    "app/assets/images/flags/ve58.gif",
-    "app/assets/images/flags/vi1284.gif",
-    "app/assets/images/flags/vi1340.gif",
-    "app/assets/images/flags/vi84.gif",
-    "app/assets/images/flags/wa681.gif",
-    "app/assets/images/flags/wales.gif",
-    "app/assets/images/flags/we212.gif",
-    "app/assets/images/flags/ye967.gif",
-    "app/assets/images/flags/za260.gif",
-    "app/assets/images/flags/zi263.gif",
-    "app/assets/images/icon.png",
-    "app/assets/javascripts/form.authy.js",
+    "VERSION",
+    "app/assets/javascripts/devise_authy.js",
     "app/assets/stylesheets/devise_authy.css",
     "app/assets/stylesheets/devise_authy.sass",
-    "app/assets/stylesheets/flags.authy.css.erb",
-    "app/assets/stylesheets/form.authy.css.erb",
     "app/controllers/devise/devise_authy_controller.rb",
-    "app/views/devise/register.html.erb",
-    "app/views/devise/register.html.haml",
-    "app/views/devise/show.html.erb",
-    "app/views/devise/show.html.haml",
+    "app/views/devise/enable_authy.html.erb",
+    "app/views/devise/enable_authy.html.haml",
+    "app/views/devise/verify_authy.html.erb",
+    "app/views/devise/verify_authy.html.haml",
+    "app/views/devise/verify_authy_installation.html.erb",
+    "app/views/devise/verify_authy_installation.html.haml",
     "config/locales/en.yml",
     "devise-authy.gemspec",
     "lib/devise-authy.rb",
     "lib/devise-authy/controllers/helpers.rb",
+    "lib/devise-authy/controllers/view_helpers.rb",
     "lib/devise-authy/hooks/authy_authenticatable.rb",
     "lib/devise-authy/models/authy_authenticatable.rb",
     "lib/devise-authy/rails.rb",
@@ -355,7 +116,7 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<devise-authy>, [">= 0"])
-      s.add_runtime_dependency(%q<devise>, ["~> 2.1.2"])
+      s.add_runtime_dependency(%q<devise>, [">= 0"])
       s.add_runtime_dependency(%q<authy>, [">= 0"])
       s.add_development_dependency(%q<rspec>, [">= 0"])
       s.add_development_dependency(%q<pry>, [">= 0"])
@@ -377,9 +138,25 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<simplecov>, [">= 0"])
       s.add_development_dependency(%q<sass-rails>, [">= 0"])
       s.add_development_dependency(%q<jquery-rails>, [">= 0"])
+      s.add_development_dependency(%q<rspec>, [">= 0"])
+      s.add_development_dependency(%q<yard>, [">= 0"])
+      s.add_development_dependency(%q<rdoc>, [">= 0"])
+      s.add_development_dependency(%q<bundler>, [">= 0"])
+      s.add_development_dependency(%q<jeweler>, [">= 0"])
+      s.add_development_dependency(%q<simplecov>, [">= 0"])
+      s.add_development_dependency(%q<sass-rails>, [">= 0"])
+      s.add_development_dependency(%q<jquery-rails>, [">= 0"])
+      s.add_development_dependency(%q<rspec>, [">= 0"])
+      s.add_development_dependency(%q<yard>, [">= 0"])
+      s.add_development_dependency(%q<rdoc>, [">= 0"])
+      s.add_development_dependency(%q<bundler>, [">= 0"])
+      s.add_development_dependency(%q<jeweler>, [">= 0"])
+      s.add_development_dependency(%q<simplecov>, [">= 0"])
+      s.add_development_dependency(%q<sass-rails>, [">= 0"])
+      s.add_development_dependency(%q<jquery-rails>, [">= 0"])
     else
       s.add_dependency(%q<devise-authy>, [">= 0"])
-      s.add_dependency(%q<devise>, ["~> 2.1.2"])
+      s.add_dependency(%q<devise>, [">= 0"])
       s.add_dependency(%q<authy>, [">= 0"])
       s.add_dependency(%q<rspec>, [">= 0"])
       s.add_dependency(%q<pry>, [">= 0"])
@@ -401,15 +178,47 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<simplecov>, [">= 0"])
       s.add_dependency(%q<sass-rails>, [">= 0"])
       s.add_dependency(%q<jquery-rails>, [">= 0"])
+      s.add_dependency(%q<rspec>, [">= 0"])
+      s.add_dependency(%q<yard>, [">= 0"])
+      s.add_dependency(%q<rdoc>, [">= 0"])
+      s.add_dependency(%q<bundler>, [">= 0"])
+      s.add_dependency(%q<jeweler>, [">= 0"])
+      s.add_dependency(%q<simplecov>, [">= 0"])
+      s.add_dependency(%q<sass-rails>, [">= 0"])
+      s.add_dependency(%q<jquery-rails>, [">= 0"])
+      s.add_dependency(%q<rspec>, [">= 0"])
+      s.add_dependency(%q<yard>, [">= 0"])
+      s.add_dependency(%q<rdoc>, [">= 0"])
+      s.add_dependency(%q<bundler>, [">= 0"])
+      s.add_dependency(%q<jeweler>, [">= 0"])
+      s.add_dependency(%q<simplecov>, [">= 0"])
+      s.add_dependency(%q<sass-rails>, [">= 0"])
+      s.add_dependency(%q<jquery-rails>, [">= 0"])
     end
   else
     s.add_dependency(%q<devise-authy>, [">= 0"])
-    s.add_dependency(%q<devise>, ["~> 2.1.2"])
+    s.add_dependency(%q<devise>, [">= 0"])
     s.add_dependency(%q<authy>, [">= 0"])
     s.add_dependency(%q<rspec>, [">= 0"])
     s.add_dependency(%q<pry>, [">= 0"])
     s.add_dependency(%q<bundler>, [">= 0"])
     s.add_dependency(%q<jeweler>, [">= 0"])
+    s.add_dependency(%q<rspec>, [">= 0"])
+    s.add_dependency(%q<yard>, [">= 0"])
+    s.add_dependency(%q<rdoc>, [">= 0"])
+    s.add_dependency(%q<bundler>, [">= 0"])
+    s.add_dependency(%q<jeweler>, [">= 0"])
+    s.add_dependency(%q<simplecov>, [">= 0"])
+    s.add_dependency(%q<sass-rails>, [">= 0"])
+    s.add_dependency(%q<jquery-rails>, [">= 0"])
+    s.add_dependency(%q<rspec>, [">= 0"])
+    s.add_dependency(%q<yard>, [">= 0"])
+    s.add_dependency(%q<rdoc>, [">= 0"])
+    s.add_dependency(%q<bundler>, [">= 0"])
+    s.add_dependency(%q<jeweler>, [">= 0"])
+    s.add_dependency(%q<simplecov>, [">= 0"])
+    s.add_dependency(%q<sass-rails>, [">= 0"])
+    s.add_dependency(%q<jquery-rails>, [">= 0"])
     s.add_dependency(%q<rspec>, [">= 0"])
     s.add_dependency(%q<yard>, [">= 0"])
     s.add_dependency(%q<rdoc>, [">= 0"])
