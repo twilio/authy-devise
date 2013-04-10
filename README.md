@@ -7,6 +7,9 @@ This is a [Devise](https://github.com/plataformatec/devise) extension to add Two
 
 Get an Authy API Key: [https://www.authy.com/signup](https://www.authy.com/signup)
 
+## Demo
+
+See [https://github.com/authy/authy-devise/tree/master/authy-devise-demo](https://github.com/authy/authy-devise/tree/master/authy-devise-demo)
 
 ## Getting started
 
@@ -33,15 +36,11 @@ Add `Devise Authy` to your App:
 
 ### Configuring Models
 
-Configure your Devise user model, run:
+Configure your Devise user model:
 
     rails g devise_authy [MODEL_NAME]
 
-or add this line to your `User` model
-
-    :authy_authenticatable
-
-For example
+or add the following line to your `User` model
 
     devise :authy_authenticatable, :database_authenticatable
 
@@ -77,7 +76,7 @@ If you want to customise your views, you can modify the files that are located a
 
 ## I18n
 
-The install generator also copy a Devise Authy i18n file. This can be modified and is  located at:
+The install generator also copy a `Devise Authy` i18n file which you can find at:
 
     config/locales/devise.authy.en.yml
 
