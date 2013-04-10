@@ -1,9 +1,9 @@
 PATH
-  remote: ../authy-devise
+  remote: ..
   specs:
     devise-authy (1.0.0)
       authy
-      devise (~> 2.1.2)
+      devise
       devise-authy
 
 GEM
