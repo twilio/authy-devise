@@ -1,5 +1,5 @@
 class Devise::DeviseAuthyController < DeviseController
-  prepend_before_filter :require_no_authentication, :only => [
+  prepend_before_filter :find_resource_and_require_password_checked, :only => [
     :GET_verify_authy, :POST_verify_authy
   ]
   prepend_before_filter :authenticate_scope!, :only => [
@@ -9,30 +9,19 @@ class Devise::DeviseAuthyController < DeviseController
   include Devise::Controllers::Helpers
 
   def GET_verify_authy
-    @resource = resource_class.find_by_id(session["#{resource_name}_id"])
-
-    if @resource && session[:"#{resource_name}_password_checked"].to_s == "true"
-      @authy_id = @resource.authy_id
-      render :verify_authy
-    else
-      redirect_to :root
-    end
+    @authy_id = @resource.authy_id
+    render :verify_authy
   end
 
   # verify 2fa
   def POST_verify_authy
-    @resource = resource_class.find_by_id(session["#{resource_name}_id"])
-    if !@resource
-      redirect_to :root and return
-    end
-
     token = Authy::API.verify({
       :id => @resource.authy_id,
       :token => params[:token],
       :force => true
     })
 
-    if token.ok? && session[:"#{resource_name}_password_checked"].to_s == "true"
+    if token.ok?
       @resource.update_attribute(:last_sign_in_with_authy, DateTime.now)
 
       set_flash_message(:notice, :signed_in) if is_navigational_format?
@@ -108,5 +97,13 @@ class Devise::DeviseAuthyController < DeviseController
   def authenticate_scope!
     send(:"authenticate_#{resource_name}!", :force => true)
     self.resource = send("current_#{resource_name}")
+  end
+
+  def find_resource_and_require_password_checked
+    @resource = resource_class.find_by_id(session["#{resource_name}_id"])
+
+    if @resource.nil? || session[:"#{resource_name}_password_checked"].to_s != "true"
+      redirect_to :root
+    end
   end
 end
