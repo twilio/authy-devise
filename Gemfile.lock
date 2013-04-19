@@ -31,6 +31,7 @@ GEM
       xpath (~> 0.1.4)
     childprocess (0.3.6)
       ffi (~> 1.0, >= 1.0.6)
+    coderay (1.0.9)
     database_cleaner (0.9.1)
     devise (2.1.2)
       bcrypt-ruby (~> 3.0)
@@ -56,10 +57,15 @@ GEM
     json (1.7.5)
     libwebsocket (0.1.5)
       addressable
+    method_source (0.8.1)
     mime-types (1.19)
     multi_json (1.3.6)
     nokogiri (1.5.5)
     orm_adapter (0.4.0)
+    pry (0.9.12)
+      coderay (~> 1.0.5)
+      method_source (~> 0.8)
+      slop (~> 3.4)
     rack (1.4.1)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -105,6 +111,7 @@ GEM
       multi_json (~> 1.0)
       simplecov-html (~> 0.7.1)
     simplecov-html (0.7.1)
+    slop (3.4.4)
     sprockets (2.1.3)
       hike (~> 1.2)
       rack (~> 1.0)
@@ -129,6 +136,7 @@ DEPENDENCIES
   devise
   jeweler
   jquery-rails
+  pry
   rdoc
   rspec
   rspec-rails

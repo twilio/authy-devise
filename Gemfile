@@ -12,6 +12,7 @@ group :development do
   gem "simplecov"
   gem "sass-rails"
   gem "jquery-rails"
+  gem "pry"
 end
 
 group :test do

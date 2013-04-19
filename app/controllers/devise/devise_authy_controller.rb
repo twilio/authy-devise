@@ -1,4 +1,7 @@
 class Devise::DeviseAuthyController < DeviseController
+  prepend_before_filter :find_resource, :only => [
+    :request_sms
+  ]
   prepend_before_filter :find_resource_and_require_password_checked, :only => [
     :GET_verify_authy, :POST_verify_authy
   ]
@@ -82,7 +85,6 @@ class Devise::DeviseAuthyController < DeviseController
   end
 
   def request_sms
-    @resource = resource_class.find_by_id(session["#{resource_name}_id"])
     if !@resource
       render :json => {:sent => false, :message => "User couldn't be found."}
       return
@@ -99,8 +101,16 @@ class Devise::DeviseAuthyController < DeviseController
     self.resource = send("current_#{resource_name}")
   end
 
+  def find_resource
+    @resource = send("current_#{resource_name}")
+
+    if @resource.nil?
+      @resource = resource_class.find_by_id(session["#{resource_name}_id"])
+    end
+  end
+
   def find_resource_and_require_password_checked
-    @resource = resource_class.find_by_id(session["#{resource_name}_id"])
+    find_resource
 
     if @resource.nil? || session[:"#{resource_name}_password_checked"].to_s != "true"
       redirect_to :root
