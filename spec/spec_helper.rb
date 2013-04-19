@@ -17,7 +17,6 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 RSpec.configure do |config|
   config.before :suite do
     DatabaseCleaner[:active_record].strategy = :truncation
-    Capybara.run_server = false
   end
 
   config.before :each do
