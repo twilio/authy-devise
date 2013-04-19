@@ -1,7 +1,7 @@
 ENV["RAILS_ENV"] ||= 'test'
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
-require "rails_app/config/environment"
+require "rails-app/config/environment"
 
 require 'rspec/rails'
 require 'devise-authy'

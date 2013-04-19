@@ -5,7 +5,7 @@ require 'rails/generators'
 require 'generators/devise_authy/devise_authy_generator'
 
 describe "generators for devise_authy" do
-  RAILS_APP_PATH = File.expand_path("../rails_app", __FILE__)
+  RAILS_APP_PATH = File.expand_path("../rails-app", __FILE__)
 
   it "rails g should include the generators" do
     @output = `cd #{RAILS_APP_PATH} && rails g`
