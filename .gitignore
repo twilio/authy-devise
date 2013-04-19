@@ -48,6 +48,7 @@ tmtags
 # For rubinius:
 #*.rbc
 
-spec/rails_app/tmp
-spec/rails_app/log
+spec/rails-app/tmp
+spec/rails-app/db
+spec/rails-app/log
 *.sqlite3DS_Store
