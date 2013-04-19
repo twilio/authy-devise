@@ -90,7 +90,7 @@ class Devise::DeviseAuthyController < DeviseController
       return
     end
 
-    response = Authy::API.request_sms(:id => @resource.id, :force => true)
+    response = Authy::API.request_sms(:id => @resource.authy_id, :force => true)
     render :json => {:sent => response.ok?, :message => response.message}
   end
 
