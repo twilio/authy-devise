@@ -1,0 +1,185 @@
+Connecting to database specified by database.yml
+Connecting to database specified by database.yml
+Connecting to database specified by database.yml
+Binary data inserted for `string` type on column `encrypted_password`
+Binary data inserted for `string` type on column `encrypted_password`
+Binary data inserted for `string` type on column `encrypted_password`
+Binary data inserted for `string` type on column `encrypted_password`
+Binary data inserted for `string` type on column `encrypted_password`
+Binary data inserted for `string` type on column `encrypted_password`
+Binary data inserted for `string` type on column `encrypted_password`
+Connecting to database specified by database.yml
+Connecting to database specified by database.yml
+Connecting to database specified by database.yml
+  [1m[36m (1.4ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations" [0m
+Migrating to DeviseCreateUsers (20130419164907)
+Migrating to DeviseAuthyAddToUsers (20130419164936)
+  [1m[35m (0.1ms)[0m  select sqlite_version(*)
+  [1m[36m (0.1ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations" [0m
+Connecting to database specified by database.yml
+Binary data inserted for `string` type on column `encrypted_password`
+Binary data inserted for `string` type on column `encrypted_password`
+Binary data inserted for `string` type on column `encrypted_password`
+Binary data inserted for `string` type on column `encrypted_password`
+Binary data inserted for `string` type on column `encrypted_password`
+Binary data inserted for `string` type on column `encrypted_password`
+Binary data inserted for `string` type on column `encrypted_password`
+Connecting to database specified by database.yml
+Connecting to database specified by database.yml
+Connecting to database specified by database.yml
+Binary data inserted for `string` type on column `encrypted_password`
+Processing by Devise::DeviseAuthyController#GET_verify_authy as HTML
+Redirected to http://test.host/
+Filter chain halted as :find_resource_and_require_password_checked rendered or redirected
+Completed 302 Found in 14ms (ActiveRecord: 0.2ms)
+Connecting to database specified by database.yml
+Binary data inserted for `string` type on column `encrypted_password`
+Processing by Devise::DeviseAuthyController#GET_verify_authy as HTML
+Completed 500 Internal Server Error in 0ms
+Connecting to database specified by database.yml
+Binary data inserted for `string` type on column `encrypted_password`
+Processing by Devise::DeviseAuthyController#GET_verify_authy as HTML
+Redirected to http://test.host/
+Filter chain halted as :find_resource_and_require_password_checked rendered or redirected
+Completed 302 Found in 106387ms (ActiveRecord: 0.3ms)
+Connecting to database specified by database.yml
+Binary data inserted for `string` type on column `encrypted_password`
+Processing by Devise::DeviseAuthyController#GET_verify_authy as HTML
+Redirected to http://test.host/
+Filter chain halted as :find_resource_and_require_password_checked rendered or redirected
+Completed 302 Found in 7763ms (ActiveRecord: 0.5ms)
+Connecting to database specified by database.yml
+Binary data inserted for `string` type on column `encrypted_password`
+Processing by Devise::DeviseAuthyController#GET_verify_authy as HTML
+Redirected to http://test.host/
+Filter chain halted as :find_resource_and_require_password_checked rendered or redirected
+Completed 302 Found in 21ms (ActiveRecord: 0.2ms)
+Connecting to database specified by database.yml
+Binary data inserted for `string` type on column `encrypted_password`
+Processing by Devise::DeviseAuthyController#GET_verify_authy as HTML
+Redirected to http://test.host/
+Filter chain halted as :find_resource_and_require_password_checked rendered or redirected
+Completed 302 Found in 123158ms (ActiveRecord: 0.2ms)
+Connecting to database specified by database.yml
+Binary data inserted for `string` type on column `encrypted_password`
+Processing by Devise::DeviseAuthyController#GET_verify_authy as HTML
+Redirected to http://test.host/
+Filter chain halted as :find_resource_and_require_password_checked rendered or redirected
+Completed 302 Found in 24ms (ActiveRecord: 0.2ms)
+Connecting to database specified by database.yml
+Binary data inserted for `string` type on column `encrypted_password`
+Processing by Devise::DeviseAuthyController#GET_verify_authy as HTML
+Redirected to http://test.host/
+Filter chain halted as :find_resource_and_require_password_checked rendered or redirected
+Completed 302 Found in 6ms (ActiveRecord: 0.2ms)
+Connecting to database specified by database.yml
+Binary data inserted for `string` type on column `encrypted_password`
+Processing by Devise::DeviseAuthyController#GET_verify_authy as HTML
+Redirected to http://test.host/
+Filter chain halted as :find_resource_and_require_password_checked rendered or redirected
+Completed 302 Found in 95545ms (ActiveRecord: 0.2ms)
+Connecting to database specified by database.yml
+Binary data inserted for `string` type on column `encrypted_password`
+Processing by Devise::DeviseAuthyController#GET_verify_authy as HTML
+  Rendered devise/devise_authy/verify_authy.html.erb within layouts/application (0.3ms)
+Completed 200 OK in 10307ms (Views: 112.2ms | ActiveRecord: 0.2ms)
+Connecting to database specified by database.yml
+Binary data inserted for `string` type on column `encrypted_password`
+Processing by Devise::DeviseAuthyController#GET_verify_authy as HTML
+  Rendered devise/devise_authy/verify_authy.html.erb within layouts/application (0.3ms)
+Completed 200 OK in 98ms (Views: 73.5ms | ActiveRecord: 0.2ms)
+Binary data inserted for `string` type on column `encrypted_password`
+Processing by Devise::DeviseAuthyController#GET_verify_authy as HTML
+Redirected to http://test.host/
+Filter chain halted as :find_resource_and_require_password_checked rendered or redirected
+Completed 302 Found in 2ms (ActiveRecord: 0.2ms)
+Binary data inserted for `string` type on column `encrypted_password`
+Processing by Devise::DeviseAuthyController#POST_verify_authy as HTML
+  Parameters: {"authy_id"=>"80", "token"=>"567890"}
+Redirected to http://test.host/
+Filter chain halted as :find_resource_and_require_password_checked rendered or redirected
+Completed 302 Found in 2ms (ActiveRecord: 0.2ms)
+Binary data inserted for `string` type on column `encrypted_password`
+Binary data inserted for `string` type on column `encrypted_password`
+Binary data inserted for `string` type on column `encrypted_password`
+Binary data inserted for `string` type on column `encrypted_password`
+Binary data inserted for `string` type on column `encrypted_password`
+Connecting to database specified by database.yml
+Binary data inserted for `string` type on column `encrypted_password`
+Processing by Devise::DeviseAuthyController#GET_verify_authy as HTML
+  Rendered devise/devise_authy/verify_authy.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 71ms (Views: 61.1ms | ActiveRecord: 0.2ms)
+Binary data inserted for `string` type on column `encrypted_password`
+Processing by Devise::DeviseAuthyController#GET_verify_authy as HTML
+Redirected to http://test.host/
+Filter chain halted as :find_resource_and_require_password_checked rendered or redirected
+Completed 302 Found in 2ms (ActiveRecord: 0.2ms)
+Binary data inserted for `string` type on column `encrypted_password`
+Processing by Devise::DeviseAuthyController#GET_verify_authy as HTML
+Redirected to http://test.host/
+Filter chain halted as :find_resource_and_require_password_checked rendered or redirected
+Completed 302 Found in 1ms (ActiveRecord: 0.2ms)
+Connecting to database specified by database.yml
+Binary data inserted for `string` type on column `encrypted_password`
+Processing by Devise::DeviseAuthyController#POST_verify_authy as HTML
+  Parameters: {"token"=>"0000000"}
+  Rendered devise/devise_authy/verify_authy.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 904ms (Views: 36.6ms | ActiveRecord: 0.2ms)
+Connecting to database specified by database.yml
+Binary data inserted for `string` type on column `encrypted_password`
+Processing by Devise::DeviseAuthyController#POST_verify_authy as HTML
+  Parameters: {"token"=>"0000000"}
+  Rendered devise/devise_authy/verify_authy.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 721ms (Views: 37.3ms | ActiveRecord: 0.2ms)
+Connecting to database specified by database.yml
+Binary data inserted for `string` type on column `encrypted_password`
+Processing by Devise::DeviseAuthyController#POST_verify_authy as HTML
+  Parameters: {"token"=>"0000000"}
+  Rendered devise/devise_authy/verify_authy.html.erb within layouts/application (0.4ms)
+Completed 200 OK in 810ms (Views: 99.8ms | ActiveRecord: 0.2ms)
+Connecting to database specified by database.yml
+Binary data inserted for `string` type on column `encrypted_password`
+Processing by Devise::DeviseAuthyController#POST_verify_authy as HTML
+  Parameters: {"token"=>"0000000"}
+  Rendered devise/devise_authy/verify_authy.html.erb within layouts/application (0.4ms)
+Completed 200 OK in 241557ms (Views: 188.2ms | ActiveRecord: 0.2ms)
+Connecting to database specified by database.yml
+Binary data inserted for `string` type on column `encrypted_password`
+Processing by Devise::DeviseAuthyController#POST_verify_authy as HTML
+  Parameters: {"token"=>"0000000"}
+  Rendered devise/devise_authy/verify_authy.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 478ms (Views: 36.5ms | ActiveRecord: 0.2ms)
+Connecting to database specified by database.yml
+Binary data inserted for `string` type on column `encrypted_password`
+Processing by Devise::DeviseAuthyController#POST_verify_authy as HTML
+  Parameters: {"token"=>"0000000"}
+  Rendered devise/devise_authy/verify_authy.html.erb within layouts/application (0.3ms)
+Completed 200 OK in 56202ms (Views: 45.9ms | ActiveRecord: 0.2ms)
+Connecting to database specified by database.yml
+Binary data inserted for `string` type on column `encrypted_password`
+Processing by Devise::DeviseAuthyController#POST_verify_authy as HTML
+  Parameters: {"token"=>"0000000"}
+Redirected to http://test.host/
+Completed 302 Found in 44043ms (ActiveRecord: 0.0ms)
+Connecting to database specified by database.yml
+Binary data inserted for `string` type on column `encrypted_password`
+Processing by Devise::DeviseAuthyController#POST_verify_authy as HTML
+  Parameters: {"token"=>"0000000"}
+Redirected to http://test.host/
+Completed 302 Found in 320ms (ActiveRecord: 0.0ms)
+Connecting to database specified by database.yml
+Binary data inserted for `string` type on column `encrypted_password`
+Processing by Devise::DeviseAuthyController#POST_verify_authy as HTML
+  Parameters: {"token"=>"0000000"}
+Redirected to http://test.host/
+Completed 302 Found in 312ms (ActiveRecord: 0.0ms)
+Connecting to database specified by database.yml
+Binary data inserted for `string` type on column `encrypted_password`
+Processing by Devise::DeviseAuthyController#POST_verify_authy as HTML
+  Parameters: {"token"=>"0000000"}
+Redirected to http://test.host/
+Completed 302 Found in 352ms (ActiveRecord: 0.0ms)
+Binary data inserted for `string` type on column `encrypted_password`
+Processing by Devise::DeviseAuthyController#POST_verify_authy as HTML
+  Parameters: {"token"=>"5678900"}
+Completed 200 OK in 144ms (Views: 3.5ms | ActiveRecord: 0.2ms)
