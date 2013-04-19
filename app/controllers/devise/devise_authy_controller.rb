@@ -6,7 +6,7 @@ class Devise::DeviseAuthyController < DeviseController
     :GET_verify_authy, :POST_verify_authy
   ]
   prepend_before_filter :authenticate_scope!, :only => [
-    :GET_enable_authy, :POST_enable_authy, 
+    :GET_enable_authy, :POST_enable_authy,
     :GET_verify_authy_installation, :POST_verify_authy_installation
   ]
   include Devise::Controllers::Helpers
@@ -37,7 +37,12 @@ class Devise::DeviseAuthyController < DeviseController
 
   # enable 2fa
   def GET_enable_authy
-    render :enable_authy
+    if resource.authy_id.blank? || !resource.authy_enabled
+      render :enable_authy
+    else
+      set_flash_message(:notice, :already_enabled)
+      redirect_to :root
+    end
   end
 
   def POST_enable_authy

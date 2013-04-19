@@ -51,7 +51,8 @@ describe Devise::DeviseAuthyController do
 
   describe "GET #enable_authy" do
     it "Should render enable authy view" do
-      sign_in @user
+      user2 = create_user
+      sign_in user2
       get :GET_enable_authy
       response.should render_template('enable_authy')
     end
@@ -59,6 +60,20 @@ describe Devise::DeviseAuthyController do
     it "Shouldn't render enable authy view" do
       get :GET_enable_authy
       response.should redirect_to(new_user_session_url)
+    end
+
+    it "should redirect if user has authy enabled" do
+      @user.update_attribute(:authy_enabled, true)
+      sign_in @user
+      get :GET_enable_authy
+      response.should redirect_to(root_url)
+      flash.now[:notice].should == "Two factor authentication is already enabled."
+    end
+
+    it "Should render enable authy view if authy enabled is false" do
+      sign_in @user
+      get :GET_enable_authy
+      response.should render_template('enable_authy')
     end
   end
 

@@ -4,7 +4,7 @@
   <title>AuthyDeviseDemo</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>    
+  <%= csrf_meta_tags %>
   <%=javascript_include_tag "https://www.authy.com/form.authy.min.js" %>
   <%=stylesheet_link_tag "https://www.authy.com/form.authy.min.css" %>
   <%=javascript_include_tag "devise_authy.js" %>
@@ -12,7 +12,19 @@
 </head>
 <body>
 
-<%= yield %>
+  <% if flash[:notice] %>
+    <div id="notice">
+      <%= flash[:notice] %>
+    </div>
+  <% end %>
+
+  <% if flash[:error] %>
+    <div class='alert alert-error'>
+      <%= flash[:error] %>
+    </div>
+  <% end %>
+
+  <%= yield %>
 
 </body>
 </html>
