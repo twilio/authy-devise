@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "devise-authy"
-  s.version = "1.0.0"
+  s.version = "1.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Authy Inc."]
-  s.date = "2013-04-10"
+  s.date = "2013-04-19"
   s.description = "Authy plugin for Devise"
   s.email = "support@authy.com"
   s.extra_rdoc_files = [
@@ -120,62 +120,68 @@ Gem::Specification.new do |s|
     "lib/generators/devise_authy/devise_authy_generator.rb",
     "lib/generators/devise_authy/install_generator.rb",
     "spec/controllers/devise_authy_controller_spec.rb",
+    "spec/features/authy_authenticatable_spec.rb",
     "spec/generators_spec.rb",
-    "spec/integration/authy_authenticatable.rb",
     "spec/models/authy_authenticatable.rb",
     "spec/orm/active_record.rb",
-    "spec/rails_app/Rakefile",
-    "spec/rails_app/app/assets/images/rails.png",
-    "spec/rails_app/app/assets/javascripts/application.js",
-    "spec/rails_app/app/assets/stylesheets/application.css",
-    "spec/rails_app/app/assets/stylesheets/devise_authy.css",
-    "spec/rails_app/app/assets/stylesheets/devise_authy.css.scss",
-    "spec/rails_app/app/assets/stylesheets/scaffolds.css.scss",
-    "spec/rails_app/app/controllers/application_controller.rb",
-    "spec/rails_app/app/controllers/posts_controller.rb",
-    "spec/rails_app/app/helpers/application_helper.rb",
-    "spec/rails_app/app/helpers/posts_helper.rb",
-    "spec/rails_app/app/mailers/.gitkeep",
-    "spec/rails_app/app/models/.gitkeep",
-    "spec/rails_app/app/models/post.rb",
-    "spec/rails_app/app/models/user.rb",
-    "spec/rails_app/app/views/devise/devise_authy/register.html.erb",
-    "spec/rails_app/app/views/devise/devise_authy/show.html.erb",
-    "spec/rails_app/app/views/layouts/application.html.erb",
-    "spec/rails_app/app/views/posts/_form.html.erb",
-    "spec/rails_app/app/views/posts/edit.html.erb",
-    "spec/rails_app/app/views/posts/index.html.erb",
-    "spec/rails_app/app/views/posts/new.html.erb",
-    "spec/rails_app/app/views/posts/show.html.erb",
-    "spec/rails_app/config.ru",
-    "spec/rails_app/config/application.rb",
-    "spec/rails_app/config/boot.rb",
-    "spec/rails_app/config/database.yml",
-    "spec/rails_app/config/environment.rb",
-    "spec/rails_app/config/environments/development.rb",
-    "spec/rails_app/config/environments/production.rb",
-    "spec/rails_app/config/environments/test.rb",
-    "spec/rails_app/config/initializers/authy.rb",
-    "spec/rails_app/config/initializers/backtrace_silencers.rb",
-    "spec/rails_app/config/initializers/devise.rb",
-    "spec/rails_app/config/initializers/inflections.rb",
-    "spec/rails_app/config/initializers/mime_types.rb",
-    "spec/rails_app/config/initializers/secret_token.rb",
-    "spec/rails_app/config/initializers/session_store.rb",
-    "spec/rails_app/config/initializers/wrap_parameters.rb",
-    "spec/rails_app/config/locales/devise.authy.en.yml",
-    "spec/rails_app/config/routes.rb",
-    "spec/rails_app/db/migrate/20121029205626_devise_create_users.rb",
-    "spec/rails_app/db/migrate/20121029205627_create_posts.rb",
-    "spec/rails_app/db/migrate/20121029205628_devise_authy_add_to_users.rb",
-    "spec/rails_app/db/schema.rb",
-    "spec/rails_app/public/favicon.ico",
-    "spec/rails_app/script/rails",
+    "spec/rails-app/Rakefile",
+    "spec/rails-app/app/assets/images/rails.png",
+    "spec/rails-app/app/assets/javascripts/application.js",
+    "spec/rails-app/app/assets/javascripts/devise_authy.js",
+    "spec/rails-app/app/assets/javascripts/welcome.js",
+    "spec/rails-app/app/assets/stylesheets/application.css",
+    "spec/rails-app/app/assets/stylesheets/devise_authy.css",
+    "spec/rails-app/app/assets/stylesheets/welcome.css.scss",
+    "spec/rails-app/app/controllers/application_controller.rb",
+    "spec/rails-app/app/controllers/welcome_controller.rb",
+    "spec/rails-app/app/helpers/application_helper.rb",
+    "spec/rails-app/app/helpers/welcome_helper.rb",
+    "spec/rails-app/app/mailers/.gitkeep",
+    "spec/rails-app/app/models/.gitkeep",
+    "spec/rails-app/app/models/user.rb",
+    "spec/rails-app/app/views/devise/devise_authy/enable_authy.html.erb",
+    "spec/rails-app/app/views/devise/devise_authy/verify_authy.html.erb",
+    "spec/rails-app/app/views/devise/devise_authy/verify_authy_installation.html.erb",
+    "spec/rails-app/app/views/layouts/application.html.erb",
+    "spec/rails-app/app/views/welcome/index.html.erb",
+    "spec/rails-app/config.ru",
+    "spec/rails-app/config/application.rb",
+    "spec/rails-app/config/boot.rb",
+    "spec/rails-app/config/database.yml",
+    "spec/rails-app/config/environment.rb",
+    "spec/rails-app/config/environments/development.rb",
+    "spec/rails-app/config/environments/production.rb",
+    "spec/rails-app/config/environments/test.rb",
+    "spec/rails-app/config/initializers/authy.rb",
+    "spec/rails-app/config/initializers/backtrace_silencers.rb",
+    "spec/rails-app/config/initializers/devise.rb",
+    "spec/rails-app/config/initializers/inflections.rb",
+    "spec/rails-app/config/initializers/mime_types.rb",
+    "spec/rails-app/config/initializers/secret_token.rb",
+    "spec/rails-app/config/initializers/session_store.rb",
+    "spec/rails-app/config/initializers/wrap_parameters.rb",
+    "spec/rails-app/config/locales/devise.authy.en.yml",
+    "spec/rails-app/config/locales/devise.en.yml",
+    "spec/rails-app/config/locales/en.yml",
+    "spec/rails-app/config/routes.rb",
+    "spec/rails-app/db/development.sqlite3",
+    "spec/rails-app/db/migrate/20130419164907_devise_create_users.rb",
+    "spec/rails-app/db/migrate/20130419164936_devise_authy_add_to_users.rb",
+    "spec/rails-app/db/schema.rb",
+    "spec/rails-app/db/seeds.rb",
+    "spec/rails-app/lib/assets/.gitkeep",
+    "spec/rails-app/lib/tasks/.gitkeep",
+    "spec/rails-app/public/404.html",
+    "spec/rails-app/public/422.html",
+    "spec/rails-app/public/500.html",
+    "spec/rails-app/public/favicon.ico",
+    "spec/rails-app/public/robots.txt",
+    "spec/rails-app/script/rails",
     "spec/routing/routes_spec.rb",
     "spec/spec_helper.rb",
     "spec/support/helpers.rb"
   ]
-  s.homepage = "http://github.com/senekis/devise-authy"
+  s.homepage = "https://github.com/authy/authy-devise"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
   s.rubygems_version = "1.8.24"
@@ -185,6 +191,8 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
+      s.add_runtime_dependency(%q<devise-authy>, [">= 0"])
+      s.add_runtime_dependency(%q<rails>, ["~> 3.2.6"])
       s.add_runtime_dependency(%q<devise>, [">= 0"])
       s.add_runtime_dependency(%q<authy>, [">= 0"])
       s.add_development_dependency(%q<rspec>, [">= 0"])
@@ -195,7 +203,27 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<simplecov>, [">= 0"])
       s.add_development_dependency(%q<sass-rails>, [">= 0"])
       s.add_development_dependency(%q<jquery-rails>, [">= 0"])
+      s.add_development_dependency(%q<rspec>, [">= 0"])
+      s.add_development_dependency(%q<yard>, [">= 0"])
+      s.add_development_dependency(%q<rdoc>, [">= 0"])
+      s.add_development_dependency(%q<bundler>, [">= 0"])
+      s.add_development_dependency(%q<jeweler>, [">= 0"])
+      s.add_development_dependency(%q<simplecov>, [">= 0"])
+      s.add_development_dependency(%q<sass-rails>, [">= 0"])
+      s.add_development_dependency(%q<jquery-rails>, [">= 0"])
+      s.add_development_dependency(%q<pry>, [">= 0"])
+      s.add_development_dependency(%q<rspec>, [">= 0"])
+      s.add_development_dependency(%q<yard>, [">= 0"])
+      s.add_development_dependency(%q<rdoc>, [">= 0"])
+      s.add_development_dependency(%q<bundler>, [">= 0"])
+      s.add_development_dependency(%q<jeweler>, [">= 0"])
+      s.add_development_dependency(%q<simplecov>, [">= 0"])
+      s.add_development_dependency(%q<sass-rails>, [">= 0"])
+      s.add_development_dependency(%q<jquery-rails>, [">= 0"])
+      s.add_development_dependency(%q<pry>, [">= 0"])
     else
+      s.add_dependency(%q<devise-authy>, [">= 0"])
+      s.add_dependency(%q<rails>, ["~> 3.2.6"])
       s.add_dependency(%q<devise>, [">= 0"])
       s.add_dependency(%q<authy>, [">= 0"])
       s.add_dependency(%q<rspec>, [">= 0"])
@@ -206,8 +234,28 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<simplecov>, [">= 0"])
       s.add_dependency(%q<sass-rails>, [">= 0"])
       s.add_dependency(%q<jquery-rails>, [">= 0"])
+      s.add_dependency(%q<rspec>, [">= 0"])
+      s.add_dependency(%q<yard>, [">= 0"])
+      s.add_dependency(%q<rdoc>, [">= 0"])
+      s.add_dependency(%q<bundler>, [">= 0"])
+      s.add_dependency(%q<jeweler>, [">= 0"])
+      s.add_dependency(%q<simplecov>, [">= 0"])
+      s.add_dependency(%q<sass-rails>, [">= 0"])
+      s.add_dependency(%q<jquery-rails>, [">= 0"])
+      s.add_dependency(%q<pry>, [">= 0"])
+      s.add_dependency(%q<rspec>, [">= 0"])
+      s.add_dependency(%q<yard>, [">= 0"])
+      s.add_dependency(%q<rdoc>, [">= 0"])
+      s.add_dependency(%q<bundler>, [">= 0"])
+      s.add_dependency(%q<jeweler>, [">= 0"])
+      s.add_dependency(%q<simplecov>, [">= 0"])
+      s.add_dependency(%q<sass-rails>, [">= 0"])
+      s.add_dependency(%q<jquery-rails>, [">= 0"])
+      s.add_dependency(%q<pry>, [">= 0"])
     end
   else
+    s.add_dependency(%q<devise-authy>, [">= 0"])
+    s.add_dependency(%q<rails>, ["~> 3.2.6"])
     s.add_dependency(%q<devise>, [">= 0"])
     s.add_dependency(%q<authy>, [">= 0"])
     s.add_dependency(%q<rspec>, [">= 0"])
@@ -218,6 +266,24 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<simplecov>, [">= 0"])
     s.add_dependency(%q<sass-rails>, [">= 0"])
     s.add_dependency(%q<jquery-rails>, [">= 0"])
+    s.add_dependency(%q<rspec>, [">= 0"])
+    s.add_dependency(%q<yard>, [">= 0"])
+    s.add_dependency(%q<rdoc>, [">= 0"])
+    s.add_dependency(%q<bundler>, [">= 0"])
+    s.add_dependency(%q<jeweler>, [">= 0"])
+    s.add_dependency(%q<simplecov>, [">= 0"])
+    s.add_dependency(%q<sass-rails>, [">= 0"])
+    s.add_dependency(%q<jquery-rails>, [">= 0"])
+    s.add_dependency(%q<pry>, [">= 0"])
+    s.add_dependency(%q<rspec>, [">= 0"])
+    s.add_dependency(%q<yard>, [">= 0"])
+    s.add_dependency(%q<rdoc>, [">= 0"])
+    s.add_dependency(%q<bundler>, [">= 0"])
+    s.add_dependency(%q<jeweler>, [">= 0"])
+    s.add_dependency(%q<simplecov>, [">= 0"])
+    s.add_dependency(%q<sass-rails>, [">= 0"])
+    s.add_dependency(%q<jquery-rails>, [">= 0"])
+    s.add_dependency(%q<pry>, [">= 0"])
   end
 end
 
