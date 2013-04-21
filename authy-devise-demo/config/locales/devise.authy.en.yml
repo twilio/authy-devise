@@ -7,6 +7,7 @@ en:
     cellphone: 'Enter your cellphone'
     country: 'Enter you country'
     request_sms: 'Request SMS'
+    remember_device: 'Remember Device'
 
     authy_verify_installation_title: "Verify your account"
     enable_my_account: 'Enable my account'
