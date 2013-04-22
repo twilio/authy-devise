@@ -4,7 +4,7 @@ module DeviseAuthy
       extend ActiveSupport::Concern
 
       included do
-        before_filter :check_request_and_redirect_to_verify_token
+        before_filter :check_request_and_redirect_to_verify_token, :if => :is_signing_in?
       end
 
       private
@@ -16,32 +16,39 @@ module DeviseAuthy
       end
 
       def require_token?
-        return true if cookies.signed[:remember_device].blank?
-        return true if (Time.now.to_i - cookies.signed[:remember_device]) > \
+        if cookies.signed[:remember_device].present? &&
+          (Time.now.to_i - cookies.signed[:remember_device].to_i) < \
           resource_class.authy_remember_device.to_i
+          return false
+        end
 
-        false
+        return true
+      end
+
+      def is_signing_in?
+        if devise_controller? && signed_in?(resource_name) &&
+           self.class == Devise::SessionsController && self.action_name == "create"
+          return true
+        end
+
+        return false
       end
 
       def check_request_and_redirect_to_verify_token
-        if devise_controller? && !request.format.nil? && request.format.html?
-          Devise.mappings.keys.flatten.any? do |scope|
-            if signed_in?(scope) &&
-              warden.session(scope)[:with_authy_authentication] && require_token?
+        if signed_in?(resource_name) &&
+           warden.session(resource_name)[:with_authy_authentication] &&
+           require_token?
+          # login with 2fa
+          id = warden.session(resource_name)[:id]
+          warden.logout
+          warden.reset_session! # make sure the session resetted
+          session["#{resource_name}_id"] = id
+          # this is safe to put in the session because the cookie is signed
+          session["#{resource_name}_password_checked"] = true
+          session["#{resource_name}_return_to"] = request.path if request.get?
 
-              # login with 2fa
-              id = warden.session(scope)[:id]
-              warden.logout
-              warden.reset_session! # make sure the session resetted
-              session["#{scope}_id"] = id
-              # this is safe to put in the session because the cookie is signed
-              session["#{scope}_password_checked"] = true
-              session["#{scope}_return_to"] = request.path if request.get?
-
-              redirect_to verify_authy_path_for(scope)
-              return
-            end
-          end
+          redirect_to verify_authy_path_for(resource_name)
+          return
         end
       end
 

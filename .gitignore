@@ -52,3 +52,6 @@ spec/rails-app/tmp
 spec/rails-app/db
 spec/rails-app/log
 *.sqlite3DS_Store
+
+initializers/authy.rb
+
