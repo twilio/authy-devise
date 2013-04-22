@@ -33,6 +33,7 @@ class Devise::DeviseAuthyController < DeviseController
       sign_in(resource_name, @resource)
       respond_with resource, :location => after_sign_in_path_for(@resource)
     else
+      set_flash_message(:error, :invalid_token)
       render :verify_authy
     end
   end

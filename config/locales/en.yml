@@ -11,6 +11,7 @@ en:
 
     authy_verify_installation_title: "Verify your account"
     enable_my_account: 'Enable my account'
+    invalid_token: 'The entered token is invalid'
 
     devise_authy:
       user:
