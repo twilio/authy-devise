@@ -11,13 +11,6 @@ class Devise::DeviseAuthyController < DeviseController
   ]
   include Devise::Controllers::Helpers
 
-  def remember_device
-    cookies.signed[:remember_device] = {
-      :value => Time.now.to_i,
-      :secure => !(Rails.env.test? || Rails.env.development?)
-    }
-  end
-
   def GET_verify_authy
     @authy_id = @resource.authy_id
     render :verify_authy

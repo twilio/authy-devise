@@ -100,7 +100,7 @@ describe Devise::DeviseAuthyController do
       post :POST_enable_authy, :cellphone => '2222227', :country_code => '57'
       user2.reload
       user2.authy_id.should_not be_nil
-      flash.now[:notice].should == "Two factor authentication was enable"
+      flash.now[:notice].should == "Two factor authentication was enabled"
       response.should redirect_to(user_verify_authy_installation_url)
     end
 
@@ -137,7 +137,7 @@ describe Devise::DeviseAuthyController do
       sign_in @user
       post :POST_verify_authy_installation, :token => "0000000"
       response.should redirect_to(root_url)
-      flash[:notice].should == 'Two factor authentication was enable'
+      flash[:notice].should == 'Two factor authentication was enabled'
     end
 
     it "should not enable authy for user" do

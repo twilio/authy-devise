@@ -1,9 +1,11 @@
 PATH
   remote: ..
   specs:
-    devise-authy (1.0.0)
+    devise-authy (1.1.0)
       authy
       devise
+      devise-authy
+      rails (~> 3.2.6)
 
 GEM
   remote: https://rubygems.org/

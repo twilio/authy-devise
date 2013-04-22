@@ -8,6 +8,12 @@ module DeviseAuthy
       end
 
       private
+      def remember_device
+        cookies.signed[:remember_device] = {
+          :value => Time.now.to_i,
+          :secure => !(Rails.env.test? || Rails.env.development?)
+        }
+      end
 
       def require_token?
         return true if cookies.signed[:remember_device].blank?
