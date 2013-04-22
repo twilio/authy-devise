@@ -1,3 +1,11 @@
+PATH
+  remote: ../..
+  specs:
+    devise-authy (1.2.0)
+      authy
+      devise
+      rails (~> 3.2.6)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -33,49 +41,25 @@ GEM
       httpclient (>= 2.2.6)
     bcrypt-ruby (3.0.1)
     builder (3.0.4)
-    capybara (2.1.0)
-      mime-types (>= 1.16)
-      nokogiri (>= 1.3.3)
-      rack (>= 1.0.0)
-      rack-test (>= 0.5.4)
-      xpath (~> 2.0)
-    coderay (1.0.9)
-    database_cleaner (0.9.1)
     devise (2.2.3)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
       railties (~> 3.1)
       warden (~> 1.2.1)
-    diff-lcs (1.2.3)
     erubis (2.7.0)
-    git (1.2.5)
     hike (1.2.2)
     httpclient (2.3.3)
     i18n (0.6.1)
-    jeweler (1.8.4)
-      bundler (~> 1.0)
-      git (>= 1.2.5)
-      rake
-      rdoc
     journey (1.0.4)
-    jquery-rails (2.2.1)
-      railties (>= 3.0, < 5.0)
-      thor (>= 0.14, < 2.0)
     json (1.7.7)
     mail (2.5.3)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
-    method_source (0.8.1)
     mime-types (1.22)
     multi_json (1.7.2)
-    nokogiri (1.5.9)
     orm_adapter (0.4.0)
     polyglot (0.3.3)
-    pry (0.9.12)
-      coderay (~> 1.0.5)
-      method_source (~> 0.8)
-      slop (~> 3.4)
     rack (1.4.5)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -101,31 +85,6 @@ GEM
     rake (10.0.4)
     rdoc (3.12.2)
       json (~> 1.4)
-    rspec (2.13.0)
-      rspec-core (~> 2.13.0)
-      rspec-expectations (~> 2.13.0)
-      rspec-mocks (~> 2.13.0)
-    rspec-core (2.13.1)
-    rspec-expectations (2.13.0)
-      diff-lcs (>= 1.1.3, < 2.0)
-    rspec-mocks (2.13.1)
-    rspec-rails (2.13.0)
-      actionpack (>= 3.0)
-      activesupport (>= 3.0)
-      railties (>= 3.0)
-      rspec-core (~> 2.13.0)
-      rspec-expectations (~> 2.13.0)
-      rspec-mocks (~> 2.13.0)
-    sass (3.2.7)
-    sass-rails (3.2.6)
-      railties (~> 3.2.0)
-      sass (>= 3.1.10)
-      tilt (~> 1.3)
-    simplecov (0.7.1)
-      multi_json (~> 1.0)
-      simplecov-html (~> 0.7.1)
-    simplecov-html (0.7.1)
-    slop (3.4.4)
     sprockets (2.2.2)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -140,27 +99,13 @@ GEM
     tzinfo (0.3.37)
     warden (1.2.1)
       rack (>= 1.0)
-    xpath (2.0.0)
-      nokogiri (~> 1.3)
-    yard (0.8.6.1)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   authy
-  bundler
-  capybara
-  database_cleaner
   devise
-  jeweler
-  jquery-rails
-  pry
-  rails
-  rdoc
-  rspec
-  rspec-rails
-  sass-rails
-  simplecov
+  devise-authy!
+  rails (~> 3.2.6)
   sqlite3
-  yard

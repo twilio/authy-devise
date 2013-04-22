@@ -1,8 +1,5 @@
 source "https://rubygems.org"
 
-gemspec
-
-gem "rails", "~> 3.2.6"
 gem "devise"
 gem 'authy'
 
@@ -19,6 +16,7 @@ group :development do
 end
 
 group :test do
+  gem "rails"
   gem "sqlite3"
   gem 'rspec-rails'
   gem 'database_cleaner'

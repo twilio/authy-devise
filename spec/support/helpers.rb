@@ -28,6 +28,6 @@ def fill_sign_in_form(email, password)
 end
 
 def sign_cookie(name, val)
-   verifier = ActiveSupport::MessageVerifier.new(RailsApp::Application.config.secret_token)
-   verifier.generate(val)
- end
+  verifier = ActiveSupport::MessageVerifier.new(RailsApp::Application.config.secret_token)
+  verifier.generate(val)
+end
