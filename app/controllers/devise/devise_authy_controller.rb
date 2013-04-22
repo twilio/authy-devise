@@ -11,6 +11,13 @@ class Devise::DeviseAuthyController < DeviseController
   ]
   include Devise::Controllers::Helpers
 
+  def remember_device
+    cookies.signed[:remember_device] = {
+      :value => Time.now.to_i,
+      :secure => !(Rails.env.test? || Rails.env.development?)
+    }
+  end
+
   def GET_verify_authy
     @authy_id = @resource.authy_id
     render :verify_authy
@@ -26,6 +33,8 @@ class Devise::DeviseAuthyController < DeviseController
 
     if token.ok?
       @resource.update_attribute(:last_sign_in_with_authy, DateTime.now)
+
+      remember_device if params[:remember_device].to_i == 1
 
       set_flash_message(:notice, :signed_in) if is_navigational_format?
       sign_in(resource_name, @resource)

@@ -36,6 +36,21 @@ describe Devise::DeviseAuthyController do
       post :POST_verify_authy, :token => '0000000'
       @user.reload
       @user.last_sign_in_with_authy.should_not be_nil
+
+      response.cookies["remember_device"].should be_nil
+      response.should redirect_to(root_url)
+      flash.now[:notice].should_not be_nil
+    end
+
+    it "Should set remember_device if selected" do
+      request.session["user_id"] = @user.id
+      request.session["user_password_checked"] = true
+
+      post :POST_verify_authy, :token => '0000000', :remember_device => '1'
+      @user.reload
+      @user.last_sign_in_with_authy.should_not be_nil
+
+      response.cookies["remember_device"].should_not be_nil
       response.should redirect_to(root_url)
       flash.now[:notice].should_not be_nil
     end

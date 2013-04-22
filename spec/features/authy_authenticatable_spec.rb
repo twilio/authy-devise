@@ -41,7 +41,7 @@ describe "Authy Autnenticatable", :type => :request do
       @user.last_sign_in_with_authy.should_not be_nil
     end
 
-    it "Sign in shouldn't success" do
+    it "Sign in shouldn't succeed" do
       visit new_user_session_path
       fill_sign_in_form(@user.email, '12345678')
       current_path.should == user_verify_authy_path
@@ -54,6 +54,26 @@ describe "Authy Autnenticatable", :type => :request do
       current_path.should == user_verify_authy_path
       @user.reload
       @user.last_sign_in_with_authy.should be_nil
+    end
+
+    describe "With cookie['remember_device']" do
+      it "Should prompt for a token" do
+        cookie_val = sign_cookie("remember_device", Time.now.to_i - 2.month.to_i)
+        page.driver.browser.set_cookie("remember_device=#{cookie_val}")
+        visit new_user_session_path
+        fill_sign_in_form(@user.email, '12345678')
+        current_path.should == user_verify_authy_path
+        page.should have_content('Please enter your Authy token')
+      end
+
+      it "Shouldn't prompt for a token" do
+        cookie_val = sign_cookie("remember_device", Time.now.to_i)
+        page.driver.browser.set_cookie("remember_device=#{cookie_val}")
+        visit new_user_session_path
+        fill_sign_in_form(@user.email, '12345678')
+        current_path.should == root_path
+        page.should have_content("Signed in successfully.")
+      end
     end
 
     it "With cookie['current_user_id'] and cookie['user_password_checked']" do

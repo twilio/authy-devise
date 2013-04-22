@@ -16,6 +16,8 @@ module Devise
         def find_by_authy_id(authy_id)
           find(:first, :conditions => {:authy_id => authy_id})
         end
+
+        Devise::Models.config(self, :authy_remember_device)
       end
     end
   end

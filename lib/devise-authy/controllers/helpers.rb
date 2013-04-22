@@ -9,10 +9,20 @@ module DeviseAuthy
 
       private
 
+      def require_token?
+        return true if cookies.signed[:remember_device].blank?
+        return true if (Time.now.to_i - cookies.signed[:remember_device]) > \
+          resource_class.authy_remember_device.to_i
+
+        false
+      end
+
       def check_request_and_redirect_to_verify_token
         if devise_controller? && !request.format.nil? && request.format.html?
           Devise.mappings.keys.flatten.any? do |scope|
-            if signed_in?(scope) && warden.session(scope)[:with_authy_authentication]
+            if signed_in?(scope) &&
+              warden.session(scope)[:with_authy_authentication] && require_token?
+
               # login with 2fa
               id = warden.session(scope)[:id]
               warden.logout

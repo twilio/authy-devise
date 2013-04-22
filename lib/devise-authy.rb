@@ -1,9 +1,12 @@
 require 'active_support/concern'
+require 'active_support/core_ext/integer/time'
 require 'devise-authy/version'
 require 'devise'
 require 'authy'
 
 module Devise
+  mattr_accessor :authy_remember_device
+  @@authy_remember_device = 1.month
 end
 
 module DeviseAuthy
