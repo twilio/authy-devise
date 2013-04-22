@@ -11,7 +11,6 @@ en:
 
     authy_verify_installation_title: "Verify your account"
     enable_my_account: 'Enable my account'
-    invalid_token: 'The entered token is invalid'
 
     devise_authy:
       user:
@@ -19,3 +18,4 @@ en:
         not_enabled: 'Something went wrong while enabling two factor authentication'
         signed_in: 'Signed in with Authy successfully.'
         already_enabled: "Two factor authentication is already enabled."
+        invalid_token: 'The entered token is invalid'
