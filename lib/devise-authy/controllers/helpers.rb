@@ -27,7 +27,7 @@ module DeviseAuthy
 
       def is_signing_in?
         if devise_controller? && signed_in?(resource_name) &&
-           self.class == Devise::SessionsController or self.class.superclass == Devise::SessionsController && 
+           self.class == Devise::SessionsController || self.class.ancestors.include?(Devise::SessionsController) && 
            self.action_name == "create"
           return true
         end
