@@ -44,7 +44,7 @@ class Devise::DeviseAuthyController < DeviseController
       render :enable_authy
     else
       set_flash_message(:notice, :already_enabled)
-      redirect_to :root
+      redirect_to after_authy_enabled_path_for(resource)
     end
   end
 
@@ -61,7 +61,7 @@ class Devise::DeviseAuthyController < DeviseController
         set_flash_message(:notice, :enabled)
       else
         set_flash_message(:error, :not_enabled)
-        redirect_to :root and return
+        redirect_to after_authy_enabled_path_for(resource) and return
       end
 
       redirect_to [resource_name, :verify_authy_installation]
@@ -124,4 +124,10 @@ class Devise::DeviseAuthyController < DeviseController
       redirect_to :root
     end
   end
+
+  protected
+
+    def after_authy_enabled_path_for(resource)
+      root_path
+    end
 end
