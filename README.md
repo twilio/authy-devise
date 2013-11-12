@@ -74,6 +74,30 @@ If you want to customise your views, you can modify the files that are located a
     app/views/devise/devise_authy/verify_authy.html.erb
     app/views/devise/devise_authy/verify_authy_installation.html.erb
 
+
+## Custom Redirect Paths (eg. using modules)
+
+If you want to customise the redirects you can override them within your own controller like this:
+
+```ruby
+class MyCustomModule::DeviseAuthyController < Devise::DeviseAuthyController
+
+  protected
+    def after_authy_enabled_path_for(resource)
+      my_own_path
+    end
+
+    def after_authy_verified_path_for(resource)
+      my_own_path
+    end
+
+    def invalid_resource_path
+      my_own_path
+    end
+end
+```
+
+
 ## I18n
 
 The install generator also copy a `Devise Authy` i18n file which you can find at:
