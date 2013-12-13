@@ -1,6 +1,5 @@
 require 'active_support/concern'
 require 'active_support/core_ext/integer/time'
-require 'devise-authy/version'
 require 'devise'
 require 'authy'
 

@@ -28,9 +28,12 @@ class Devise::DeviseAuthyController < DeviseController
       @resource.update_attribute(:last_sign_in_with_authy, DateTime.now)
 
       remember_device if params[:remember_device].to_i == 1
+      if session.delete("#{resource_name}_remember_me") == true && @resource.respond_to?(:remember_me=)
+        @resource.remember_me = true
+      end
+      sign_in(resource_name, @resource)
 
       set_flash_message(:notice, :signed_in) if is_navigational_format?
-      sign_in(resource_name, @resource)
       respond_with resource, :location => after_sign_in_path_for(@resource)
     else
       set_flash_message(:error, :invalid_token)
