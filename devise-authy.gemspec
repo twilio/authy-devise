@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "devise-authy"
-  s.version = "1.3.0"
+  s.version = "1.4.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Authy Inc."]
-  s.date = "2013-11-15"
+  s.date = "2013-12-17"
   s.description = "Authy plugin for Devise"
   s.email = "support@authy.com"
   s.extra_rdoc_files = [
@@ -114,7 +114,6 @@ Gem::Specification.new do |s|
     "lib/devise-authy/models/authy_authenticatable.rb",
     "lib/devise-authy/rails.rb",
     "lib/devise-authy/routes.rb",
-    "lib/devise-authy/version.rb",
     "lib/generators/active_record/devise_authy_generator.rb",
     "lib/generators/active_record/templates/migration.rb",
     "lib/generators/devise_authy/devise_authy_generator.rb",
