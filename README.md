@@ -114,5 +114,5 @@ The install generator also copy a `Devise Authy` i18n file which you can find at
 
 ## Copyright
 
-Copyright (c) 2013 Authy Inc. See LICENSE.txt for
+Copyright (c) 2014 Authy Inc. See LICENSE.txt for
 further details.
