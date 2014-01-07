@@ -1,7 +1,7 @@
 PATH
   remote: ../..
   specs:
-    devise-authy (1.3.0)
+    devise-authy (1.4.0)
       authy
       devise
 
