@@ -14,13 +14,13 @@ require 'rake'
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
-  gem.name = "devise-authy"
+  gem.name = "devise-certificate"
   gem.homepage = "https://github.com/authy/authy-devise"
   gem.license = "MIT"
-  gem.summary = %Q{Authy plugin for Devise}
-  gem.description = %Q{Authy plugin for Devise}
-  gem.email = "support@authy.com"
-  gem.authors = ["Authy Inc."]
+  gem.summary = %Q{Certificate plugin for Devise}
+  gem.description = %Q{Certificate plugin for Devise}
+	gem.email = "devise+certificate@specialbrands.net"
+	gem.authors = ["Authy Inc.", "Daniël W. Crompton"]
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new

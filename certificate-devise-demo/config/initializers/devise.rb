@@ -1,9 +1,6 @@
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
-
-	config.secret_key = '279b7470114ed5be06f9de08edbf2721a4259d56231f58821b8d8661dec9cc902af48b4361ba88ce914a030d0a01bfa07794542b942e91040c54aa5d7391dde9'
-
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class with default "from" parameter.
@@ -85,7 +82,7 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 10
 
   # Setup a pepper to generate the encrypted password.
-  # config.pepper = "1fb52305f8a163568d583979061df5b184b724114fb7f98a93e7b110346b80c4ab05380379f946ea2315f74f2d31cd5c75b36bd8a9866c8ce83fd5a36a5b9da6"
+  # config.pepper = "e0a1729ce89577b6ca7510ca4625d2d5c2cf2d9cfb214629b55d660ff42f44272e75858eed89e3bdf558db8a949c6dd6f512b7f7a0ef787547ed76aeaf59f1fd"
 
   # ==> Configuration for :confirmable
   # A period that the user is allowed to access the website even without
@@ -94,14 +91,6 @@ Devise.setup do |config|
   # access will be blocked just in the third day. Default is 0.days, meaning
   # the user cannot access the website without confirming his account.
   # config.allow_unconfirmed_access_for = 2.days
-
-  # A period that the user is allowed to confirm their account before their
-  # token becomes invalid. For example, if set to 3.days, the user can confirm
-  # their account within 3 days after the mail was sent, but on the fourth day
-  # their account can't be confirmed with the token any more.
-  # Default is nil, meaning there is no restriction on how long a user can take
-  # before confirming their account.
-  # config.confirm_within = 3.days
 
   # If true, requires any email changes to be confirmed (exactly the same way as
   # initial account confirmation) to be applied. Requires additional unconfirmed_email
@@ -124,8 +113,8 @@ Devise.setup do |config|
   # config.rememberable_options = {}
 
   # ==> Configuration for :validatable
-  # Range for password length. Default is 8..128.
-  config.password_length = 8..128
+  # Range for password length. Default is 6..128.
+  # config.password_length = 6..128
 
   # Email regex used to validate email formats. It simply asserts that
   # an one (and only one) @ exists in the given string. This is mainly
@@ -243,11 +232,6 @@ Devise.setup do |config|
 
   # ==> Devise Authy Authentication Extension
   # How long should the user's device be remembered for.
-  # config.authy_remember_device = 1.month
-
-
-  # ==> Devise Certificate Authentication Extension
-  # How long should the user's device be remembered for.
-  # config.certificate_remember_device = 1.month
+  #config.authy_remember_device = 1.minute
 
 end

@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(File.dirname(__FILE__))
 
 require "rails-app/config/environment"
 require 'rspec/rails'
-require 'devise-authy'
+require 'devise-certificate'
 require 'orm/active_record'
 require 'capybara/rails'
 require 'capybara/rspec'
