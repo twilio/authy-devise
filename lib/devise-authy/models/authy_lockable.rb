@@ -12,7 +12,7 @@ module Devise
       # Public: Determine if this is a lockable resource, via Devise::Models::Lockable.
       # Returns true
       def lockable?
-        respond_to? :lock_access!
+        respond_to?(:lock_access!) && Devise.lock_strategy == :failed_attempts
       end
 
       # Public: Handle a failed 2FA attempt. If the resource is lockable via
@@ -23,12 +23,12 @@ module Devise
         return false unless lockable?
 
         self.failed_attempts ||= 0
+        self.failed_attempts += 1
 
         if attempts_exceeded?
           lock_access! unless access_locked?
           true
         else
-          self.failed_attempts += 1
           save validate: false
           false
         end
