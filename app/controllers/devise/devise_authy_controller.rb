@@ -36,8 +36,7 @@ class Devise::DeviseAuthyController < DeviseController
       set_flash_message(:notice, :signed_in) if is_navigational_format?
       respond_with resource, :location => after_sign_in_path_for(@resource)
     else
-      set_flash_message(:error, :invalid_token)
-      render :verify_authy
+      handle_invalid_token
     end
   end
 
@@ -130,15 +129,28 @@ class Devise::DeviseAuthyController < DeviseController
 
   protected
 
-    def after_authy_enabled_path_for(resource)
-      root_path
-    end
+  def after_authy_enabled_path_for(resource)
+    root_path
+  end
 
-    def after_authy_verified_path_for(resource)
-      after_authy_enabled_path_for(resource)
-    end
+  def after_authy_verified_path_for(resource)
+    after_authy_enabled_path_for(resource)
+  end
 
-    def invalid_resource_path
-      root_path
+  def invalid_resource_path
+    root_path
+  end
+
+  def handle_invalid_token
+    if @resource.respond_to?(:invalid_authy_attempt!) && @resource.invalid_authy_attempt!
+      after_account_is_locked
+    else
+      set_flash_message(:error, :invalid_token)
+      render :verify_authy
     end
+  end
+
+  def after_account_is_locked
+    sign_out_and_redirect @resource
+  end
 end
