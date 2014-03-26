@@ -11,8 +11,10 @@ module Devise
 
       # Public: Determine if this is a lockable resource, via Devise::Models::Lockable.
       # Returns true
+      # Raises an error if the Devise::Models::Lockable module is not configured.
       def lockable?
-        respond_to?(:lock_access!) && Devise.lock_strategy == :failed_attempts
+        raise 'Devise lockable extension required' unless respond_to? :lock_access!
+        Devise.lock_strategy == :failed_attempts
       end
 
       # Public: Handle a failed 2FA attempt. If the resource is lockable via

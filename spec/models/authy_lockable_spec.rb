@@ -47,23 +47,26 @@ describe Devise::Models::AuthyLockable do
 
   end
 
-  context 'model does not include Devise::Models::Lockable' do
+  context 'model misconfigured, includes AuthyLockable w/out Lockable' do
 
-    let(:user) { create_user authy_id: '20' }
+    let(:user) do
+      u = create_user authy_id: '20'
+      u.extend Devise::Models::AuthyLockable
+      u
+    end
 
     context '#lockable?' do
 
-      it 'returns false' do
-        expect(user.lockable?).to be_false
+      it 'raises an error' do
+        expect { user.lockable? }.to raise_error 'Devise lockable extension required'
       end
 
     end
 
     context '#invalid_authy_attempt!' do
 
-      it "doesn't affect anything" do
-        expect(user.invalid_authy_attempt!).to be_false
-        expect(user.failed_attempts).to be_nil
+      it 'raises an error' do
+        expect { user.invalid_authy_attempt! }.to raise_error 'Devise lockable extension required'
       end
 
     end
