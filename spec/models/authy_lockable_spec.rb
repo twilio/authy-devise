@@ -28,6 +28,11 @@ describe Devise::Models::AuthyLockable do
         expect(user.failed_attempts).to eq(1)
       end
 
+      it 'updates failed_attempts' do
+        10.times { user.invalid_authy_attempt! }
+        expect(user.failed_attempts).to eq(10)
+      end
+
       it 'respects the maximum attempts configuration for Devise::Models::Lockable' do
         4.times { user.invalid_authy_attempt! }
         expect(user.send :attempts_exceeded?).to be_true # protected method
