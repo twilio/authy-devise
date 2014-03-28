@@ -1,81 +1,68 @@
 require 'spec_helper'
 
-describe 'Authy Lockable' do
+feature 'Authy Lockable' do
 
-  let(:user) do
-    u = create_lockable_user authy_id: 20, email: 'foo@bar.com'
-    u.update_attribute :authy_enabled, true
-    u
-  end
+  context 'during verify code when Authy enabled' do
 
-  before :each do
-    fill_sign_in_form user.email, '12345678', '#new_lockable_user', new_lockable_user_session_path
-  end
+    let(:user) do
+      u = create_lockable_user authy_id: 20, email: 'foo@bar.com'
+      u.update_attribute :authy_enabled, true
+      u
+    end
 
-  context 'user enters incorrect code' do
+    before :each do
+      fill_sign_in_form user.email, '12345678', '#new_lockable_user', new_lockable_user_session_path
+    end
 
-    context 'maximum failed attempts not exceeded' do
-
-      it 'renders verify_authy view' do
+    scenario 'account locked when user enters invalid code too many times' do
+      Devise.maximum_attempts.times do |i|
         fill_verify_token_form invalid_authy_token
-        expect(current_path).to eq(lockable_user_verify_authy_path)
+        assert_at lockable_user_verify_authy_path
         expect(page).to have_content('Please enter your Authy token')
-      end
-
-      it 'does not lock out the user' do
-        fill_verify_token_form invalid_authy_token
         user.reload
-        expect(user.access_locked?).to be_false
+        assert_account_locked_for user, nil
+        expect(user.failed_attempts).to eq(i + 1)
       end
 
-      it 'updates fail_attempts' do
-        fill_verify_token_form invalid_authy_token
-        user.reload
-        expect(user.failed_attempts).to eq(1)
-      end
-
-    end
-
-    context 'max failed attempts exceeded' do
-
-      it 'locks the account' do
-        lock_user_account
-        user.reload
-        expect(user.locked_at).not_to be_nil
-      end
-
-      it 'signs the user out' do
-        lock_user_account
-        visit root_path
-        expect(current_path).to eq(new_user_session_path)
-      end
-
-      it 'redirects to after_sign_out_path' do
-        lock_user_account
-        expect(current_path).to eq(new_user_session_path)
-      end
-
+      fill_verify_token_form invalid_authy_token
+      user.reload
+      assert_at new_user_session_path
+      assert_account_locked_for user
+      visit root_path
+      assert_at new_user_session_path
     end
 
   end
 
-  context 'user enters correct code' do
+  context 'during verify Authy installation' do
 
-    it 'redirects' do
-      fill_verify_token_form valid_authy_token
-      expect(current_path).not_to eq(lockable_user_verify_authy_path)
+    let(:user) { create_lockable_user email: 'foo@bar.com' }
+
+    before do
+      fill_sign_in_form user.email, '12345678', '#new_lockable_user', new_lockable_user_session_path
     end
 
-    it 'does not lock the account' do
-      fill_verify_token_form valid_authy_token
-      user.reload
-      expect(user.access_locked?).to be_false
-    end
+    scenario 'account locked when user enters invalid code too many times' do
+      visit lockable_user_enable_authy_path
+      fill_in 'authy-countries', with: '1'
+      fill_in 'authy-cellphone', with: '8001234567'
+      click_on 'Enable'
 
-    it 'does not modify failed_attempts' do
-      fill_verify_token_form valid_authy_token
+      Devise.maximum_attempts.times do |i|
+        fill_in_verify_authy_installation_form invalid_authy_token
+        assert_at lockable_user_verify_authy_installation_path
+        expect(page).to have_content('Verify your account')
+        user.reload
+        assert_account_locked_for user, nil
+        expect(user.failed_attempts).to eq(i + 1)
+      end
+
+      fill_in_verify_authy_installation_form invalid_authy_token
       user.reload
-      expect(user.failed_attempts).to eq(0)
+      assert_at new_user_session_path
+      assert_account_locked_for user
+      visit root_path
+      assert_at new_user_session_path
     end
 
   end

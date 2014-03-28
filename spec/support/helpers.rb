@@ -25,6 +25,7 @@ end
 def fill_sign_in_form(email, password, form_selector = nil, sign_in_path = nil)
   form_selector ||= '#new_user'
   sign_in_path  ||= new_user_session_path
+
   visit sign_in_path
   within(form_selector) do
     fill_in 'Email', :with => email
@@ -36,6 +37,11 @@ end
 def fill_verify_token_form(token)
   within('#devise_authy') { fill_in 'authy-token', with: token }
   click_on 'Check Token'
+end
+
+def fill_in_verify_authy_installation_form(token)
+  fill_in 'authy-token', with: token
+  click_on 'Enable my account'
 end
 
 def sign_cookie(name, val)
@@ -57,4 +63,16 @@ end
 
 def lock_user_account
   too_many_failed_attempts.times { fill_verify_token_form invalid_authy_token }
+end
+
+def assert_at(path)
+  expect(current_path).to eq(path)
+end
+
+def assert_not_at(path)
+  expect(current_path).not_to eq(path)
+end
+
+def assert_account_locked_for(user, is_locked = true)
+  expect(user.access_locked?).to eq(is_locked)
 end
