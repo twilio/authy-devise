@@ -107,4 +107,5 @@ DEPENDENCIES
   devise
   devise-authy!
   rails (~> 3.2.6)
+  rake
   sqlite3

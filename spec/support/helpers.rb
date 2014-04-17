@@ -1,7 +1,7 @@
+$email_count ||= 0
 def generate_unique_email
-  @@email_count ||= 0
-  @@email_count += 1
-  "test#{@@email_count}@example.com"
+  $email_count += 1
+  "test#{$email_count}@example.com"
 end
 
 def valid_attributes(attributes={})
