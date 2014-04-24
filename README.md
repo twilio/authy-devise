@@ -64,7 +64,7 @@ Then run the migrations:
 
     rake db:migrate
 
-Now whenever a user wants to enable two-factor authentication he can go
+Now whenever a user wants to enable two-factor authentication they can go
 to:
 
     http://your-app/users/enable-two-factor

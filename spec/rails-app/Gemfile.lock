@@ -1,7 +1,7 @@
 PATH
   remote: ../..
   specs:
-    devise-authy (1.5.0)
+    devise-authy (1.5.1)
       authy
       devise
 
@@ -107,4 +107,5 @@ DEPENDENCIES
   devise
   devise-authy!
   rails (~> 3.2.6)
+  rake
   sqlite3

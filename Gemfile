@@ -8,7 +8,7 @@ group :development do
   gem "yard"
   gem "rdoc"
   gem "bundler"
-  gem "jeweler"
+  gem "jeweler", ">= 2.0.1"
   gem "simplecov"
   gem "sass-rails"
   gem "jquery-rails"
