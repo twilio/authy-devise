@@ -21,7 +21,7 @@ describe "Authy Autnenticatable", :type => :request do
 
   describe "If user have two factor authentication" do
     before :each do
-      @user = create_user(:authy_id => 2)
+      @user = create_user(:authy_id => 1)
       @user.update_attribute(:authy_enabled, true)
     end
 

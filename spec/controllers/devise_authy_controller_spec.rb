@@ -5,7 +5,7 @@ describe Devise::DeviseAuthyController do
 
   before :each do
     request.env["devise.mapping"] = Devise.mappings[:user]
-    @user = create_user(:authy_id => 2)
+    @user = create_user(:authy_id => 1)
   end
 
   describe "GET #verify_authy" do
