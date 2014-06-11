@@ -77,10 +77,12 @@ class Devise::DeviseAuthyController < DeviseController
 
   # Disable 2FA
   def POST_disable_authy
-    resource.authy_enabled = false
-    resource.authy_id = nil
+    response = Authy::API.delete_user(:id => resource.authy_id)
 
-    if resource.save
+    if response.ok?
+      resource.update_attribute(:authy_enabled, false)
+      resource.update_attribute(:authy_id, nil)
+
       set_flash_message(:notice, :disabled)
     else
       set_flash_message(:error, :not_disabled)

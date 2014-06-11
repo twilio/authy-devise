@@ -122,8 +122,7 @@ describe Devise::DeviseAuthyController do
   describe "POST #disable_authy" do
     it "Should disable 2FA" do
       sign_in @user
-      @user.authy_enabled = true
-      @user.save
+      @user.update_attribute(:authy_enabled, true)
 
       post :POST_disable_authy
       @user.reload
@@ -135,10 +134,11 @@ describe Devise::DeviseAuthyController do
 
     it "Should not disable 2FA" do
       sign_in @user
-      @user.authy_enabled = true
-      @user.save
+      @user.update_attribute(:authy_enabled, true)
 
-      User.any_instance.stub(:save).and_return(false)
+      authy_response = mock('authy_response')
+      authy_response.stub(:ok?).and_return(false)
+      Authy::API.should_receive(:delete_user).with(:id => @user.authy_id.to_s).and_return(authy_response)
 
       post :POST_disable_authy
       @user.reload
