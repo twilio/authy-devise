@@ -13,7 +13,7 @@ See [https://github.com/authy/authy-devise/tree/master/authy-devise-demo](https:
 
 ## Getting started
 
-First create an initializer in `config/initializer/authy.rb`
+First create an initializer in `config/initializers/authy.rb`
 
 ```ruby
 Authy.api_key = ENV['AUTHY_API_KEY'] || 'your_authy_api_key'
