@@ -55,3 +55,8 @@ spec/rails-app/log
 
 initializers/authy.rb
 
+# For RBENV
+.ruby-version
+
+# For RubyMine
+.idea

@@ -62,6 +62,46 @@ describe Devise::DeviseAuthyController do
       post :POST_verify_authy, :token => '5678900'
       response.should render_template('verify_authy')
     end
+
+    context 'User is lockable' do
+
+      let(:user) { create_lockable_user authy_id: 2 }
+
+      before do
+        controller.stub(:find_resource).and_return user
+        controller.instance_variable_set :@resource, user
+      end
+
+      it 'locks the account when failed_attempts exceeds maximum' do
+        request.session['user_id']               = user.id
+        request.session['user_password_checked'] = true
+
+        too_many_failed_attempts.times do
+          post :POST_verify_authy, token: invalid_authy_token
+        end
+
+        user.reload
+        expect(user.access_locked?).to be_true
+      end
+
+    end
+
+    context 'User is not lockable' do
+
+      it 'does not lock the account when failed_attempts exceeds maximum' do
+        request.session['user_id']               = @user.id
+        request.session['user_password_checked'] = true
+
+        too_many_failed_attempts.times do
+          post :POST_verify_authy, token: invalid_authy_token
+        end
+
+        @user.reload
+        expect(@user.locked_at).to be_nil
+      end
+
+    end
+
   end
 
   describe "GET #enable_authy" do

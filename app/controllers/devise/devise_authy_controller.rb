@@ -37,8 +37,7 @@ class Devise::DeviseAuthyController < DeviseController
       set_flash_message(:notice, :signed_in) if is_navigational_format?
       respond_with resource, :location => after_sign_in_path_for(@resource)
     else
-      set_flash_message(:error, :invalid_token)
-      render :verify_authy
+      handle_invalid_token :verify_authy, :invalid_token
     end
   end
 
@@ -103,9 +102,9 @@ class Devise::DeviseAuthyController < DeviseController
     })
 
     self.resource.authy_enabled = token.ok?
+
     if !token.ok? || !self.resource.save
-      set_flash_message(:error, :not_enabled)
-      render :verify_authy_installation
+      handle_invalid_token :verify_authy_installation, :not_enabled
     else
       set_flash_message(:notice, :enabled)
       redirect_to after_authy_verified_path_for(resource)
@@ -127,6 +126,7 @@ class Devise::DeviseAuthyController < DeviseController
   def authenticate_scope!
     send(:"authenticate_#{resource_name}!", :force => true)
     self.resource = send("current_#{resource_name}")
+    @resource = resource
   end
 
   def find_resource
@@ -147,15 +147,28 @@ class Devise::DeviseAuthyController < DeviseController
 
   protected
 
-    def after_authy_enabled_path_for(resource)
-      root_path
-    end
+  def after_authy_enabled_path_for(resource)
+    root_path
+  end
 
-    def after_authy_verified_path_for(resource)
-      after_authy_enabled_path_for(resource)
-    end
+  def after_authy_verified_path_for(resource)
+    after_authy_enabled_path_for(resource)
+  end
 
-    def invalid_resource_path
-      root_path
+  def invalid_resource_path
+    root_path
+  end
+
+  def handle_invalid_token(view, error_message)
+    if @resource.respond_to?(:invalid_authy_attempt!) && @resource.invalid_authy_attempt!
+      after_account_is_locked
+    else
+      set_flash_message(:error, error_message)
+      render view
     end
+  end
+
+  def after_account_is_locked
+    sign_out_and_redirect @resource
+  end
 end
