@@ -159,6 +159,40 @@ describe Devise::DeviseAuthyController do
     end
   end
 
+  describe "POST #disable_authy" do
+    it "Should disable 2FA" do
+      sign_in @user
+      @user.update_attribute(:authy_enabled, true)
+
+      post :POST_disable_authy
+      @user.reload
+      @user.authy_id.should be_nil
+      @user.authy_enabled.should be_false
+      flash.now[:notice].should == "Two factor authentication was disabled"
+      response.should redirect_to(root_url)
+    end
+
+    it "Should not disable 2FA" do
+      sign_in @user
+      @user.update_attribute(:authy_enabled, true)
+
+      authy_response = mock('authy_response')
+      authy_response.stub(:ok?).and_return(false)
+      Authy::API.should_receive(:delete_user).with(:id => @user.authy_id.to_s).and_return(authy_response)
+
+      post :POST_disable_authy
+      @user.reload
+      @user.authy_id.should_not be_nil
+      @user.authy_enabled.should be_true
+      flash[:error].should == "Something went wrong while disabling two factor authentication"
+    end
+
+    it "Should redirect if user isn't authenticated" do
+      post :POST_disable_authy
+      response.should redirect_to(new_user_session_url)
+    end
+  end
+
   describe "GET #verify_authy_installation" do
     it "Should render the authy installation page" do
       sign_in @user

@@ -9,9 +9,13 @@ module Devise
 end
 
 module DeviseAuthy
+  autoload :Mapping, 'devise-authy/mapping'
+
   module Controllers
+    autoload :Passwords, 'devise-authy/controllers/passwords'
     autoload :Helpers, 'devise-authy/controllers/helpers'
   end
+
   module Views
     autoload :Helpers, 'devise-authy/controllers/view_helpers'
   end

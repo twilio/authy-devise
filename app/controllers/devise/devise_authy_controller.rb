@@ -7,7 +7,8 @@ class Devise::DeviseAuthyController < DeviseController
   ]
   prepend_before_filter :authenticate_scope!, :only => [
     :GET_enable_authy, :POST_enable_authy,
-    :GET_verify_authy_installation, :POST_verify_authy_installation
+    :GET_verify_authy_installation, :POST_verify_authy_installation,
+    :POST_disable_authy
   ]
   include Devise::Controllers::Helpers
 
@@ -71,6 +72,22 @@ class Devise::DeviseAuthyController < DeviseController
       set_flash_message(:error, :not_enabled)
       render :enable_authy
     end
+  end
+
+  # Disable 2FA
+  def POST_disable_authy
+    response = Authy::API.delete_user(:id => resource.authy_id)
+
+    if response.ok?
+      resource.update_attribute(:authy_enabled, false)
+      resource.update_attribute(:authy_id, nil)
+
+      set_flash_message(:notice, :disabled)
+    else
+      set_flash_message(:error, :not_disabled)
+    end
+
+    redirect_to root_path
   end
 
   def GET_verify_authy_installation

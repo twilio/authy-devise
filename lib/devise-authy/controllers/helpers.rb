@@ -61,9 +61,8 @@ module DeviseAuthy
 
       def verify_authy_path_for(resource_or_scope = nil)
         scope = Devise::Mapping.find_scope!(resource_or_scope)
-        send("#{scope}_verify_authy_path")
+        send(:"#{scope}_verify_authy_path")
       end
     end
   end
 end
-
