@@ -105,6 +105,12 @@ class MyCustomModule::DeviseAuthyController < Devise::DeviseAuthyController
 end
 ```
 
+And tell the router to use this controller
+
+```ruby
+devise_for :users, controllers: {devise_authy: 'my_custom_module/devise_authy'}
+```
+
 
 ## I18n
 
