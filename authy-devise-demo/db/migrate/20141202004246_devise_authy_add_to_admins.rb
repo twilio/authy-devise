@@ -1,6 +1,6 @@
-class DeviseAuthyAddToUsers < ActiveRecord::Migration
+class DeviseAuthyAddToAdmins < ActiveRecord::Migration
   def self.up
-    change_table :users do |t|
+    change_table :admins do |t|
       t.string    :authy_id
       t.datetime  :last_sign_in_with_authy
       t.boolean   :authy_enabled, :default => false
@@ -9,11 +9,11 @@ class DeviseAuthyAddToUsers < ActiveRecord::Migration
       t.datetime  :locked_at
     end
 
-    add_index :users, :authy_id
+    add_index :admins, :authy_id
   end
 
   def self.down
-    change_table :users do |t|
+    change_table :admins do |t|
       t.remove :authy_id, :last_sign_in_with_authy, :authy_enabled, :failed_attempts, :unlock_token, :locked_at
     end
   end
