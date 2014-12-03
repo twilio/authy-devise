@@ -26,10 +26,14 @@ module DeviseAuthy
         return true
       end
 
+      def is_devise_sessions_controller?
+        self.class == Devise::SessionsController || self.class.ancestors.include?(Devise::SessionsController)
+      end
+
       def is_signing_in?
         if devise_controller? && signed_in?(resource_name) &&
-           self.class == Devise::SessionsController || self.class.ancestors.include?(Devise::SessionsController) && 
-           self.action_name == "create"
+          is_devise_sessions_controller? &&
+          self.action_name == "create"
           return true
         end
 
