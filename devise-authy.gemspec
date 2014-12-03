@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib"]
   s.authors = ["Authy Inc."]
-  s.date = "2014-06-11"
+  s.date = "2014-12-03"
   s.description = "Authy plugin for Devise"
   s.email = "support@authy.com"
   s.extra_rdoc_files = [
@@ -56,12 +56,15 @@ Gem::Specification.new do |s|
     "authy-devise-demo/app/helpers/welcome_helper.rb",
     "authy-devise-demo/app/mailers/.gitkeep",
     "authy-devise-demo/app/models/.gitkeep",
+    "authy-devise-demo/app/models/admin.rb",
     "authy-devise-demo/app/models/user.rb",
     "authy-devise-demo/app/views/devise/devise_authy/enable_authy.html.erb",
     "authy-devise-demo/app/views/devise/devise_authy/verify_authy.html.erb",
     "authy-devise-demo/app/views/devise/devise_authy/verify_authy_installation.html.erb",
     "authy-devise-demo/app/views/layouts/application.html.erb",
+    "authy-devise-demo/app/views/welcome/admin_page.html.erb",
     "authy-devise-demo/app/views/welcome/index.html.erb",
+    "authy-devise-demo/app/views/welcome/user_page.html.erb",
     "authy-devise-demo/config.ru",
     "authy-devise-demo/config/application.rb",
     "authy-devise-demo/config/boot.rb",
@@ -83,7 +86,8 @@ Gem::Specification.new do |s|
     "authy-devise-demo/config/locales/en.yml",
     "authy-devise-demo/config/routes.rb",
     "authy-devise-demo/db/migrate/20130409234357_devise_create_users.rb",
-    "authy-devise-demo/db/migrate/20130409234434_devise_authy_add_to_users.rb",
+    "authy-devise-demo/db/migrate/20141202000744_devise_create_admins.rb",
+    "authy-devise-demo/db/migrate/20141202004246_devise_authy_add_to_admins.rb",
     "authy-devise-demo/db/schema.rb",
     "authy-devise-demo/db/seeds.rb",
     "authy-devise-demo/lib/assets/.gitkeep",
@@ -116,6 +120,7 @@ Gem::Specification.new do |s|
     "lib/devise-authy/hooks/authy_authenticatable.rb",
     "lib/devise-authy/mapping.rb",
     "lib/devise-authy/models/authy_authenticatable.rb",
+    "lib/devise-authy/models/authy_lockable.rb",
     "lib/devise-authy/rails.rb",
     "lib/devise-authy/routes.rb",
     "lib/generators/active_record/devise_authy_generator.rb",
@@ -125,8 +130,10 @@ Gem::Specification.new do |s|
     "spec/controllers/devise_authy_controller_spec.rb",
     "spec/controllers/passwords_controller_spec.rb",
     "spec/features/authy_authenticatable_spec.rb",
+    "spec/features/authy_lockable_spec.rb",
     "spec/generators_spec.rb",
-    "spec/models/authy_authenticatable.rb",
+    "spec/models/authy_authenticatable_spec.rb",
+    "spec/models/authy_lockable_spec.rb",
     "spec/orm/active_record.rb",
     "spec/rails-app/Gemfile",
     "spec/rails-app/Gemfile.lock",
@@ -144,6 +151,7 @@ Gem::Specification.new do |s|
     "spec/rails-app/app/helpers/welcome_helper.rb",
     "spec/rails-app/app/mailers/.gitkeep",
     "spec/rails-app/app/models/.gitkeep",
+    "spec/rails-app/app/models/lockable_user.rb",
     "spec/rails-app/app/models/user.rb",
     "spec/rails-app/app/views/devise/devise_authy/enable_authy.html.erb",
     "spec/rails-app/app/views/devise/devise_authy/verify_authy.html.erb",
@@ -189,7 +197,7 @@ Gem::Specification.new do |s|
   ]
   s.homepage = "https://github.com/authy/authy-devise"
   s.licenses = ["MIT"]
-  s.rubygems_version = "2.2.2"
+  s.rubygems_version = "2.4.3"
   s.summary = "Authy plugin for Devise"
 
   if s.respond_to? :specification_version then
