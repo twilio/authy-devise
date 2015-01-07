@@ -118,6 +118,21 @@ The install generator also copy a `Devise Authy` i18n file which you can find at
 
     config/locales/devise.authy.en.yml
 
+
+## Running Tests
+
+To prepare the tests run the following commands:
+```bash
+$ cd spec/rails-app
+$ bundle install
+$ RAILS_ENV=test bundle exec rake db:migrate
+```
+
+Now on the project root run the following commands:
+```bash
+$ bundle exec rspec spec/
+```
+
 ## Copyright
 
 Copyright (c) 2014 Authy Inc. See LICENSE.txt for
