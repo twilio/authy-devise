@@ -40,15 +40,12 @@ Add `Devise Authy` to your App:
 
 ### Configuring Models
 
-Configure your Devise user model:
+Configure your Devise user model either by using the generator:
 
     rails g devise_authy [MODEL_NAME]
 
-or add the following line to your `User` model
+or by manually adding the Authy strategy to your user model (`devise :authy_authenticatable, :database_authenticatable`) and generating the required migration (`rails g active_record:devise_authy [MODEL_NAME]`).
 
-```ruby
-devise :authy_authenticatable, :database_authenticatable
-```
 
 Change the default routes to point to something sane like:
 
