@@ -98,8 +98,8 @@ class Devise::DeviseAuthyController < DeviseController
   end
 
   def POST_verify_authy_installation
-    self.resource = session[:pre_auth_resource_id]
-    session.delete(:pre_auth_resource)
+    self.resource = Kernel.const_get(resource_name.to_s.capitalize).find(session[:pre_auth_resource_id])
+    session.delete(:pre_auth_resource_id)
 
     token = Authy::API.verify({
       :id => self.resource.authy_id,
