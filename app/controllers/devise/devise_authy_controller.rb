@@ -7,7 +7,7 @@ class Devise::DeviseAuthyController < DeviseController
   ]
   prepend_before_filter :authenticate_scope!, :only => [
     :GET_enable_authy, :POST_enable_authy,
-    :GET_verify_authy_installation, :POST_verify_authy_installation,
+    :GET_verify_authy_installation,
     :POST_disable_authy
   ]
   include Devise::Controllers::Helpers
@@ -91,10 +91,16 @@ class Devise::DeviseAuthyController < DeviseController
   end
 
   def GET_verify_authy_installation
+    session[:pre_auth_resource_id] = resource.id
+    sign_out resource
+
     render :verify_authy_installation
   end
 
   def POST_verify_authy_installation
+    self.resource = session[:pre_auth_resource_id]
+    session.delete(:pre_auth_resource)
+
     token = Authy::API.verify({
       :id => self.resource.authy_id,
       :token => params[:token],
@@ -107,6 +113,7 @@ class Devise::DeviseAuthyController < DeviseController
       handle_invalid_token :verify_authy_installation, :not_enabled
     else
       set_flash_message(:notice, :enabled)
+      sign_in(resource_name, self.resource)
       redirect_to after_authy_verified_path_for(resource)
     end
   end
