@@ -142,6 +142,10 @@ class Devise::DeviseAuthyController < DeviseController
     if @resource.nil?
       @resource = resource_class.find_by_id(session["#{resource_name}_id"])
     end
+
+    if @resource.nil? && session.key?(:pre_auth_resource_id)
+      @resource = resource_class.find_by_id(session[:pre_auth_resource_id])
+    end
   end
 
   def find_resource_and_require_password_checked
