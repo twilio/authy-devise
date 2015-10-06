@@ -1,6 +1,6 @@
 class Devise::DeviseAuthyController < DeviseController
   prepend_before_filter :find_resource, :only => [
-    :request_sms
+    :request_phone_call, :request_sms
   ]
   prepend_before_filter :find_resource_and_require_password_checked, :only => [
     :GET_verify_authy, :POST_verify_authy
@@ -109,6 +109,16 @@ class Devise::DeviseAuthyController < DeviseController
       set_flash_message(:notice, :enabled)
       redirect_to after_authy_verified_path_for(resource)
     end
+  end
+
+  def request_phone_call
+    unless @resource
+      render :json => { :sent => false, :message => "User couldn't be found." }
+      return
+    end
+
+    response = Authy::API.request_phone_call(:id => @resource.authy_id, :force => true)
+    render :json => { :sent => response.ok?, :message => response.message }
   end
 
   def request_sms
