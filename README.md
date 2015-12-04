@@ -135,5 +135,5 @@ $ bundle exec rspec spec/
 
 ## Copyright
 
-Copyright (c) 2014 Authy Inc. See LICENSE.txt for
+Copyright (c) 2012-2020 Authy Inc. See LICENSE.txt for
 further details.
