@@ -13,6 +13,6 @@
 
   <%= link_to '?', '#', :id => 'authy-help' %>
   <%= authy_request_sms_link %>
+  <%= authy_request_phone_call_link %>
   <%= submit_tag I18n.t('submit_token', {:scope => 'devise'}), :class => 'btn' %>
 <% end %>
-

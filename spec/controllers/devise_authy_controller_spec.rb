@@ -5,7 +5,7 @@ describe Devise::DeviseAuthyController do
 
   before :each do
     request.env["devise.mapping"] = Devise.mappings[:user]
-    @user = create_user(:authy_id => 1)
+    @user = create_user(:authy_id => 2)
   end
 
   describe "GET #verify_authy" do
@@ -239,6 +239,25 @@ describe Devise::DeviseAuthyController do
 
     it "Shoul not send sms if user couldn't be found" do
       post :request_sms
+      response.content_type.should == 'application/json'
+      body = JSON.parse(response.body)
+      body['sent'].should be_false
+      body['message'].should == "User couldn't be found."
+    end
+  end
+
+  describe "POST #request_phone_call" do
+    it "Should send phone call if user is logged" do
+      sign_in @user
+      post :request_phone_call
+      response.content_type.should == 'application/json'
+      body = JSON.parse(response.body)
+      body['sent'].should be_true
+      body['message'].should == "Call started..."
+    end
+
+    it "Shoul not send phone call if user couldn't be found" do
+      post :request_phone_call
       response.content_type.should == 'application/json'
       body = JSON.parse(response.body)
       body['sent'].should be_false
