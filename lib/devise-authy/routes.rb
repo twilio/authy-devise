@@ -16,6 +16,7 @@ module ActionDispatch::Routing
 
 
       match "/request-sms", :controller => controllers[:devise_authy], :action => :request_sms, :as => :request_sms, :via => :post
+      match "/request-phone-call", :controller => controllers[:devise_authy], :action => :request_phone_call, :as => :request_phone_call, :via => :post
     end
   end
 end
