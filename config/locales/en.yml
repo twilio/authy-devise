@@ -5,7 +5,7 @@ en:
     authy_register_title: 'Enable Two factor authentication'
     enable_authy: 'Enable'
     cellphone: 'Enter your cellphone'
-    country: 'Enter you country'
+    country: 'Enter your country'
     request_sms: 'Request SMS'
     request_phone_call: 'Request phone call'
     remember_device: 'Remember Device'
