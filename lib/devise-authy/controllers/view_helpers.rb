@@ -11,33 +11,46 @@ module DeviseAuthy
         )
       end
 
-      def authy_request_sms_link
-        link_to(
-          I18n.t('request_sms', {:scope => 'devise'}),
-          url_for([resource_name, :request_sms]),
+      def authy_request_sms_link(opts={})
+        opts = {
           :id => "authy-request-sms-link",
           :method => :post,
           :remote => true
+        }.merge(opts)
+
+        link_to(
+          I18n.t('request_sms', {:scope => 'devise'}),
+          url_for([resource_name, :request_sms]),
+          opts
         )
       end
 
-      def verify_authy_form(&block)
-        form_tag([resource_name, :verify_authy], :id => 'devise_authy', :class => 'authy-form', :method => :post) do
+      def verify_authy_form(opts={}, &block)
+        opts = default_form_opts.merge(:id => 'devise_authy').merge(opts)
+        form_tag([resource_name, :verify_authy], opts) do
           buffer = hidden_field_tag(:"#{resource_name}_id", @resource.id)
           buffer << capture(&block)
         end
       end
 
-      def enable_authy_form(&block)
-        form_tag([resource_name, :enable_authy], :class => 'authy-form', :method => :post) do
+      def enable_authy_form(opts={}, &block)
+        opts = default_form_opts.merge(opts)
+        form_tag([resource_name, :enable_authy], opts) do
           capture(&block)
         end
       end
 
-      def verify_authy_installation_form(&block)
-        form_tag([resource_name, :verify_authy_installation], :class => 'authy-form', :method => :post) do
+      def verify_authy_installation_form(opts={}, &block)
+        opts = default_form_opts.merge(opts)
+        form_tag([resource_name, :verify_authy_installation], opts) do
           capture(&block)
         end
+      end
+
+      private
+
+      def default_form_opts
+        { :class => 'authy-form', :method => :post }
       end
     end
   end
