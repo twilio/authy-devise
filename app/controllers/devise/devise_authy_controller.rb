@@ -103,11 +103,11 @@ class Devise::DeviseAuthyController < DeviseController
 
     self.resource.authy_enabled = token.ok?
 
-    if !token.ok? || !self.resource.save
-      handle_invalid_token :verify_authy_installation, :not_enabled
-    else
+    if token.ok? && self.resource.save
       set_flash_message(:notice, :enabled)
       redirect_to after_authy_verified_path_for(resource)
+    else
+      handle_invalid_token :verify_authy_installation, :not_enabled
     end
   end
 

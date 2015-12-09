@@ -212,6 +212,9 @@ describe Devise::DeviseAuthyController do
       post :POST_verify_authy_installation, :token => "0000000"
       response.should redirect_to(root_url)
       flash[:notice].should == 'Two factor authentication was enabled'
+
+      @user.reload
+      @user.authy_enabled.should be_true
     end
 
     it "should not enable authy for user" do
