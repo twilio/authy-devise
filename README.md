@@ -99,6 +99,10 @@ class MyCustomModule::DeviseAuthyController < Devise::DeviseAuthyController
       my_own_path
     end
 
+    def after_authy_disabled_path_for(resource)
+      my_own_path
+    end
+
     def invalid_resource_path
       my_own_path
     end
