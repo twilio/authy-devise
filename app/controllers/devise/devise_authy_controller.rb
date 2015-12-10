@@ -87,7 +87,7 @@ class Devise::DeviseAuthyController < DeviseController
       set_flash_message(:error, :not_disabled)
     end
 
-    redirect_to root_path
+    redirect_to after_authy_disabled_path_for(resource)
   end
 
   def GET_verify_authy_installation
@@ -163,6 +163,10 @@ class Devise::DeviseAuthyController < DeviseController
 
   def after_authy_verified_path_for(resource)
     after_authy_enabled_path_for(resource)
+  end
+
+  def after_authy_disabled_path_for(resource)
+    root_path
   end
 
   def invalid_resource_path
