@@ -4,7 +4,7 @@
   width: 350px;
 }
 
-legend {
+.authy-form legend {
   display: block;
   width: 100%;
   padding: 0;
@@ -15,9 +15,9 @@ legend {
   border-bottom: 1px solid #E5E5E5;
 }
 
-label,
-input,
-button {
+.authy-form label,
+.authy-form input,
+.authy-form button {
   font-size: 14px;
   font-weight: normal;
   line-height: 20px;

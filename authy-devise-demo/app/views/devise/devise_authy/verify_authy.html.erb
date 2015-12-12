@@ -11,7 +11,11 @@
     <span><%= I18n.t('remember_device', {:scope => 'devise'}) %></span>
   </label>
 
-  <%= link_to '?', '#', :id => 'authy-help' %>
+  <!-- Help tooltip -->
+  <!-- You need to configure a help message. -->
+  <!-- See documentation: https://github.com/authy/authy-form-helpers#help-tooltip -->
+  <!-- <%= link_to '?', '#', :id => 'authy-help' %> -->
+
   <%= authy_request_sms_link %>
   <%= authy_request_phone_call_link %>
   <%= submit_tag I18n.t('submit_token', {:scope => 'devise'}), :class => 'btn' %>
