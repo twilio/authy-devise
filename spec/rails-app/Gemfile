@@ -6,4 +6,4 @@ gem "rake"
 gem "authy"
 gem "devise"
 gem "devise-authy", :path => "../.."
-
+gem 'jquery-rails'
