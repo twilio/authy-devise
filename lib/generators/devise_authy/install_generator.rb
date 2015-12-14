@@ -48,7 +48,6 @@ module DeviseAuthy
             :content => %@
     =javascript_include_tag "https://www.authy.com/form.authy.min.js"
     =stylesheet_link_tag "https://www.authy.com/form.authy.min.css"
-    =javascript_include_tag "devise_authy.js"
 @
           },
           :erb => {
@@ -56,12 +55,11 @@ module DeviseAuthy
             :content => %@
   <%=javascript_include_tag "https://www.authy.com/form.authy.min.js" %>
   <%=stylesheet_link_tag "https://www.authy.com/form.authy.min.css" %>
-  <%=javascript_include_tag "devise_authy.js" %>
 @
           }
         }.each do |extension, opts|
           file_path = "app/views/layouts/application.html.#{extension}"
-          if File.exists?(file_path) && !File.read(file_path).include?("devise_authy.js")
+          if File.exists?(file_path) && !File.read(file_path).include?("form.authy.min.js")
             inject_into_file(file_path, opts.delete(:content), opts)
           end
         end
