@@ -40,6 +40,7 @@ describe Devise::DeviseAuthyController do
       response.cookies["remember_device"].should be_nil
       response.should redirect_to(root_url)
       flash.now[:notice].should_not be_nil
+      session["user_authy_token_checked"].should be_true
     end
 
     it "Should set remember_device if selected" do

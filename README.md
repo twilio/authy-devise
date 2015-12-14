@@ -122,6 +122,18 @@ The install generator also copy a `Devise Authy` i18n file which you can find at
 
     config/locales/devise.authy.en.yml
 
+## Session variables
+
+If you want to know if the user is signed in using Two-Factor authentication,
+you can use the following session variable:
+
+```ruby
+session["#{resource_name}_authy_token_checked"]
+
+# Eg.
+session["user_authy_token_checked"]
+```
+
 
 ## Running Tests
 
