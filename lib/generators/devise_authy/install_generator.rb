@@ -13,7 +13,7 @@ module DeviseAuthy
         inject_into_file "config/initializers/devise.rb", "\n" +
         "  # ==> Devise Authy Authentication Extension\n" +
         "  # How long should the user's device be remembered for.\n" +
-        "  # config.authy_remember_device = 1.month\n\n", :before => /^end[\r\n]*$/
+        "  # config.authy_remember_device = 1.month\n\n", :after => "Devise.setup do |config|\n"
       end
 
       def copy_locale
