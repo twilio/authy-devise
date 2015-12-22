@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib"]
   s.authors = ["Authy Inc."]
-  s.date = "2015-12-14"
+  s.date = "2015-12-22"
   s.description = "Authy plugin for Devise"
   s.email = "support@authy.com"
   s.extra_rdoc_files = [
