@@ -27,7 +27,6 @@ class Devise::DeviseAuthyController < DeviseController
 
     if token.ok?
       @resource.update_attribute(:last_sign_in_with_authy, DateTime.now)
-      @resource.update_attribute(:last_sign_in_with_authy, DateTime.now)
 
       session["#{resource_name}_authy_token_checked"] = true
 
