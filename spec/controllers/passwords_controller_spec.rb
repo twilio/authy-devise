@@ -20,8 +20,8 @@ describe DeviseAuthy::PasswordsController do
         put :update, :user => { :reset_password_token => user.reset_password_token, :password => "password", :password_confirmation => "password" }
 
         user.reload
-        user.last_sign_in_at.should be_nil
-        response.should redirect_to(root_url)
+        expect(user.last_sign_in_at).to be_nil
+        expect(response).to redirect_to(root_url)
       end
     end
   end
@@ -37,11 +37,11 @@ describe DeviseAuthy::PasswordsController do
         last_sign_in_at = user.last_sign_in_at
 
         put :update, :user => { :reset_password_token => user.reset_password_token, :password => "password", :password_confirmation => "password" }
-        response.should redirect_to(root_url)
+        expect(response).to redirect_to(root_url)
 
         user.reload
-        user.last_sign_in_at.should_not be_nil
-        flash[:notice].should == "Your password was changed successfully. You are now signed in."
+        expect(user.last_sign_in_at).not_to be_nil
+        expect(flash[:notice]).to eq("Your password was changed successfully. You are now signed in.")
       end
     end
   end

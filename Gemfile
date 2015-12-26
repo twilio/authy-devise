@@ -1,10 +1,10 @@
 source "https://rubygems.org"
 
-gem "devise"
+gem "devise", '< 3.0.0'
 gem 'authy'
 
 group :development do
-  gem "rspec"
+  gem "rspec", "> 2.14.1", "< 3.0"
   gem "yard"
   gem "rdoc"
   gem "bundler"
@@ -16,9 +16,10 @@ group :development do
 end
 
 group :test do
-  gem "rails"
+  gem "rails", "~> 3.2.6"
   gem "sqlite3"
   gem 'rspec-rails'
   gem 'database_cleaner'
   gem 'capybara'
+  gem 'test-unit'
 end
