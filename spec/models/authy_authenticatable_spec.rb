@@ -7,11 +7,11 @@ describe Devise::Models::AuthyAuthenticatable do
 
   describe "User#find_by_authy_id" do
     it "Should find the user" do
-      User.find_by_authy_id('20').should_not be_nil
+      expect(User.find_by_authy_id('20')).not_to be_nil
     end
 
     it "Shouldn't find the user" do
-      User.find_by_authy_id('80').should be_nil
+      expect(User.find_by_authy_id('80')).to be_nil
     end
   end
 end

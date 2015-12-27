@@ -13,18 +13,18 @@ describe "generators for devise_authy" do
 
   it "rails g should include the generators" do
     @output = rails_command("g")
-    @output.include?('devise_authy:install').should be_true
-    @output.include?('active_record:devise_authy').should be_true
+    expect(@output.include?('devise_authy:install')).to be_truthy
+    expect(@output.include?('active_record:devise_authy')).to be_truthy
   end
 
   it "rails g devise_authy:install" do
     @output = rails_command("g", "devise_authy:install", "-s")
-    @output.include?('config/initializers/devise.rb').should be_true
-    @output.include?('config/locales/devise.authy.en.yml').should be_true
-    @output.include?('app/views/devise/devise_authy/enable_authy.html.erb').should be_true
-    @output.include?('app/views/devise/devise_authy/verify_authy.html.erb').should be_true
-    @output.include?('app/views/devise/devise_authy/verify_authy_installation.html.erb').should be_true
-    @output.include?('app/assets/stylesheets/devise_authy.css').should be_true
-    @output.include?('app/assets/javascripts/devise_authy.js').should be_true
+    expect(@output.include?('config/initializers/devise.rb')).to be_truthy
+    expect(@output.include?('config/locales/devise.authy.en.yml')).to be_truthy
+    expect(@output.include?('app/views/devise/devise_authy/enable_authy.html.erb')).to be_truthy
+    expect(@output.include?('app/views/devise/devise_authy/verify_authy.html.erb')).to be_truthy
+    expect(@output.include?('app/views/devise/devise_authy/verify_authy_installation.html.erb')).to be_truthy
+    expect(@output.include?('app/assets/stylesheets/devise_authy.css')).to be_truthy
+    expect(@output.include?('app/assets/javascripts/devise_authy.js')).to be_truthy
   end
 end
