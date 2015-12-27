@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Devise::DeviseAuthyController do
+describe Devise::DeviseAuthyController, type: :controller do
   include Devise::TestHelpers
 
   before :each do

@@ -14,7 +14,7 @@ module Devise
 
       module ClassMethods
         def find_by_authy_id(authy_id)
-          find(:first, :conditions => {:authy_id => authy_id})
+          where(authy_id: authy_id).first
         end
 
         Devise::Models.config(self, :authy_remember_device)

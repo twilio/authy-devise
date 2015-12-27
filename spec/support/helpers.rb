@@ -27,11 +27,13 @@ def fill_sign_in_form(email, password, form_selector = nil, sign_in_path = nil)
   sign_in_path  ||= new_user_session_path
 
   visit sign_in_path
+
+#  save_and_open_page
   within(form_selector) do
     fill_in 'Email', :with => email
     fill_in 'Password', :with => password
   end
-  click_on 'Sign in'
+  click_button 'Log in'
 end
 
 def fill_verify_token_form(token)

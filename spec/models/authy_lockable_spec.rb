@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Devise::Models::AuthyLockable do
+describe Devise::Models::AuthyLockable, type: :controller do
 
   context 'model includes Devise::Models::Lockable' do
 

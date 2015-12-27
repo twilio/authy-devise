@@ -15,19 +15,19 @@ feature 'Authy Lockable' do
     end
 
     scenario 'account locked when user enters invalid code too many times' do
-      Devise.maximum_attempts.times do |i|
+      (LockableUser.maximum_attempts - 1).times do |i|
         fill_verify_token_form invalid_authy_token
         assert_at lockable_user_verify_authy_path
         expect(page).to have_content('Please enter your Authy token')
         user.reload
-        assert_account_locked_for user, nil
+        assert_account_locked_for user, false
         expect(user.failed_attempts).to eq(i + 1)
       end
 
       fill_verify_token_form invalid_authy_token
       user.reload
       assert_at new_user_session_path
-      assert_account_locked_for user
+      assert_account_locked_for user, true
       visit root_path
       assert_at new_user_session_path
     end
@@ -48,19 +48,19 @@ feature 'Authy Lockable' do
       fill_in 'authy-cellphone', with: '8001234567'
       click_on 'Enable'
 
-      Devise.maximum_attempts.times do |i|
+      (LockableUser.maximum_attempts - 1).times do |i|
         fill_in_verify_authy_installation_form invalid_authy_token
         assert_at lockable_user_verify_authy_installation_path
         expect(page).to have_content('Verify your account')
         user.reload
-        assert_account_locked_for user, nil
+        assert_account_locked_for user, false
         expect(user.failed_attempts).to eq(i + 1)
       end
 
       fill_in_verify_authy_installation_form invalid_authy_token
       user.reload
       assert_at new_user_session_path
-      assert_account_locked_for user
+      assert_account_locked_for user, true
       visit root_path
       assert_at new_user_session_path
     end
