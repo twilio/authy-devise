@@ -16,6 +16,13 @@ module DeviseAuthy
         "  # config.authy_remember_device = 1.month\n\n", :after => "Devise.setup do |config|\n"
       end
 
+      def add_initializer
+        initializer("authy.rb") do
+          "Authy.api_key = ENV[\"AUTHY_API_KEY\"]\n" \
+          "Authy.api_uri = \"https://api.authy.com/\""
+        end
+      end
+
       def copy_locale
         copy_file "../../../config/locales/en.yml", "config/locales/devise.authy.en.yml"
       end

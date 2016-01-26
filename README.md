@@ -13,14 +13,11 @@ See [https://github.com/authy/authy-devise/tree/master/authy-devise-demo](https:
 
 ## Getting started
 
-First create an initializer in `config/initializers/authy.rb`
+First get your Authy API key from [https://www.authy.com/signup](https://www.authy.com/signup). We recommend you store your API key as an environment variable.
 
-```ruby
-Authy.api_key = ENV['AUTHY_API_KEY'] || 'your_authy_api_key'
-Authy.api_uri = 'https://api.authy.com/'
+```bash
+$ export AUTHY_API_KEY=YOUR_AUTHY_API_KEY
 ```
-
-You can get the `AUTHY_API_KEY` at [https://www.authy.com/signup](https://www.authy.com/signup)
 
 Next add the gem to your Gemfile:
 
