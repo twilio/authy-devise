@@ -18,7 +18,6 @@ module DeviseAuthy
       end
 
       def require_token?
-        byebug
         id = warden.session(resource_name)[:id]
         cookie = JSON.parse(cookies.signed[:remember_device])
         if cookie.present? &&
