@@ -9,17 +9,22 @@ module DeviseAuthy
 
       private
       def remember_device
+        id = @resource.id
         cookies.signed[:remember_device] = {
-          :value => Time.now.to_i,
+          :value => {expires: Time.now.to_i, id: id}.to_json,
           :secure => !(Rails.env.test? || Rails.env.development?),
           :expires => resource_class.authy_remember_device.from_now
         }
       end
 
       def require_token?
-        if cookies.signed[:remember_device].present? &&
-          (Time.now.to_i - cookies.signed[:remember_device].to_i) < \
-          resource_class.authy_remember_device.to_i
+        byebug
+        id = warden.session(resource_name)[:id]
+        cookie = JSON.parse(cookies.signed[:remember_device])
+        if cookie.present? &&
+          (Time.now.to_i - cookie['expires'].to_i) < \
+          resource_class.authy_remember_device.to_i &&
+          cookie['id'] == id
           return false
         end
 
