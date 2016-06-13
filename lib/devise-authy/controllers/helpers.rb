@@ -19,15 +19,18 @@ module DeviseAuthy
 
       def require_token?
         id = warden.session(resource_name)[:id]
-        cookie = JSON.parse(cookies.signed[:remember_device])
-        if cookie.present? &&
-          (Time.now.to_i - cookie['expires'].to_i) < \
-          resource_class.authy_remember_device.to_i &&
-          cookie['id'] == id
-          return false
+        cookie = cookies.signed[:remember_device]
+
+        # backwords compatibility for old cookies which just have expiration
+        # time and no id
+        if cookie.to_s =~ %r{\A\d+\Z}
+          return (Time.now.to_i - cookie.to_i) > \
+                 resource_class.authy_remember_device.to_i
         end
 
-        return true
+        cookie = JSON.parse(cookie)
+        return cookie.blank? || (Time.now.to_i - cookie['expires'].to_i) > \
+               resource_class.authy_remember_device.to_i || cookie['id'] != id
       end
 
       def is_devise_sessions_controller?
