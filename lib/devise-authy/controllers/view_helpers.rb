@@ -2,6 +2,9 @@ module DeviseAuthy
   module Views
     module Helpers
       def authy_request_phone_call_link(opts = {})
+        title = opts.delete(:title) do
+          I18n.t('request_phone_call', { :scope => 'devise' })
+        end
         opts = {
           :id => "authy-request-phone-call-link",
           :method => :post,
@@ -9,13 +12,16 @@ module DeviseAuthy
         }.merge(opts)
 
         link_to(
-          I18n.t('request_phone_call', { :scope => 'devise' }),
+          title,
           url_for([resource_name, :request_phone_call]),
           opts
         )
       end
 
       def authy_request_sms_link(opts = {})
+        title = opts.delete(:title) do
+          I18n.t('request_sms', scope: 'devise')
+        end
         opts = {
           :id => "authy-request-sms-link",
           :method => :post,
@@ -23,7 +29,7 @@ module DeviseAuthy
         }.merge(opts)
 
         link_to(
-          I18n.t('request_sms', {:scope => 'devise'}),
+          title,
           url_for([resource_name, :request_sms]),
           opts
         )
