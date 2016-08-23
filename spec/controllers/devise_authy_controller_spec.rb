@@ -138,7 +138,7 @@ describe Devise::DeviseAuthyController do
       user2 = create_user
       sign_in user2
 
-      post :POST_enable_authy, :cellphone => '2222227', :country_code => '57'
+      post :POST_enable_authy, :cellphone => '3010008090', :country_code => '57'
       user2.reload
       user2.authy_id.should_not be_nil
       flash.now[:notice].should == "Two factor authentication was enabled"
@@ -238,7 +238,7 @@ describe Devise::DeviseAuthyController do
       response.content_type.should == 'application/json'
       body = JSON.parse(response.body)
       body['sent'].should be_true
-      body['message'].should == "SMS token was sent"
+      body['message'].should == "Token was sent."
     end
 
     it "Shoul not send sms if user couldn't be found" do
