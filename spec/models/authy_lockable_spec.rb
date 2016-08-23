@@ -9,12 +9,12 @@ describe Devise::Models::AuthyLockable do
     context '#lockable?' do
 
       it 'returns true if lock_strategy is :failed_attempts' do
-        expect(user.lockable?).to be_true
+        expect(user.lockable?).to be_truthy
       end
 
       it 'returns false if lock_strategy is anything other than :failed attempts' do
         Devise.lock_strategy = :none
-        expect(user.lockable?).to be_false
+        expect(user.lockable?).to be_falsey
         Devise.lock_strategy = :failed_attempts
       end
 
@@ -35,17 +35,17 @@ describe Devise::Models::AuthyLockable do
 
       it 'respects the maximum attempts configuration for Devise::Models::Lockable' do
         4.times { user.invalid_authy_attempt! }
-        expect(user.send :attempts_exceeded?).to be_true # protected method
-        expect(user.access_locked?).to be_true
+        expect(user.send :attempts_exceeded?).to be_truthy # protected method
+        expect(user.access_locked?).to be_truthy
       end
 
       it 'returns true if the account is locked' do
         3.times { user.invalid_authy_attempt! }
-        expect(user.invalid_authy_attempt!).to be_true
+        expect(user.invalid_authy_attempt!).to be_truthy
       end
 
       it 'returns false if the account is not locked' do
-        expect(user.invalid_authy_attempt!).to be_false
+        expect(user.invalid_authy_attempt!).to be_falsey
       end
 
     end
