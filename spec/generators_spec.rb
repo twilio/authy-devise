@@ -20,6 +20,7 @@ describe "generators for devise_authy" do
   it "rails g devise_authy:install" do
     @output = rails_command("g", "devise_authy:install", "-s")
     @output.include?('config/initializers/devise.rb').should be_true
+    @output.include?('config/initializers/authy.rb').should be_true
     @output.include?('config/locales/devise.authy.en.yml').should be_true
     @output.include?('app/views/devise/devise_authy/enable_authy.html.erb').should be_true
     @output.include?('app/views/devise/devise_authy/verify_authy.html.erb').should be_true
