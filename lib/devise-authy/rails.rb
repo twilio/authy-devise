@@ -9,7 +9,7 @@ module DeviseAuthy
 
     # extend mapping with after_initialize because it's not reloaded
     config.after_initialize do
-      Devise::Mapping.send :include, DeviseAuthy::Mapping
+      Devise::Mapping.send :prepend, DeviseAuthy::Mapping
     end
   end
 end
