@@ -82,6 +82,11 @@ If you want to customise your views, you can modify the files that are located a
     app/views/devise/devise_authy/verify_authy.html.erb
     app/views/devise/devise_authy/verify_authy_installation.html.erb
 
+### Request a phone call
+
+The default views come with a button to force a request for an SMS message. You can also add a button that will request a phone call instead. Simply add the helper method to your view:
+
+    <%= authy_request_phone_call_link %>
 
 ## Custom Redirect Paths (eg. using modules)
 
