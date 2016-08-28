@@ -1,5 +1,5 @@
 class WelcomeController < ApplicationController
-  before_filter :authenticate_scope!
+  before_action :authenticate_scope!
 
   def index
   end

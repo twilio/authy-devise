@@ -1,11 +1,11 @@
 class Devise::DeviseAuthyController < DeviseController
-  prepend_before_filter :find_resource, :only => [
+  prepend_before_action :find_resource, :only => [
     :request_phone_call, :request_sms
   ]
-  prepend_before_filter :find_resource_and_require_password_checked, :only => [
+  prepend_before_action :find_resource_and_require_password_checked, :only => [
     :GET_verify_authy, :POST_verify_authy
   ]
-  prepend_before_filter :authenticate_scope!, :only => [
+  prepend_before_action :authenticate_scope!, :only => [
     :GET_enable_authy, :POST_enable_authy,
     :GET_verify_authy_installation, :POST_verify_authy_installation,
     :POST_disable_authy
