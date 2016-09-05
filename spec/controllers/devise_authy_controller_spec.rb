@@ -239,7 +239,7 @@ describe Devise::DeviseAuthyController, type: :controller do
       body = JSON.parse(response.body)
 
       expect(body['sent']).to be_truthy
-      expect(body['message']).to eq("Token was sent.")
+      expect(body['message']).to eq("SMS token was sent")
     end
 
     it "Shoul not send sms if user couldn't be found" do
