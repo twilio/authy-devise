@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Authy Autnenticatable", :type => :request do
+describe "Authy Authenticatable", :type => :request do
   describe "If user don't have two factor authentication should login with email - password" do
     before :each do
       @user = create_user(:email => 'foo@bar.com')
@@ -12,14 +12,14 @@ describe "Authy Autnenticatable", :type => :request do
       expect(page).to have_content('Signed in successfully.')
     end
 
-    it "Sign in shouldn't success" do
+    it "Sign in shouldn't succeed" do
       fill_sign_in_form('foo@bar.com', '14567823')
       expect(current_path).to eq(new_user_session_path)
       expect(page).not_to have_content('Signed in successfully.')
     end
   end
 
-  describe "If user have two factor authentication" do
+  describe "If user has two factor authentication" do
     before :each do
       @user = create_user(:authy_id => 1)
       @user.update_attribute(:authy_enabled, true)
@@ -78,7 +78,7 @@ describe "Authy Autnenticatable", :type => :request do
 
       visit user_verify_authy_path
       expect(current_path).to eq(new_user_session_path)
-      expect(page).to have_content('Sign in')
+      expect(page).to have_content('Log in')
     end
 
     it "Click link Request sms" do
