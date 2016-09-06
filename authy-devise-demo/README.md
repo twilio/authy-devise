@@ -37,7 +37,7 @@
 
 8. Edit `app/controllers/welcome_controller.rb` and add:
 
-	    before_filter :authenticate_user!
+	    before_action :authenticate_user!
 
 
 9. Edit `app/views/welcome/index.html.erb` and add:
