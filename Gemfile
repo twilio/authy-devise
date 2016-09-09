@@ -14,7 +14,7 @@ group :development do
 end
 
 group :test do
-  gem 'rails', '~> 4.2.5'
+  gem 'rails', '~> 4.2.7'
   gem 'sqlite3'
 
   # Use SCSS for stylesheets

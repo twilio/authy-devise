@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Devise::DeviseAuthyController, type: :controller do
-  include Devise::TestHelpers
+  include Devise::Test::ControllerHelpers
 
   before :each do
     request.env["devise.mapping"] = Devise.mappings[:user]
