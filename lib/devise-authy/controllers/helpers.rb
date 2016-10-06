@@ -21,6 +21,8 @@ module DeviseAuthy
         id = warden.session(resource_name)[:id]
         cookie = cookies.signed[:remember_device]
 
+        return true if cookie.blank?
+
         # backwords compatibility for old cookies which just have expiration
         # time and no id
         if cookie.to_s =~ %r{\A\d+\Z}
