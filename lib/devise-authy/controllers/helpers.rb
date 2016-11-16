@@ -51,6 +51,7 @@ module DeviseAuthy
           return_to = session["#{resource_name}_return_to"]
           warden.logout
           warden.reset_session! # make sure the session resetted
+          warden.clear_strategies_cache! # stop devise from signing in the user again
 
           session["#{resource_name}_id"] = id
           # this is safe to put in the session because the cookie is signed
