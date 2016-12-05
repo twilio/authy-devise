@@ -49,8 +49,7 @@ module DeviseAuthy
 
           remember_me = (params.fetch(resource_name, {})[:remember_me].to_s == "1")
           return_to = session["#{resource_name}_return_to"]
-          warden.logout
-          warden.reset_session! # make sure the session resetted
+          sign_out
 
           session["#{resource_name}_id"] = id
           # this is safe to put in the session because the cookie is signed
