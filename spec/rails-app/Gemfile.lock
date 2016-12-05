@@ -1,9 +1,9 @@
 PATH
   remote: ../..
   specs:
-    devise-authy (1.7.0)
+    devise-authy (1.8.0)
       authy
-      devise
+      devise (>= 3.0.0)
 
 GEM
   remote: https://rubygems.org/
@@ -137,4 +137,4 @@ DEPENDENCIES
   sqlite3
 
 BUNDLED WITH
-   1.11.2
+   1.12.5

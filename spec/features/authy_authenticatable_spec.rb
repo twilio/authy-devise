@@ -21,7 +21,7 @@ describe "Authy Authenticatable", :type => :request do
 
   describe "If user has two factor authentication" do
     before :each do
-      @user = create_user(:authy_id => 1)
+      @user = create_user(:authy_id => 75)
       @user.update_attribute(:authy_enabled, true)
     end
 
@@ -84,7 +84,7 @@ describe "Authy Authenticatable", :type => :request do
     it "Click link Request sms" do
       fill_sign_in_form(@user.email, '12345678')
       click_link 'Request SMS'
-      expect(page).to have_content("token was sent")
+      expect(page).to have_content("Token was sent.")
     end
   end
 end
