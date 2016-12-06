@@ -20,17 +20,12 @@ module DeviseAuthy
       def require_token?
         id = warden.session(resource_name)[:id]
         cookie = cookies.signed[:remember_device]
-
         return true if cookie.blank?
 
-        # backwords compatibility for old cookies which just have expiration
-        # time and no id
-        if cookie.to_s =~ %r{\A\d+\Z}
-          return (Time.now.to_i - cookie.to_i) > \
-                 resource_class.authy_remember_device.to_i
-        end
+        # require token for old cookies which just have expiration time and no id
+        return true if cookie.to_s =~ %r{\A\d+\z}
 
-        cookie = JSON.parse(cookie)
+        cookie = JSON.parse(cookie) rescue ""
         return cookie.blank? || (Time.now.to_i - cookie['expires'].to_i) > \
                resource_class.authy_remember_device.to_i || cookie['id'] != id
       end

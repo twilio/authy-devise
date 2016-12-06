@@ -55,20 +55,38 @@ describe "Authy Authenticatable", :type => :request do
     end
 
     describe "With cookie['remember_device']" do
-      it "Should prompt for a token" do
-        cookie_val = sign_cookie("remember_device", Time.now.to_i - 2.month.to_i)
+      it "prompts for a token when cookie expired" do
+        expires = { expires: 2.months.ago.to_i, id: @user.id }.to_json
+        cookie_val = sign_cookie("remember_device", expires)
         page.driver.browser.set_cookie("remember_device=#{cookie_val}")
         fill_sign_in_form(@user.email, '12345678')
         expect(current_path).to eq(user_verify_authy_path)
         expect(page).to have_content('Please enter your Authy token')
       end
 
-      it "Shouldn't prompt for a token" do
-        cookie_val = sign_cookie("remember_device", Time.now.to_i)
+      it "no prompt for a token" do
+        expires = { expires: Time.now.to_i, id: @user.id }.to_json
+        cookie_val = sign_cookie("remember_device", expires)
         page.driver.browser.set_cookie("remember_device=#{cookie_val}")
         fill_sign_in_form(@user.email, '12345678')
         expect(current_path).to eq(root_path)
         expect(page).to have_content("Signed in successfully.")
+      end
+
+      it "prompts for a token when user has an old cookie" do
+        cookie_val = sign_cookie("remember_device", 2.months.ago.to_i)
+        page.driver.browser.set_cookie("remember_device=#{cookie_val}")
+        fill_sign_in_form(@user.email, '12345678')
+        expect(current_path).to eq(user_verify_authy_path)
+        expect(page).to have_content('Please enter your Authy token')
+      end
+
+      it "prompts for a token when cookie has an invalid json" do
+        cookie_val = sign_cookie("remember_device", "{")
+        page.driver.browser.set_cookie("remember_device=#{cookie_val}")
+        fill_sign_in_form(@user.email, '12345678')
+        expect(current_path).to eq(user_verify_authy_path)
+        expect(page).to have_content('Please enter your Authy token')
       end
     end
 
