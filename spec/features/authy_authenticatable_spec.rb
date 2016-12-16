@@ -40,6 +40,14 @@ describe "Authy Authenticatable", :type => :request do
       expect(@user.last_sign_in_with_authy).not_to be_nil
     end
 
+    it "Sign in should not sign in user until they verify authy token" do
+      fill_sign_in_form(@user.email, '12345678')
+      expect(current_path).to eq(user_verify_authy_path)
+
+      visit new_user_session_path
+      expect(page).to_not have_content "Logout"
+    end
+
     it "Sign in shouldn't succeed" do
       fill_sign_in_form(@user.email, '12345678')
       expect(current_path).to eq(user_verify_authy_path)
