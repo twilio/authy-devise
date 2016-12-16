@@ -53,7 +53,8 @@ module DeviseAuthy
 
           remember_me = (params.fetch(resource_name, {})[:remember_me].to_s == "1")
           return_to = session["#{resource_name}_return_to"]
-          sign_out
+          sign_out resource_name
+          warden.lock!
 
           session["#{resource_name}_id"] = id
           # this is safe to put in the session because the cookie is signed
@@ -62,7 +63,6 @@ module DeviseAuthy
           session["#{resource_name}_return_to"] = return_to if return_to
 
           redirect_to verify_authy_path_for(resource_name)
-          return
         end
       end
 
