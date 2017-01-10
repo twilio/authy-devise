@@ -208,7 +208,7 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<devise>.freeze, [">= 3.0.0"])
-      s.add_runtime_dependency(%q<authy>.freeze, [">= 0"])
+      s.add_runtime_dependency(%q<authy>.freeze, [">= 2.4.2"])
       s.add_development_dependency(%q<rspec>.freeze, ["> 3.0.0"])
       s.add_development_dependency(%q<yard>.freeze, [">= 0"])
       s.add_development_dependency(%q<rdoc>.freeze, [">= 0"])
