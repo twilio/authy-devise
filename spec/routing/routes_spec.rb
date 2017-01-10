@@ -28,4 +28,8 @@ describe "routes for devise_authy" do
   it "routes to devise_authy#request_sms" do
     expect(post('/users/request-sms')).to route_to("devise/devise_authy#request_sms")
   end
+
+  it "routes to devise_authy#GET_authy_onetouch_status" do
+    expect(get('/users/authy_onetouch_status')).to route_to("devise/devise_authy#GET_authy_onetouch_status")
+  end
 end
