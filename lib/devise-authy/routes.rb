@@ -14,6 +14,7 @@ module ActionDispatch::Routing
       match "/#{mapping.path_names[:verify_authy_installation]}", :controller => controllers[:devise_authy], :action => :GET_verify_authy_installation, :as => :verify_authy_installation, :via => :get
       match "/#{mapping.path_names[:verify_authy_installation]}", :controller => controllers[:devise_authy], :action => :POST_verify_authy_installation, :as => nil, :via => :post
 
+      match "/#{mapping.path_names[:authy_onetouch_status]}", :controller => controllers[:devise_authy], :action => :GET_authy_onetouch_status, as: :authy_onetouch_status, via: :get
 
       match "/request-sms", :controller => controllers[:devise_authy], :action => :request_sms, :as => :request_sms, :via => :post
       match "/request-phone-call", :controller => controllers[:devise_authy], :action => :request_phone_call, :as => :request_phone_call, :via => :post

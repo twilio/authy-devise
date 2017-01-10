@@ -70,6 +70,17 @@ module DeviseAuthy
         scope = Devise::Mapping.find_scope!(resource_or_scope)
         send(:"#{scope}_verify_authy_path")
       end
+
+      def send_one_touch_request
+        Authy::OneTouch.send_approval_request(id: @authy_id, message: 'Request to Login')
+      end
+
+      def record_authy_authentication
+        @resource.update_attribute(:last_sign_in_with_authy, DateTime.now)
+        session["#{resource_name}_authy_token_checked"] = true
+        sign_in(resource_name, @resource)
+        set_flash_message(:notice, :signed_in) if is_navigational_format?
+      end
     end
   end
 end

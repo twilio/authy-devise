@@ -16,3 +16,17 @@
 
   = authy_request_sms_link
   = submit_tag I18n.t('submit_token', {:scope => 'devise'}), :class => 'btn'
+
+- if @onetouch_uuid
+  :javascript
+    (function(){
+      setInterval(function(){
+        var onetouchRequest = new XMLHttpRequest();
+        onetouchRequest.addEventListener("load", function(){
+          if(this.status != 202) clearInterval(onetouch_status);
+          if(this.status == 200) window.location = JSON.parse(this.responseText).redirect;
+        });
+        onetouchRequest.open("GET", "#{polymorphic_path [resource_name, :authy_onetouch_status]}?onetouch_uuid=#{@onetouch_uuid}");
+        onetouchRequest.send();
+      }, 3000);
+    })();
