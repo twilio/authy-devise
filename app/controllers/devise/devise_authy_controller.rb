@@ -61,7 +61,10 @@ class Devise::DeviseAuthyController < DeviseController
     )
 
     if @authy_user.ok?
-      resource.authy_id = @authy_user.id
+      resource.update_attributes({
+        authy_id: @authy_user.id,
+        authy_enabled: true
+      })
       if resource.save
         set_flash_message(:notice, :enabled)
       else
