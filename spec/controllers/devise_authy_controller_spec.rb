@@ -9,11 +9,34 @@ describe Devise::DeviseAuthyController, type: :controller do
   end
 
   describe "GET #verify_authy" do
-    it "Should render the second step of authentication" do
-      request.session["user_id"] = @user.id
-      request.session["user_password_checked"] = true
-      get :GET_verify_authy
-      expect(response).to render_template('verify_authy')
+    describe "when the first step of authentication is complete" do
+      before do
+        request.session["user_id"] = @user.id
+        request.session["user_password_checked"] = true
+      end
+
+      it "Should render the second step of authentication" do
+        get :GET_verify_authy
+        expect(response).to render_template('verify_authy')
+      end
+
+      it "should not make a OneTouch request" do
+        expect(Authy::OneTouch).not_to receive(:send_approval_request)
+        get :GET_verify_authy
+      end
+
+      describe "when OneTouch is enabled" do
+        before do
+          allow(User).to receive(:authy_enable_onetouch).and_return(true)
+        end
+
+        it "should make a OneTouch request" do
+          expect(Authy::OneTouch).to receive(:send_approval_request)
+                                 .with(id: @user.authy_id, message: 'Request to Login')
+                                 .and_return('approval_request' => { 'uuid' => 'uuid' }).once
+          get :GET_verify_authy
+        end
+      end
     end
 
     it "Should no render the second step of authentication if first step is incomplete" do
@@ -25,6 +48,11 @@ describe Devise::DeviseAuthyController, type: :controller do
     it "should redirect to root_url" do
       get :GET_verify_authy
       expect(response).to redirect_to(root_url)
+    end
+
+    it "should not make a OneTouch request" do
+      expect(Authy::OneTouch).not_to receive(:send_approval_request)
+      get :GET_verify_authy
     end
   end
 
