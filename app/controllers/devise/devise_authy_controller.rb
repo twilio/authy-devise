@@ -14,8 +14,10 @@ class Devise::DeviseAuthyController < DeviseController
 
   def GET_verify_authy
     @authy_id = @resource.authy_id
-    approval_request = send_one_touch_request['approval_request']
-    @onetouch_uuid = approval_request['uuid'] if approval_request.present?
+    if resource_class.authy_enable_onetouch
+      approval_request = send_one_touch_request['approval_request']
+      @onetouch_uuid = approval_request['uuid'] if approval_request.present?
+    end
     render :verify_authy
   end
 
