@@ -26,7 +26,7 @@
           if(this.status != 202) clearInterval(onetouchInterval);
           if(this.status == 200) window.location = JSON.parse(this.responseText).redirect;
         });
-        onetouchRequest.open("GET", "#{polymorphic_path [resource_name, :authy_onetouch_status]}?onetouch_uuid=#{@onetouch_uuid}");
+        onetouchRequest.open("GET", "<%= polymorphic_path [resource_name, :authy_onetouch_status] %>?onetouch_uuid=<%= @onetouch_uuid %>");
         onetouchRequest.send();
       }, 3000);
     })();
