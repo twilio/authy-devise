@@ -137,6 +137,14 @@ session["#{resource_name}_authy_token_checked"]
 session["user_authy_token_checked"]
 ```
 
+## OneTouch support
+
+To enable the OneTouch feature, you need to modify the Devise config file `config/initializers/devise.rb` and add configuration:
+
+```
+config.authy_enable_onetouch = true
+```
+
 
 ## Running Tests
 
