@@ -7,7 +7,7 @@ Devise.setup do |config|
   # config.authy_remember_device = 1.month
   #
   # Should Authy OneTouch be enabled?
-  # config.authy_enable_onetouch = false
+  config.authy_enable_onetouch = true
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,

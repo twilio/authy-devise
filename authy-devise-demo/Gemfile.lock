@@ -1,8 +1,8 @@
 PATH
   remote: ..
   specs:
-    devise-authy (1.8.0)
-      authy
+    devise-authy (1.8.1)
+      authy (>= 2.4.2)
       devise (>= 3.0.0)
 
 GEM
@@ -76,7 +76,7 @@ GEM
     execjs (2.7.0)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
-    httpclient (2.8.2.4)
+    httpclient (2.8.3)
     i18n (0.7.0)
     jbuilder (2.6.0)
       activesupport (>= 3.0.0, < 5.1)
@@ -191,4 +191,4 @@ DEPENDENCIES
   web-console (~> 2.0)
 
 BUNDLED WITH
-   1.12.5
+   1.16.0
