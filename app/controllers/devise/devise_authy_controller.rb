@@ -3,7 +3,7 @@ class Devise::DeviseAuthyController < DeviseController
     :request_phone_call, :request_sms
   ]
   prepend_before_action :find_resource_and_require_password_checked, :only => [
-    :GET_verify_authy, :POST_verify_authy
+    :GET_verify_authy, :POST_verify_authy, :GET_authy_onetouch_status
   ]
   prepend_before_action :authenticate_scope!, :only => [
     :GET_enable_authy, :POST_enable_authy,
@@ -14,6 +14,10 @@ class Devise::DeviseAuthyController < DeviseController
 
   def GET_verify_authy
     @authy_id = @resource.authy_id
+    if resource_class.authy_enable_onetouch
+      approval_request = send_one_touch_request['approval_request']
+      @onetouch_uuid = approval_request['uuid'] if approval_request.present?
+    end
     render :verify_authy
   end
 
@@ -26,17 +30,11 @@ class Devise::DeviseAuthyController < DeviseController
     })
 
     if token.ok?
-      @resource.update_attribute(:last_sign_in_with_authy, DateTime.now)
-
-      session["#{resource_name}_authy_token_checked"] = true
-
       remember_device if params[:remember_device].to_i == 1
       if session.delete("#{resource_name}_remember_me") == true && @resource.respond_to?(:remember_me=)
         @resource.remember_me = true
       end
-      sign_in(resource_name, @resource)
-
-      set_flash_message(:notice, :signed_in) if is_navigational_format?
+      record_authy_authentication
       respond_with resource, :location => after_sign_in_path_for(@resource)
     else
       handle_invalid_token :verify_authy, :invalid_token
@@ -110,6 +108,21 @@ class Devise::DeviseAuthyController < DeviseController
       redirect_to after_authy_verified_path_for(resource)
     else
       handle_invalid_token :verify_authy_installation, :not_enabled
+    end
+  end
+  
+  def GET_authy_onetouch_status
+    status = Authy::API.get_request("onetouch/json/approval_requests/#{params[:onetouch_uuid]}")['approval_request']['status']
+    case status
+    when 'pending'
+      head 202
+    when 'approved'
+      record_authy_authentication
+      render json: { redirect: after_sign_in_path_for(@resource) }
+    when 'denied'
+      head :unauthorized
+    else
+      head :error
     end
   end
 

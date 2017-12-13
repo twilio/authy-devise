@@ -4,8 +4,9 @@ require 'devise'
 require 'authy'
 
 module Devise
-  mattr_accessor :authy_remember_device
+  mattr_accessor :authy_remember_device, :authy_enable_onetouch
   @@authy_remember_device = 1.month
+  @@authy_enable_onetouch = false
 end
 
 module DeviseAuthy

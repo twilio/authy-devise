@@ -9,11 +9,34 @@ describe Devise::DeviseAuthyController, type: :controller do
   end
 
   describe "GET #verify_authy" do
-    it "Should render the second step of authentication" do
-      request.session["user_id"] = @user.id
-      request.session["user_password_checked"] = true
-      get :GET_verify_authy
-      expect(response).to render_template('verify_authy')
+    describe "when the first step of authentication is complete" do
+      before do
+        request.session["user_id"] = @user.id
+        request.session["user_password_checked"] = true
+      end
+
+      it "Should render the second step of authentication" do
+        get :GET_verify_authy
+        expect(response).to render_template('verify_authy')
+      end
+
+      it "should not make a OneTouch request" do
+        expect(Authy::OneTouch).not_to receive(:send_approval_request)
+        get :GET_verify_authy
+      end
+
+      describe "when OneTouch is enabled" do
+        before do
+          allow(User).to receive(:authy_enable_onetouch).and_return(true)
+        end
+
+        it "should make a OneTouch request" do
+          expect(Authy::OneTouch).to receive(:send_approval_request)
+                                 .with(id: @user.authy_id, message: 'Request to Login')
+                                 .and_return('approval_request' => { 'uuid' => 'uuid' }).once
+          get :GET_verify_authy
+        end
+      end
     end
 
     it "Should no render the second step of authentication if first step is incomplete" do
@@ -25,6 +48,11 @@ describe Devise::DeviseAuthyController, type: :controller do
     it "should redirect to root_url" do
       get :GET_verify_authy
       expect(response).to redirect_to(root_url)
+    end
+
+    it "should not make a OneTouch request" do
+      expect(Authy::OneTouch).not_to receive(:send_approval_request)
+      get :GET_verify_authy
     end
   end
 
@@ -267,6 +295,57 @@ describe Devise::DeviseAuthyController, type: :controller do
       body = JSON.parse(response.body)
       expect(body['sent']).to be_falsey
       expect(body['message']).to eq("User couldn't be found.")
+    end
+  end
+
+  describe "GET #authy_onetouch_status" do
+    # OneTouch stubbed due to test API key not having OneTouch enabled
+    before do
+      allow(Authy::OneTouch).to receive(:send_approval_request).with(id: @user.authy_id) { { 'approval_request' => { 'uuid' => SecureRandom.uuid } } }
+      @uuid = Authy::OneTouch.send_approval_request(id: @user.authy_id)['approval_request']['uuid']
+    end
+
+    it "Should return a 202 status code when pending" do
+      allow(Authy::API).to receive(:get_request).with(/onetouch\/json\/approval_requests\/.+/) { { 'approval_request' => { 'status' => 'pending' } } }
+      request.session["user_id"] = @user.id
+      request.session["user_password_checked"] = true
+      get :GET_authy_onetouch_status, onetouch_uuid: @uuid
+      expect(response.code).to eq("202")
+    end
+
+    it "Should return a 401 status code when denied" do
+      allow(Authy::API).to receive(:get_request).with(/onetouch\/json\/approval_requests\/.+/) { { 'approval_request' => { 'status' => 'denied' } } }
+      request.session["user_id"] = @user.id
+      request.session["user_password_checked"] = true
+      get :GET_authy_onetouch_status, onetouch_uuid: @uuid
+      expect(response.code).to eq("401")
+    end
+
+    it "Should return a 200 status code when approved" do
+      allow(Authy::API).to receive(:get_request).with(/onetouch\/json\/approval_requests\/.+/) { { 'approval_request' => { 'status' => 'approved' } } }
+      request.session["user_id"] = @user.id
+      request.session["user_password_checked"] = true
+      get :GET_authy_onetouch_status, onetouch_uuid: @uuid
+      expect(response.code).to eq("200")
+    end
+
+    it "Should render a JSON object with the redirect path when approved" do
+      allow(Authy::API).to receive(:get_request).with(/onetouch\/json\/approval_requests\/.+/) { { 'approval_request' => { 'status' => 'approved' } } }
+      request.session["user_id"] = @user.id
+      request.session["user_password_checked"] = true
+      get :GET_authy_onetouch_status, onetouch_uuid: @uuid
+      expect(response.body).to eq({ redirect: root_path }.to_json)
+    end
+
+    it "Should not render the second step of authentication if first step is incomplete" do
+      request.session["user_id"] = @user.id
+      get :GET_authy_onetouch_status
+      expect(response).to redirect_to(root_url)
+    end
+
+    it "should redirect to root_url" do
+      get :GET_authy_onetouch_status
+      expect(response).to redirect_to(root_url)
     end
   end
 end

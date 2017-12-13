@@ -13,7 +13,10 @@ module DeviseAuthy
         inject_into_file "config/initializers/devise.rb", "\n" +
         "  # ==> Devise Authy Authentication Extension\n" +
         "  # How long should the user's device be remembered for.\n" +
-        "  # config.authy_remember_device = 1.month\n\n", :after => "Devise.setup do |config|\n"
+        "  # config.authy_remember_device = 1.month\n\n" +
+        "  # Should Authy OneTouch be enabled?\n" +
+        "  # config.authy_enable_onetouch = false\n\n", :after => "Devise.setup do |config|\n"
+
       end
 
       def add_initializer
