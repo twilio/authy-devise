@@ -152,6 +152,12 @@ Now on the project root run the following commands:
 $ bundle exec rspec spec/
 ```
 
+## Backporting to Rails 3
+
+While we are not currently supporting Rails 3, there's an active fork that maintains the backwards compatibility.
+
+https://github.com/gcosta/authy-devise
+
 ## Copyright
 
 Copyright (c) 2012-2020 Authy Inc. See LICENSE.txt for
