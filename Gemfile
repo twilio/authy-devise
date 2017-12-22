@@ -1,11 +1,11 @@
 source 'https://rubygems.org'
 
 gem 'devise', '>= 3.0.0'
-gem 'authy'
+gem 'authy', ">= 2.7.2"
 
 group :development do
   gem 'rspec', '> 3.0.0'
-  gem 'yard'
+  gem 'yard', "~> 0.9.11"
   gem 'rdoc'
   gem 'bundler'
   gem 'jeweler', '>= 2.0.1'
