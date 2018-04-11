@@ -8,6 +8,7 @@ module DeviseAuthy
       end
 
       private
+
       def remember_device
         id = @resource.id
         cookies.signed[:remember_device] = {
@@ -15,6 +16,10 @@ module DeviseAuthy
           :secure => !(Rails.env.test? || Rails.env.development?),
           :expires => resource_class.authy_remember_device.from_now
         }
+      end
+
+      def forget_device
+        cookies.delete :remember_device
       end
 
       def require_token?

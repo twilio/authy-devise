@@ -81,6 +81,7 @@ class Devise::DeviseAuthyController < DeviseController
     if response.ok?
       resource.update_attribute(:authy_enabled, false)
       resource.update_attribute(:authy_id, nil)
+      forget_device
 
       set_flash_message(:notice, :disabled)
     else
@@ -110,7 +111,7 @@ class Devise::DeviseAuthyController < DeviseController
       handle_invalid_token :verify_authy_installation, :not_enabled
     end
   end
-  
+
   def GET_authy_onetouch_status
     status = Authy::API.get_request("onetouch/json/approval_requests/#{params[:onetouch_uuid]}")['approval_request']['status']
     case status
