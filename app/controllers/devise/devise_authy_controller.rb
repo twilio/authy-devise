@@ -104,13 +104,14 @@ class Devise::DeviseAuthyController < DeviseController
     self.resource.authy_enabled = token.ok?
 
     if token.ok? && self.resource.save
+      record_authy_authentication
       set_flash_message(:notice, :enabled)
       redirect_to after_authy_verified_path_for(resource)
     else
       handle_invalid_token :verify_authy_installation, :not_enabled
     end
   end
-  
+
   def GET_authy_onetouch_status
     status = Authy::API.get_request("onetouch/json/approval_requests/#{params[:onetouch_uuid]}")['approval_request']['status']
     case status
