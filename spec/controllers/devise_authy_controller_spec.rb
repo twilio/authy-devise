@@ -239,6 +239,7 @@ describe Devise::DeviseAuthyController, type: :controller do
     it "Should enable authy for user" do
       sign_in @user
       post :POST_verify_authy_installation, :token => "0000000"
+      expect(session["user_authy_token_checked"]).to be_truthy
       expect(response).to redirect_to(root_url)
       expect(flash[:notice]).to eq('Two factor authentication was enabled')
 
