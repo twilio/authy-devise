@@ -1,6 +1,12 @@
 language: ruby
+before_install: cd spec/rails-app && bundle install
 script: bundle exec rspec
 rvm:
-  - 2.3.0
-  - 2.2.3
-before_install: cd spec/rails-app && bundle install
+  - 2.5
+  - 2.4
+  - 2.3
+  - 2.2
+  - ruby-head
+matrix:
+  allow_failures:
+    - rvm: ruby-head
