@@ -193,7 +193,15 @@ describe Devise::DeviseAuthyController, type: :controller do
       sign_in @user
       @user.update_attribute(:authy_enabled, true)
 
+      request.cookies["remember_device"] = {
+        :value => {expires: Time.now.to_i, id: @user.id}.to_json,
+        :secure => false,
+        :expires => User.authy_remember_device.from_now
+      }
+
       post :POST_disable_authy
+
+      expect(response.cookies["remember_device"]).to be_nil
       @user.reload
       expect(@user.authy_id).to be_nil
       expect(@user.authy_enabled).to be_falsey

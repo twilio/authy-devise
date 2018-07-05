@@ -81,6 +81,7 @@ class Devise::DeviseAuthyController < DeviseController
     if response.ok?
       resource.update_attribute(:authy_enabled, false)
       resource.update_attribute(:authy_id, nil)
+      forget_device
 
       set_flash_message(:notice, :disabled)
     else
