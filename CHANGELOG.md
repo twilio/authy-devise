@@ -1,0 +1,36 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
+and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+### Fixed
+- Fixes Ruby interpolation in HAML for onetouch (thanks @muan)
+- Records Authy authentication after install verification (thanks @nukturnal)
+- Forgets remember device cookie when disabling Authy (thanks @senekis)
+
+### Changed
+- Updated testing Rubies in CI
+
+## Older releases
+
+__*The following releases happened before the changelog was started. Some history will be added for clarity.*__
+
+## [1.8.2] - 2017-12-22
+## [1.8.1] - 2016-12-06
+## [1.8.0] - 2016-10-25
+## [1.7.0] - 2015-12-22
+## [1.6.0] - 2015-01-07
+## [1.5.3] - 2014-06-11
+## [1.5.2] - 2014-06-11
+## [1.5.1] - 2014-04-24
+## [1.5.0] - 2014-01-07
+## [1.4.0] - 2013-12-17
+## [1.3.0] - 2013-11-16
+## [1.2.2] - 2013-09-04
+## [1.2.1] - 2013-04-22
+## [1.2.0] - 2013-04-22 [YANKED]
+## [1.0.0] - 2013-04-10
+
