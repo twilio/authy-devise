@@ -5,7 +5,9 @@ This is a [Devise](https://github.com/plataformatec/devise) extension to add Two
 
 ## Pre-requisites
 
-Get an Authy API Key: [https://www.authy.com/signup](https://www.authy.com/signup)
+To use the Authy API you will need a Twilio Account, [sign up for a free account here](https://www.twilio.com/try-twilio).
+
+Create an [Authy Application in the Twilio console](https://www.twilio.com/console/authy/applications) and take note of the API key.
 
 ## Demo
 
@@ -13,7 +15,7 @@ See [https://github.com/authy/authy-devise/tree/master/authy-devise-demo](https:
 
 ## Getting started
 
-First get your Authy API key from [https://www.authy.com/signup](https://www.authy.com/signup). We recommend you store your API key as an environment variable.
+First get your Authy API key from [the Twilio console](https://www.twilio.com/console/authy/applications). We recommend you store your API key as an environment variable.
 
 ```bash
 $ export AUTHY_API_KEY=YOUR_AUTHY_API_KEY
@@ -139,7 +141,7 @@ session["user_authy_token_checked"]
 
 ## OneTouch support
 
-To enable the OneTouch feature, you need to modify the Devise config file `config/initializers/devise.rb` and add configuration:
+To enable [Authy push authentication](https://www.twilio.com/authy/features/push), you need to modify the Devise config file `config/initializers/devise.rb` and add configuration:
 
 ```
 config.authy_enable_onetouch = true
