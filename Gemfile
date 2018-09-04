@@ -1,17 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'devise', '>= 3.0.0'
-gem 'authy', ">= 2.7.2"
-
-group :development do
-  gem 'rspec', '> 3.0.0'
-  gem 'yard', "~> 0.9.11"
-  gem 'rdoc'
-  gem 'bundler'
-  gem 'jeweler', '>= 2.0.1'
-  gem 'simplecov'
-  gem 'byebug'
-end
+gemspec
 
 group :test do
   gem 'rails', '~> 4.2.7'
