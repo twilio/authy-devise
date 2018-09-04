@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+- Generated migration now includes version number for Rails 5
+
+### Changed
+- Removes Jeweler in favour of administering the gemspec by hand
+
 ## [1.8.3] - 2018-07-05
 ### Fixed
 - Fixes Ruby interpolation in HAML for onetouch (thanks @muan)
