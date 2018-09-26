@@ -2,20 +2,27 @@
 
 This is a [Devise](https://github.com/plataformatec/devise) extension to add Two-Factor Authentication with Authy to your rails application.
 
-
 ## Pre-requisites
 
+<<<<<<< HEAD
 To use the Authy API you will need a Twilio Account, [sign up for a free account here](https://www.twilio.com/try-twilio).
 
 Create an [Authy Application in the Twilio console](https://www.twilio.com/console/authy/applications) and take note of the API key.
+=======
+[Sign up for Twilio account](https://www.twilio.com/try-twilio) and [get an Authy API Key from the console](https://www.twilio.com/console/authy).
+>>>>>>> Updates README with new demo app
 
 ## Demo
 
-See [https://github.com/authy/authy-devise/tree/master/authy-devise-demo](https://github.com/authy/authy-devise/tree/master/authy-devise-demo)
+See [this repo for a full demo of using `authy-devise`](https://github.com/twilio/authy-devise-demo).
 
 ## Getting started
 
+<<<<<<< HEAD
 First get your Authy API key from [the Twilio console](https://www.twilio.com/console/authy/applications). We recommend you store your API key as an environment variable.
+=======
+First get your Authy API key from [the Twilio console](https://www.twilio.com/console/authy). We recommend you store your API key as an environment variable.
+>>>>>>> Updates README with new demo app
 
 ```bash
 $ export AUTHY_API_KEY=YOUR_AUTHY_API_KEY
@@ -49,7 +56,7 @@ or add the following line to your `User` model
 devise :authy_authenticatable, :database_authenticatable
 ```
 
-Change the default routes to point to something sane like:
+Update the default routes to point to something like:
 
 ```ruby
 devise_for :users, :path_names => {
@@ -64,12 +71,11 @@ Then run the migrations:
 
     rake db:migrate
 
-Now whenever a user wants to enable two-factor authentication they can go
-to:
+Now whenever a user wants to enable two-factor authentication they can go to:
 
     http://your-app/users/enable-two-factor
 
-And when the user log's in he will be redirected to:
+And when the user logs in they will be redirected to:
 
     http://your-app/users/verify-token
 
@@ -123,7 +129,7 @@ devise_for :users, controllers: {devise_authy: 'my_custom_module/devise_authy'}
 
 ## I18n
 
-The install generator also copy a `Devise Authy` i18n file which you can find at:
+The install generator also copies a `Devise Authy` i18n file which you can find at:
 
     config/locales/devise.authy.en.yml
 
