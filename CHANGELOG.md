@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-...
+### Changed
+- Moves OneTouch approval request copy to locale file.
+
+### Removed
+- Demo app now lives in its own repo
 
 ## [1.9.0] - 2018-09-04
 
