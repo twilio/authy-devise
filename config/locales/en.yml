@@ -9,6 +9,7 @@ en:
     request_sms: 'Request SMS'
     request_phone_call: 'Request phone call'
     remember_device: 'Remember Device'
+    request_to_login: 'Request to Login'
 
     authy_verify_installation_title: 'Verify your account'
     enable_my_account: 'Enable my account'
