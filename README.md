@@ -1,4 +1,4 @@
-# Authy Devise [![Build Status](https://travis-ci.org/authy/authy-devise.svg?branch=master)](https://travis-ci.org/authy/authy-devise)
+# Authy Devise [![Build Status](https://travis-ci.org/twilio/authy-devise.svg?branch=master)](https://travis-ci.org/twilio/authy-devise)
 
 This is a [Devise](https://github.com/plataformatec/devise) extension to add Two-Factor Authentication with Authy to your rails application.
 
