@@ -4,7 +4,7 @@
 
 <%= verify_authy_form do %>
   <legend><%= I18n.t('submit_token_title', {:scope => 'devise'}) %></legend>
-  <%= label_tag :token %>
+  <%= label_tag 'authy-token' %>
   <%= text_field_tag :token, "", :autocomplete => :off, :id => 'authy-token' %>
   <label>
     <%= check_box_tag :remember_device %>

@@ -3,7 +3,7 @@
 = verify_authy_form do
   %legend= I18n.t('submit_token_title', {:scope => 'devise'})
   = hidden_field_tag :"#{resource_name}_id", @resource.id
-  = label_tag :token
+  = label_tag 'authy-token'
   = text_field_tag :token, "", :autocomplete => :off, :id => 'authy-token'
   %label
     = check_box_tag :remember_device
