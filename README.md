@@ -38,17 +38,55 @@ Add `Devise Authy` to your App:
 
 ### Configuring Models
 
-Configure your Devise user model:
+You can add devise_authy to your user model in two ways.
 
-    rails g devise_authy [MODEL_NAME]
+#### With the generator
 
-or add the following line to your `User` model
+This is the easiest way and is recommended. Run the following command:
+
+```bash
+rails g devise_authy [MODEL_NAME]
+```
+
+#### Manually
+
+Add `:authy_authenticatable` to the `devise` options in your Devise user model:
 
 ```ruby
 devise :authy_authenticatable, :database_authenticatable
 ```
 
-Update the default routes to point to something like:
+Also add a new migration. For example, if you are adding to the `User` model, use this migration:
+
+```ruby
+class DeviseAuthyAddToUsers < ActiveRecord::Migration[5.2]
+  def self.up
+    change_table :users do |t|
+      t.string    :authy_id
+      t.datetime  :last_sign_in_with_authy
+      t.boolean   :authy_enabled, :default => false
+    end
+
+    add_index :users, :authy_id
+  end
+
+  def self.down
+    change_table :users do |t|
+      t.remove :authy_id, :last_sign_in_with_authy, :authy_enabled
+    end
+  end
+end
+```
+
+#### Final steps
+
+For either method above, run the migrations:
+
+```bash
+rake db:migrate
+```
+
+**[Optional]** Update the default routes to point to something like:
 
 ```ruby
 devise_for :users, :path_names => {
@@ -59,10 +97,6 @@ devise_for :users, :path_names => {
 }
 ```
 
-Then run the migrations:
-
-    rake db:migrate
-
 Now whenever a user wants to enable two-factor authentication they can go to:
 
     http://your-app/users/enable-two-factor
@@ -70,7 +104,6 @@ Now whenever a user wants to enable two-factor authentication they can go to:
 And when the user logs in they will be redirected to:
 
     http://your-app/users/verify-token
-
 
 ## Custom Views
 
@@ -118,7 +151,6 @@ And tell the router to use this controller
 devise_for :users, controllers: {devise_authy: 'my_custom_module/devise_authy'}
 ```
 
-
 ## I18n
 
 The install generator also copies a `Devise Authy` i18n file which you can find at:
@@ -145,10 +177,10 @@ To enable [Authy push authentication](https://www.twilio.com/authy/features/push
 config.authy_enable_onetouch = true
 ```
 
-
 ## Running Tests
 
 To prepare the tests run the following commands:
+
 ```bash
 $ cd spec/rails-app
 $ bundle install
@@ -156,6 +188,7 @@ $ RAILS_ENV=test bundle exec rake db:migrate
 ```
 
 Now on the project root run the following commands:
+
 ```bash
 $ bundle exec rspec spec/
 ```
