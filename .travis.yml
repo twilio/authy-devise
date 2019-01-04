@@ -1,5 +1,5 @@
 language: ruby
-before_install: cd spec/rails-app && bundle install
+before_install: cd spec/rails-app && bundle install && cd ../..
 script: bundle exec rspec
 rvm:
   - 2.5
