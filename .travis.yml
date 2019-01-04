@@ -1,6 +1,7 @@
 language: ruby
 before_install: 
   - "find /home/travis/.rvm/rubies -wholename '*default/bundler-*.gemspec' -delete"
+  - rvm @global do gem uninstall bundler -a -x
   - rvm @global do gem install bundler -v '< 2.0.0'
   - cd spec/rails-app && BUNDLE_GEMFILE=$TRAVIS_BUILD_DIR/spec/rails-app/Gemfile bundle install && cd ../..
 script: bundle exec rspec
