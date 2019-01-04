@@ -1,6 +1,6 @@
 language: ruby
 before_install: 
-  - gem install bundler -v '< 2'
+  - gem uninstall bundler && gem install bundler -v '< 2'
   - cd spec/rails-app && BUNDLE_GEMFILE=$TRAVIS_BUILD_DIR/spec/rails-app/Gemfile bundle install && cd ../..
 script: bundle exec rspec
 rvm:
