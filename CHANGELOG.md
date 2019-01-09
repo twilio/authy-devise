@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Corrects for label in verify_authy view (#103 thanks @mstruebing)
 - Corrects heading in verify_authy view (#104 thanks @mstruebing)
 
+### Changed
+
+- Allows you to define paths for request_sms and request_phone_call (#108 thanks @dedene)
+
 ## [1.10.0] - 2018-09-26
 
 ### Changed
