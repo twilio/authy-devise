@@ -177,6 +177,18 @@ To enable [Authy push authentication](https://www.twilio.com/authy/features/push
 config.authy_enable_onetouch = true
 ```
 
+## Rails 5 CSRF protection
+
+In Rails 5 `protect_from_forgery` is no longer prepended to the `before_action` chain. If you call `authenticate_user` before `protect_from_forgery` your request will result in a "Can't verify CSRF token authenticity" error.
+
+To remedy this, add `prepend: true` to your `protect_from_forgery` call, like in this example from the [Authy Devise demo app](https://github.com/twilio/authy-devise-demo):
+
+```ruby
+class ApplicationController < ActionController::Base
+  protect_from_forgery with: :exception, prepend: true
+end
+```
+
 ## Running Tests
 
 To prepare the tests run the following commands:
