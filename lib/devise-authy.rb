@@ -3,6 +3,8 @@ require 'active_support/core_ext/integer/time'
 require 'devise'
 require 'authy'
 
+Authy.user_agent = "DeviseAuthy/#{DeviseAuthy::VERSION} - #{Authy.user_agent}"
+
 module Devise
   mattr_accessor :authy_remember_device, :authy_enable_onetouch
   @@authy_remember_device = 1.month
