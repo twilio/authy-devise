@@ -16,6 +16,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Allows you to define paths for request_sms and request_phone_call (#108 thanks @dedene)
 
+### Added
+
+- Now sets a distinct user agent through the Authy gem (#110)
+
 ## [1.10.0] - 2018-09-26
 
 ### Changed
