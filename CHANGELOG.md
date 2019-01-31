@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+...
+
+## [1.11.0] - 2019-02-01
+
 ### Fixed
 
 - Corrects for label in verify_authy view (#103 thanks @mstruebing)
