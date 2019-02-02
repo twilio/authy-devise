@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ...
 
+## [1.11.1] - 2019-02-02
+
+### Fixed
+
+- Using the version before loading it broke everything. :facepalm:
+
 ## [1.11.0] - 2019-02-01
 
 ### Fixed
