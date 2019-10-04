@@ -14,6 +14,7 @@ module DeviseAuthy
         cookies.signed[:remember_device] = {
           :value => {expires: Time.now.to_i, id: id}.to_json,
           :secure => !(Rails.env.test? || Rails.env.development?),
+          :httponly => !(Rails.env.test? || Rails.env.development?),
           :expires => resource_class.authy_remember_device.from_now
         }
       end
