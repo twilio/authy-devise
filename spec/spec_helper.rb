@@ -13,6 +13,7 @@ require 'orm/active_record'
 require 'capybara/rails'
 require 'capybara/rspec'
 require 'database_cleaner'
+require 'webmock/rspec'
 
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories.

@@ -57,11 +57,20 @@ describe Devise::DeviseAuthyController, type: :controller do
   end
 
   describe "POST #verify_authy" do
+    let(:verify_success) { double("Authy::Response", :ok? => true) }
+    let(:verify_failure) { double("Authy::Response", :ok? => false) }
+
     it "Should login the user if token is ok" do
       request.session["user_id"] = @user.id
       request.session["user_password_checked"] = true
 
-      post :POST_verify_authy, :token => '0000000'
+      expect(Authy::API).to receive(:verify).with(
+        :id => @user.authy_id,
+        :token => valid_authy_token,
+        :force => true
+      ).and_return(verify_success)
+
+      post :POST_verify_authy, :token => valid_authy_token
       @user.reload
       expect(@user.last_sign_in_with_authy).not_to be_nil
 
@@ -75,7 +84,13 @@ describe Devise::DeviseAuthyController, type: :controller do
       request.session["user_id"] = @user.id
       request.session["user_password_checked"] = true
 
-      post :POST_verify_authy, :token => '0000000', :remember_device => '1'
+      expect(Authy::API).to receive(:verify).with(
+        :id => @user.authy_id,
+        :token => valid_authy_token,
+        :force => true
+      ).and_return(verify_success)
+
+      post :POST_verify_authy, :token => valid_authy_token, :remember_device => '1'
       @user.reload
       expect(@user.last_sign_in_with_authy).not_to be_nil
 
@@ -88,7 +103,13 @@ describe Devise::DeviseAuthyController, type: :controller do
       request.session["user_id"] = @user.id
       request.session["user_password_checked"] = true
 
-      post :POST_verify_authy, :token => '5678900'
+      expect(Authy::API).to receive(:verify).with(
+        :id => @user.authy_id,
+        :token => invalid_authy_token,
+        :force => true
+      ).and_return(verify_failure)
+
+      post :POST_verify_authy, :token => invalid_authy_token
       expect(response).to render_template('verify_authy')
     end
 
@@ -105,6 +126,12 @@ describe Devise::DeviseAuthyController, type: :controller do
         request.session['user_id']               = user.id
         request.session['user_password_checked'] = true
 
+        expect(Authy::API).to receive(:verify).exactly(Devise.maximum_attempts).times.with(
+          :id => @user.authy_id,
+          :token => invalid_authy_token,
+          :force => true
+        ).and_return(verify_failure)
+
         too_many_failed_attempts.times do
           post :POST_verify_authy, token: invalid_authy_token
         end
@@ -120,6 +147,12 @@ describe Devise::DeviseAuthyController, type: :controller do
       it 'does not lock the account when failed_attempts exceeds maximum' do
         request.session['user_id']               = @user.id
         request.session['user_password_checked'] = true
+
+        expect(Authy::API).to receive(:verify).exactly(too_many_failed_attempts).times.with(
+          :id => @user.authy_id,
+          :token => invalid_authy_token,
+          :force => true
+        ).and_return(verify_failure)
 
         too_many_failed_attempts.times do
           post :POST_verify_authy, token: invalid_authy_token
@@ -163,21 +196,37 @@ describe Devise::DeviseAuthyController, type: :controller do
 
   describe "POST #enable_authy" do
     it "Should create user in authy application" do
+      cellphone = '3010008090'
+      country_code = '57'
       user2 = create_user
       sign_in user2
 
-      post :POST_enable_authy, :cellphone => '3010008090', :country_code => '57'
+      expect(Authy::API).to receive(:register_user).with(
+        :email => user2.email,
+        :cellphone => cellphone,
+        :country_code => country_code
+      ).and_return(double("Authy::User", :ok? => true, :id => "123"))
+
+      post :POST_enable_authy, :cellphone => cellphone, :country_code => country_code
       user2.reload
-      expect(user2.authy_id).not_to be_nil
+      expect(user2.authy_id).to eq("123")
       expect(flash.now[:notice]).to eq("Two factor authentication was enabled")
       expect(response).to redirect_to(user_verify_authy_installation_url)
     end
 
     it "Should not create user register user failed" do
+      cellphone = '22222'
+      country_code = '57'
       user2 = create_user
       sign_in user2
 
-      post :POST_enable_authy, :cellphone => '22222', :country_code => "57"
+      expect(Authy::API).to receive(:register_user).with(
+        :email => user2.email,
+        :cellphone => cellphone,
+        :country_code => country_code
+      ).and_return(double("Authy::User", :ok? => false))
+
+      post :POST_enable_authy, :cellphone => cellphone, :country_code => country_code
       expect(response).to render_template('enable_authy')
       expect(flash[:error]).to eq("Something went wrong while enabling two factor authentication")
     end
@@ -198,6 +247,8 @@ describe Devise::DeviseAuthyController, type: :controller do
         :secure => false,
         :expires => User.authy_remember_device.from_now
       }
+
+      expect(Authy::API).to receive(:delete_user).with(:id => @user.authy_id).and_return(double("Authy::Response", :ok? => true))
 
       post :POST_disable_authy
 
@@ -245,8 +296,16 @@ describe Devise::DeviseAuthyController, type: :controller do
 
   describe "POST #verify_authy_installation" do
     it "Should enable authy for user" do
+      token = "000000"
       sign_in @user
-      post :POST_verify_authy_installation, :token => "0000000"
+
+      expect(Authy::API).to receive(:verify).with(
+        :id => @user.authy_id,
+        :token => token,
+        :force => true
+      ).and_return(double("Authy::Response", :ok? => true))
+
+      post :POST_verify_authy_installation, :token => token
       expect(session["user_authy_token_checked"]).to be_truthy
       expect(response).to redirect_to(root_url)
       expect(flash[:notice]).to eq('Two factor authentication was enabled')
@@ -256,8 +315,16 @@ describe Devise::DeviseAuthyController, type: :controller do
     end
 
     it "should not enable authy for user" do
+      token = "0007777"
       sign_in @user
-      post :POST_verify_authy_installation, :token => "0007777"
+
+      expect(Authy::API).to receive(:verify).with(
+        :id => @user.authy_id,
+        :token => token,
+        :force => true
+      ).and_return(double("Authy::Response", :ok? => false))
+
+      post :POST_verify_authy_installation, :token => token
       expect(response).to render_template('verify_authy_installation')
       expect(flash[:error]).to eq('Something went wrong while enabling two factor authentication')
     end
@@ -271,6 +338,9 @@ describe Devise::DeviseAuthyController, type: :controller do
   describe "POST #request_sms" do
     it "Should send sms if user is logged" do
       sign_in @user
+
+      expect(Authy::API).to receive(:request_sms).with(:id => @user.authy_id, :force => true).and_return(double("Authy::Response", :ok? => true, :message => "Token was sent."))
+
       post :request_sms
       expect(response.content_type).to eq('application/json')
       body = JSON.parse(response.body)
@@ -279,7 +349,7 @@ describe Devise::DeviseAuthyController, type: :controller do
       expect(body['message']).to eq("Token was sent.")
     end
 
-    it "Shoul not send sms if user couldn't be found" do
+    it "Should not send sms if user couldn't be found" do
       post :request_sms
       expect(response.content_type).to eq('application/json')
       body = JSON.parse(response.body)
@@ -291,6 +361,9 @@ describe Devise::DeviseAuthyController, type: :controller do
   describe "POST #request_phone_call" do
     it "Should send phone call if user is logged" do
       sign_in @user
+
+      expect(Authy::API).to receive(:request_phone_call).with(:id => @user.authy_id, :force => true).and_return(double("Authy::Response", :ok? => true, :message => 'Call started...'))
+
       post :request_phone_call
       expect(response.content_type).to eq('application/json')
       body = JSON.parse(response.body)

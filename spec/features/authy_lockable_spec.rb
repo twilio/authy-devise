@@ -15,6 +15,11 @@ feature 'Authy Lockable' do
     end
 
     scenario 'account locked when user enters invalid code too many times' do
+      expect(Authy::API).to receive(:verify).with(
+        :id => user.authy_id,
+        :token => invalid_authy_token,
+        :force => true
+      ).exactly(LockableUser.maximum_attempts).times.and_return(double("Authy::Response", :ok? => false))
       (LockableUser.maximum_attempts - 1).times do |i|
         fill_verify_token_form invalid_authy_token
         assert_at lockable_user_verify_authy_path
@@ -43,11 +48,23 @@ feature 'Authy Lockable' do
     end
 
     scenario 'account locked when user enters invalid code too many times' do
+      country_code = '1'
+      cellphone = '8001234567'
+      expect(Authy::API).to receive(:register_user).with(
+        :email => user.email,
+        :cellphone => cellphone,
+        :country_code => country_code
+      ).and_return(double("Authy::User", :ok? => true, :id => '3'))
       visit lockable_user_enable_authy_path
-      fill_in 'authy-countries', with: '1'
-      fill_in 'authy-cellphone', with: '8001234567'
+      fill_in 'authy-countries', with: country_code
+      fill_in 'authy-cellphone', with: cellphone
       click_on 'Enable'
 
+      expect(Authy::API).to receive(:verify).with(
+        :id => '3',
+        :token => invalid_authy_token,
+        :force => true
+      ).exactly(LockableUser.maximum_attempts).and_return(double("Authy::Response", :ok? => false))
       (LockableUser.maximum_attempts - 1).times do |i|
         fill_in_verify_authy_installation_form invalid_authy_token
         assert_at lockable_user_verify_authy_installation_path
