@@ -26,12 +26,15 @@ describe "Authy Authenticatable", :type => :request do
     end
 
     it "Sign in should succeed" do
+      token = '000000'
+
       fill_sign_in_form(@user.email, '12345678')
       expect(current_path).to eq(user_verify_authy_path)
       expect(page).to have_content('Please enter your Authy token')
 
+      expect(Authy::API).to receive(:verify).with(:id => @user.authy_id, :token => token, :force => true).and_return(double("Authy::Response", :ok? => true))
       within('#devise_authy') do
-        fill_in 'authy-token', :with => '0000000'
+        fill_in 'authy-token', :with => token
       end
       click_on 'Check Token'
       expect(current_path).to eq(root_path)
@@ -41,12 +44,14 @@ describe "Authy Authenticatable", :type => :request do
     end
 
     it "Sign in shouldn't succeed" do
+      token = '324567'
       fill_sign_in_form(@user.email, '12345678')
       expect(current_path).to eq(user_verify_authy_path)
       expect(page).to have_content('Please enter your Authy token')
 
+      expect(Authy::API).to receive(:verify).with(:id => @user.authy_id, :token => token, :force => true).and_return(double("Authy::Response", :ok? => false))
       within('#devise_authy') do
-        fill_in 'authy-token', :with => '324567'
+        fill_in 'authy-token', :with => token
       end
       click_on 'Check Token'
       expect(current_path).to eq(user_verify_authy_path)
@@ -101,6 +106,8 @@ describe "Authy Authenticatable", :type => :request do
 
     it "Click link Request sms" do
       fill_sign_in_form(@user.email, '12345678')
+      expect(Authy::API).to receive(:request_sms).with(:id => @user.authy_id, :force => true).and_return(double("Authy::Response", :ok? => true, :message => "Token was sent."))
+
       click_link 'Request SMS'
       expect(page).to have_content("Token was sent.")
     end
