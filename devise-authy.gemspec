@@ -43,4 +43,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "webmock", "~> 3.7.6"
   spec.add_development_dependency "rails"
   spec.add_development_dependency "sqlite3"
+  spec.add_development_dependency "generator_spec"
 end

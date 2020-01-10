@@ -18,7 +18,6 @@ module DeviseAuthy
         "  # config.authy_remember_device = 1.month\n\n" +
         "  # Should Authy OneTouch be enabled?\n" +
         "  # config.authy_enable_onetouch = false\n\n", :after => "Devise.setup do |config|\n"
-
       end
 
       def add_initializer
@@ -63,14 +62,14 @@ module DeviseAuthy
 @
           },
           :erb => {
-            :before => %r{\s*</\s*head\s*>\s*},
+            :before => %r{\s*<\/\s*head\s*>\s*},
             :content => %@
   <%=javascript_include_tag "https://www.authy.com/form.authy.min.js" %>
   <%=stylesheet_link_tag "https://www.authy.com/form.authy.min.css" %>
 @
           }
         }.each do |extension, opts|
-          file_path = "app/views/layouts/application.html.#{extension}"
+          file_path = File.join(destination_root, "app", "views", "layouts", "application.html.#{extension}")
           if File.exists?(file_path) && !File.read(file_path).include?("form.authy.min.js")
             inject_into_file(file_path, opts.delete(:content), opts)
           end

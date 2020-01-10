@@ -9,6 +9,7 @@ SimpleCov.start do
 end
 
 require "webmock/rspec"
+require "generator_spec"
 require "devise-authy"
 require "combustion"
 
