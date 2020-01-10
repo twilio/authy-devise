@@ -1,7 +1,9 @@
+require "rails/generators"
+
 module DeviseAuthy
   module Generators
     # Install Generator
-    class InstallGenerator < Rails::Generators::Base
+    class InstallGenerator < ::Rails::Generators::Base
       source_root File.expand_path("../../templates", __FILE__)
 
       class_option :haml, :type => :boolean, :required => false, :default => false, :desc => "Generate views in Haml"

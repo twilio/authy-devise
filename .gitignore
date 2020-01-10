@@ -35,10 +35,9 @@ Gemfile.lock
 # unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
 .rvmrc
 
-spec/rails-app/tmp
-spec/rails-app/db
-spec/rails-app/log
 *.sqlite3DS_Store
 
 initializers/authy.rb
 .byebug_history
+
+.rspec_status

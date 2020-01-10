@@ -1,62 +1,27 @@
-ENV["RAILS_ENV"] ||= 'test'
+# frozen_string_literal: true
+ENV["RAILS_ENV"] = "test"
 
-require 'simplecov'
-SimpleCov.start
+require "bundler/setup"
 
-$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
-$LOAD_PATH.unshift(File.dirname(__FILE__))
-
-require "rails-app/config/environment"
-require 'rspec/rails'
-require 'devise-authy'
-require 'orm/active_record'
-require 'capybara/rails'
-require 'capybara/rspec'
-require 'database_cleaner'
-require 'webmock/rspec'
-
-# Requires supporting files with custom matchers and macros, etc,
-# in ./support/ and its subdirectories.
-Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
-
-RSpec.configure do |config|
-  config.before :suite do
-    DatabaseCleaner[:active_record].strategy = :truncation
-  end
-
-  config.before :each do
-    DatabaseCleaner.start
-  end
-
-  config.after :each do
-    DatabaseCleaner.clean
-  end
-
-  config.include Capybara::DSL
-
-  # rspec-rails 3 will no longer automatically infer an example group's spec type
-  # from the file location. You can explicitly opt-in to the feature using this
-  # config option.
-  # To explicitly tag specs without using automatic inference, set the `:type`
-  # metadata manually:
-  #
-  #     describe ThingsController, :type => :controller do
-  #       # Equivalent to being in spec/controllers
-  #     end
-  config.infer_spec_type_from_file_location!
+require "simplecov"
+SimpleCov.start do
+  add_filter "/spec/"
 end
 
-if RUBY_VERSION>='2.6.0'
-  if Rails.version < '5'
-    class ActionController::TestResponse < ActionDispatch::TestResponse
-      def recycle!
-        # hack to avoid MonitorMixin double-initialize error:
-        @mon_mutex_owner_object_id = nil
-        @mon_mutex = nil
-        initialize
-      end
-    end
-  else
-    puts "Monkeypatch for ActionController::TestResponse no longer needed"
+require "webmock/rspec"
+require "devise-authy"
+require "combustion"
+
+Combustion.initialize!(:active_record, :action_controller)
+
+RSpec.configure do |config|
+  # Enable flags like --only-failures and --next-failure
+  config.example_status_persistence_file_path = ".rspec_status"
+
+  # Disable RSpec exposing methods globally on `Module` and `main`
+  config.disable_monkey_patching!
+
+  config.expect_with :rspec do |c|
+    c.syntax = :expect
   end
 end
