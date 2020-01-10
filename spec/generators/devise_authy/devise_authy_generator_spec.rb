@@ -17,7 +17,6 @@ RSpec.describe DeviseAuthy::Generators::DeviseAuthyGenerator, type: :generator d
               "  attr_accessible :email\n" \
               "end"
     end
-
   end
 
   before(:all) do
