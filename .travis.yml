@@ -3,6 +3,7 @@ before_install:
   - "find /home/travis/.rvm/rubies -wholename '*default/bundler-*.gemspec' -delete"
   - rvm @global do gem uninstall bundler -a -x
   - rvm @global do yes | gem install bundler -v '< 2.0.0'
+before_script: bundle exec appraisal install
 script: bundle exec appraisal rspec
 rvm:
   - 2.7
