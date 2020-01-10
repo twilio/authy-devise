@@ -6,4 +6,4 @@ end
 appraise "rails-6" do
   gem "rails", "~> 6.0.0"
   gem "sqlite3", "~> 1.4"
-end
+end if RUBY_VERSION.to_f >= 2.5
