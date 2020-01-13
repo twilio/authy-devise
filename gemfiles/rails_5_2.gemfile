@@ -6,4 +6,10 @@ gem "sdoc", "~> 0.4.0", group: :doc
 gem "rails", "~> 5.2.0"
 gem "sqlite3", "~> 1.3.13"
 
+group :development, :test do
+  gem "factory_girl_rails", require: false
+  gem "rspec-rails", require: false
+  gem "database_cleaner", require: false
+end
+
 gemspec path: "../"
