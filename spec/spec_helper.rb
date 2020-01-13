@@ -9,10 +9,11 @@ SimpleCov.start do
 end
 
 Bundler.require :default, :development
-
-require 'devise'
-require './lib/devise-authy'
+require "devise"
+require "./lib/devise-authy"
 Combustion.initialize!(:all)
+ActiveSupport.run_load_hooks :action_controller
+ActiveSupport.run_load_hooks :action_view
 
 require "rspec/rails"
 require "webmock/rspec"
