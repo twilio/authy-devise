@@ -68,6 +68,7 @@ GEM
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     crass (1.0.5)
+    database_cleaner (1.7.0)
     devise (4.7.1)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -77,6 +78,8 @@ GEM
     diff-lcs (1.3)
     docile (1.3.2)
     erubi (1.8.0)
+    factory_bot (5.1.1)
+      activesupport (>= 4.2.0)
     generator_spec (0.9.4)
       activesupport (>= 3.0.0)
       railties (>= 3.0.0)
@@ -196,7 +199,9 @@ DEPENDENCIES
   appraisal (~> 2.2)
   bundler (>= 1.16)
   combustion (~> 1.1)
+  database_cleaner (~> 1.7)
   devise-authy!
+  factory_bot (~> 5.1.1)
   generator_spec
   rails (~> 5.2.0)
   rake
@@ -210,4 +215,4 @@ DEPENDENCIES
   yard (~> 0.9.11)
 
 BUNDLED WITH
-   1.17.3
+   2.0.2

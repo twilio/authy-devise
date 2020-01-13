@@ -44,4 +44,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rails"
   spec.add_development_dependency "sqlite3"
   spec.add_development_dependency "generator_spec"
+  spec.add_development_dependency "database_cleaner", "~> 1.7"
+  spec.add_development_dependency "factory_bot_rails", "~> 5.1.1"
 end
