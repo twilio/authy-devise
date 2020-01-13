@@ -10,7 +10,7 @@ FactoryBot.define do
     password { "correct horse battery staple" }
   end
 
-  factory :lockable_user do
+  factory :lockable_user, class: LockableUser do
     email { generate(:email) }
     password { "correct horse battery staple" }
   end
