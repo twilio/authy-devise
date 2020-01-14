@@ -17,6 +17,10 @@ RSpec.describe "routes for devise_authy", type: :controller do
     expect(post: '/users/enable_authy').to route_to("devise/devise_authy#POST_enable_authy")
   end
 
+  it "routes to devise_authy#POST_disable_authy" do
+    expect(post: '/users/disable_authy').to route_to("devise/devise_authy#POST_disable_authy")
+  end
+
   it "route to devise_authy#GET_verify_authy_installation" do
     expect(get: '/users/verify_authy_installation').to route_to("devise/devise_authy#GET_verify_authy_installation")
   end
@@ -27,6 +31,10 @@ RSpec.describe "routes for devise_authy", type: :controller do
 
   it "routes to devise_authy#request_sms" do
     expect(post: '/users/request-sms').to route_to("devise/devise_authy#request_sms")
+  end
+
+  it "routes to devise_authy#request_phone_call" do
+    expect(post: '/users/request-phone-call').to route_to("devise/devise_authy#request_phone_call")
   end
 
   it "routes to devise_authy#GET_authy_onetouch_status" do
