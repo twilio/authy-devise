@@ -28,5 +28,16 @@ RSpec.describe User, type: :model do
     end
 
   end
+  describe "with a user without an authy id" do
+    let!(:user) { create(:user) }
 
+    describe "user#with_authy_authentication?" do
+      it "should be false regardless of authy_enabled field" do
+        request = double("request")
+        expect(user.with_authy_authentication?(request)).to be false
+        user.authy_enabled = true
+        expect(user.with_authy_authentication?(request)).to be false
+      end
+    end
+  end
 end
