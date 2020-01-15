@@ -2,7 +2,7 @@
 
 RSpec.describe LockableUser, type: :model do
   describe "with a user with an authy id" do
-    let(:user) { create(:lockable_user, :authy_id => '20') }
+    let(:user) { create(:lockable_authy_user) }
 
     describe "#lockable?" do
       it "is true if lock_strategy is :failed_attempts" do

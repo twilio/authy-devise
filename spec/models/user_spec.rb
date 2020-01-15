@@ -2,12 +2,12 @@
 
 RSpec.describe User, type: :model do
   describe "with a user with an authy id" do
-    let!(:user) { create(:user, :authy_id => '20') }
+    let!(:user) { create(:authy_user) }
 
     describe "User#find_by_authy_id" do
       it "should find the user" do
         expect(User.first).not_to be nil
-        expect(User.find_by_authy_id('20')).to eq(user)
+        expect(User.find_by_authy_id(user.authy_id)).to eq(user)
       end
 
       it "shouldn't find the user with the wrong id" do
@@ -17,6 +17,7 @@ RSpec.describe User, type: :model do
 
     describe "user#with_authy_authentication?" do
       it "should be false when authy isn't enabled" do
+        user.authy_enabled = false
         request = double("request")
         expect(user.with_authy_authentication?(request)).to be false
       end

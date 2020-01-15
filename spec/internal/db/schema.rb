@@ -24,6 +24,8 @@ ActiveRecord::Schema.define do
     t.string "authy_id"
     t.datetime "last_sign_in_with_authy"
     t.boolean "authy_enabled", default: false
+    # single table inheritance so we can have lockable users
+    t.string "type"
 
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

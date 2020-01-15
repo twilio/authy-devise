@@ -10,4 +10,5 @@ Rails.application.routes.draw do
       :verify_authy_installation => "/verify-installation",
       :authy_onetouch_status => "/onetouch-status"
     }
+  root 'home#index'
 end

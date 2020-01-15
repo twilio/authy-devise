@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe DeviseAuthy::PasswordsController, type: :controller do
-  before(:each) { @request.env["devise.mapping"] = Devise.mappings[:user] }
+  before(:each) { request.env["devise.mapping"] = Devise.mappings[:user] }
 
   describe "during Devise :recoverable flow reset password stage" do
     describe "with a user without authy id" do
@@ -19,7 +19,7 @@ RSpec.describe DeviseAuthy::PasswordsController, type: :controller do
     end
 
     describe "with a user with authy id and authy enabled" do
-      let(:user) { create(:user, :authy_id => '20', :authy_enabled => true) }
+      let(:user) { create(:authy_user) }
 
       it "should not sign in the user after password reset" do
         token = user.send_reset_password_instructions

@@ -37,6 +37,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "combustion", "~> 1.1"
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "rspec-rails"
+  spec.add_development_dependency "rails-controller-testing", "~> 1.0"
   spec.add_development_dependency "yard", "~> 0.9.11"
   spec.add_development_dependency "rdoc", "~> 4.3.0"
   spec.add_development_dependency "simplecov", "~> 0.17.1"

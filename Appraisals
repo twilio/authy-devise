@@ -4,7 +4,7 @@ appraise "rails-5-2" do
 
   group :development, :test do
     gem 'factory_girl_rails', :require => false
-    gem 'rspec-rails', :require => false
+    gem 'rspec-rails', "~>4.0.0.beta3", :require => false
     gem 'database_cleaner', :require => false
   end
 end
@@ -15,7 +15,7 @@ appraise "rails-6" do
 
   group :development, :test do
     gem 'factory_girl_rails', :require => false
-    gem 'rspec-rails', :require => false
+    gem 'rspec-rails', "~>4.0.0.beta3", :require => false
     gem 'database_cleaner', :require => false
   end
 end if RUBY_VERSION.to_f >= 2.5

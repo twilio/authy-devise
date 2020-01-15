@@ -2,9 +2,9 @@ class Devise::DeviseAuthyController < DeviseController
   prepend_before_action :find_resource, :only => [
     :request_phone_call, :request_sms
   ]
-  prepend_before_action :find_resource_and_require_password_checked, :only => [
-    :GET_verify_authy, :POST_verify_authy, :GET_authy_onetouch_status
-  ]
+  prepend_before_action :find_resource_and_require_password_checked, :only => [:GET_verify_authy, :POST_verify_authy]
+  #   :GET_verify_authy, :POST_verify_authy, :GET_authy_onetouch_status
+  # ]
   prepend_before_action :authenticate_scope!, :only => [
     :GET_enable_authy, :POST_enable_authy,
     :GET_verify_authy_installation, :POST_verify_authy_installation,
@@ -13,9 +13,8 @@ class Devise::DeviseAuthyController < DeviseController
   include Devise::Controllers::Helpers
 
   def GET_verify_authy
-    @authy_id = @resource.authy_id
     if resource_class.authy_enable_onetouch
-      approval_request = send_one_touch_request['approval_request']
+      approval_request = send_one_touch_request(@resource.authy_id)['approval_request']
       @onetouch_uuid = approval_request['uuid'] if approval_request.present?
     end
     render :verify_authy
@@ -30,7 +29,7 @@ class Devise::DeviseAuthyController < DeviseController
     })
 
     if token.ok?
-      remember_device if params[:remember_device].to_i == 1
+      remember_device(@resource.id) if params[:remember_device].to_i == 1
       if session.delete("#{resource_name}_remember_me") == true && @resource.respond_to?(:remember_me=)
         @resource.remember_me = true
       end
