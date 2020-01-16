@@ -152,7 +152,7 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
           end
 
           it "should not remember the user" do
-            expect(response.cookies["remember_device"]).to be_nil
+            expect(cookies["remember_device"]).to be_nil
           end
 
           it "should redirect to the root_path and set a flash notice" do
