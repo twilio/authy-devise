@@ -31,12 +31,12 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
       end
 
       describe "#GET_authy_onetouch_status" do
-        xit "should redirect to the root_path" do
+        it "should redirect to the root_path" do
           get :GET_authy_onetouch_status
           expect(response).to redirect_to(root_path)
         end
 
-        xit "should not request the one touch status" do
+        it "should not request the one touch status" do
           expect(Authy::API).not_to receive(:get_request)
           get :GET_authy_onetouch_status
         end
@@ -71,12 +71,12 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
       end
 
       describe "#GET_authy_onetouch_status" do
-        xit "should redirect to the root_path" do
+        it "should redirect to the root_path" do
           get :GET_authy_onetouch_status
           expect(response).to redirect_to(root_path)
         end
 
-        xit "should not request the one touch status" do
+        it "should not request the one touch status" do
           expect(Authy::API).not_to receive(:get_request)
           get :GET_authy_onetouch_status
         end
@@ -142,13 +142,14 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
 
           it "should log the user in" do
             expect(subject.current_user).to eq(user)
-            expect(session["user_authy_token_checked"]).to be_truthy
+            expect(session["user_authy_token_checked"]).to be true
           end
 
           it "should set the last_sign_in_with_authy field on the user" do
             expect(user.last_sign_in_with_authy).to be_nil
             user.reload
             expect(user.last_sign_in_with_authy).not_to be_nil
+            expect(user.last_sign_in_with_authy).to be_within(1).of(Time.zone.now)
           end
 
           it "should not remember the user" do
@@ -246,13 +247,11 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
           end
 
           lockable_user.reload
-          expect(lockable_user.access_locked?).to be_truthy
+          expect(lockable_user.access_locked?).to be true
         end
-
       end
 
-      context 'User is not lockable' do
-
+      describe 'with a user that is not lockable' do
         it 'does not lock the account when failed_attempts exceeds maximum' do
           request.session['user_id']               = user.id
           request.session['user_password_checked'] = true
@@ -270,9 +269,59 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
           user.reload
           expect(user.locked_at).to be_nil
         end
+      end
+    end
 
+    describe "GET #authy_onetouch_status" do
+      let(:uuid) { SecureRandom.uuid }
+
+      it "should return a 202 status code when pending" do
+        allow(Authy::API).to receive(:get_request)
+          .with("onetouch/json/approval_requests/#{uuid}")
+          .and_return({ 'approval_request' => { 'status' => 'pending' }})
+        get :GET_authy_onetouch_status, params: { onetouch_uuid: uuid }
+        expect(response.code).to eq("202")
       end
 
+      it "should return a 401 status code when denied" do
+        allow(Authy::API).to receive(:get_request)
+          .with("onetouch/json/approval_requests/#{uuid}")
+          .and_return({ 'approval_request' => { 'status' => 'denied' }})
+        get :GET_authy_onetouch_status, params: { onetouch_uuid: uuid }
+        expect(response.code).to eq("401")
+      end
+
+      it "should return a 500 status code when something else happens" do
+        allow(Authy::API).to receive(:get_request)
+          .with("onetouch/json/approval_requests/#{uuid}")
+          .and_return({})
+        get :GET_authy_onetouch_status, params: { onetouch_uuid: uuid }
+        expect(response.code).to eq("500")
+      end
+
+      describe "when approved" do
+        before(:each) do
+          allow(Authy::API).to receive(:get_request)
+            .with("onetouch/json/approval_requests/#{uuid}")
+            .and_return({ 'approval_request' => { 'status' => 'approved' }})
+          get :GET_authy_onetouch_status, params: { onetouch_uuid: uuid }
+        end
+
+        it "should return a 200 status code" do
+          expect(response.code).to eq("200")
+        end
+
+        it "should render a JSON object with the redirect path" do
+          expect(response.body).to eq({ redirect: root_path }.to_json)
+        end
+
+        it "should sign the user in" do
+          expect(subject.current_user).to eq(user)
+          expect(session["user_authy_token_checked"]).to be true
+          user.reload
+          expect(user.last_sign_in_with_authy).to be_within(1).of(Time.zone.now)
+        end
+      end
     end
   end
 end

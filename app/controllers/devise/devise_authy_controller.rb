@@ -2,9 +2,10 @@ class Devise::DeviseAuthyController < DeviseController
   prepend_before_action :find_resource, :only => [
     :request_phone_call, :request_sms
   ]
-  prepend_before_action :find_resource_and_require_password_checked, :only => [:GET_verify_authy, :POST_verify_authy]
-  #   :GET_verify_authy, :POST_verify_authy, :GET_authy_onetouch_status
-  # ]
+  prepend_before_action :find_resource_and_require_password_checked, :only => [
+    :GET_verify_authy, :POST_verify_authy, :GET_authy_onetouch_status
+  ]
+
   prepend_before_action :authenticate_scope!, :only => [
     :GET_enable_authy, :POST_enable_authy,
     :GET_verify_authy_installation, :POST_verify_authy_installation,
@@ -113,7 +114,8 @@ class Devise::DeviseAuthyController < DeviseController
   end
 
   def GET_authy_onetouch_status
-    status = Authy::API.get_request("onetouch/json/approval_requests/#{params[:onetouch_uuid]}")['approval_request']['status']
+    response =  Authy::API.get_request("onetouch/json/approval_requests/#{params[:onetouch_uuid]}")
+    status = response.dig('approval_request', 'status')
     case status
     when 'pending'
       head 202
@@ -123,7 +125,7 @@ class Devise::DeviseAuthyController < DeviseController
     when 'denied'
       head :unauthorized
     else
-      head :error
+      head :internal_server_error
     end
   end
 
