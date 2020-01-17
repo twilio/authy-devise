@@ -8,10 +8,9 @@ class Devise::DeviseAuthyController < DeviseController
 
   prepend_before_action :authenticate_scope!, :only => [
     :GET_enable_authy, :POST_enable_authy, :GET_verify_authy_installation,
-    :POST_verify_authy_installation
+    :POST_verify_authy_installation, :POST_disable_authy
   ]
-  #   :POST_disable_authy
-  # ]
+
   include Devise::Controllers::Helpers
 
   def GET_verify_authy

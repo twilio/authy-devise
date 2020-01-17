@@ -346,6 +346,11 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
         post :POST_verify_authy_installation
         expect(response).to redirect_to(new_user_session_path)
       end
+
+      it "POST #disable_authy should redirect to sign in" do
+        post :POST_disable_authy
+        expect(response).to redirect_to(new_user_session_path)
+      end
     end
 
     describe "with a logged in user" do
@@ -502,6 +507,68 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
           it "should set an error flash and render verify_authy_installation" do
             expect(response).to render_template('verify_authy_installation')
             expect(flash[:error]).to eq('Something went wrong while enabling two factor authentication')
+          end
+        end
+      end
+
+      describe "POST disable_authy" do
+        describe "successfully" do
+          before(:each) do
+            cookies.signed[:remember_device] = {
+              :value => {expires: Time.now.to_i, id: user.id}.to_json,
+              :secure => false,
+              :expires => User.authy_remember_device.from_now
+            }
+            expect(Authy::API).to receive(:delete_user)
+              .with(:id => user.authy_id)
+              .and_return(double("Authy::Response", :ok? => true))
+
+            post :POST_disable_authy
+          end
+
+          it "should disable 2FA" do
+            user.reload
+            expect(user.authy_id).to be nil
+            expect(user.authy_enabled).to be false
+          end
+
+          it "should forget the device cookie" do
+            expect(response.cookies[:remember_device]).to be nil
+          end
+
+          it "should set a flash notice and redirect" do
+            expect(flash.now[:notice]).to eq("Two factor authentication was disabled")
+            expect(response).to redirect_to(root_path)
+          end
+        end
+
+        describe "unsuccessfully" do
+          before(:each) do
+            cookies.signed[:remember_device] = {
+              :value => {expires: Time.now.to_i, id: user.id}.to_json,
+              :secure => false,
+              :expires => User.authy_remember_device.from_now
+            }
+            expect(Authy::API).to receive(:delete_user)
+              .with(:id => user.authy_id)
+              .and_return(double("Authy::Response", :ok? => false))
+
+            post :POST_disable_authy
+          end
+
+          it "should not disable 2FA" do
+            user.reload
+            expect(user.authy_id).not_to be nil
+            expect(user.authy_enabled).to be true
+          end
+
+          it "should not forget the device cookie" do
+            expect(cookies[:remember_device]).not_to be_nil
+          end
+
+          it "should set a flash error and redirect" do
+            expect(flash[:error]).to eq("Something went wrong while disabling two factor authentication")
+            expect(response).to redirect_to(root_path)
           end
         end
       end
