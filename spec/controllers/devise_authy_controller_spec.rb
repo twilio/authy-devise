@@ -324,4 +324,38 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
       end
     end
   end
+
+  describe "enabling disabling authy" do
+    describe "with no-one logged in" do
+      describe "GET #enable_authy" do
+        it "should redirect to sign in" do
+          get :GET_enable_authy
+          expect(response).to redirect_to(new_user_session_path)
+        end
+      end
+    end
+
+    describe "with a logged in user" do
+      before(:each) { sign_in(user) }
+
+      it "should render enable authy view if user isn't enabled" do
+        user.update_attribute(:authy_enabled, false)
+        get :GET_enable_authy
+        expect(response).to render_template("enable_authy")
+      end
+
+      it "should render enable authy view if user doens't have an authy_id" do
+        user.update_attribute(:authy_id, nil)
+        get :GET_enable_authy
+        expect(response).to render_template("enable_authy")
+      end
+
+      it "should redirect and set flash if authy is enabled" do
+        user.update_attribute(:authy_enabled, true)
+        get :GET_enable_authy
+        expect(response).to redirect_to(root_path)
+        expect(flash[:notice]).not_to be nil
+      end
+    end
+  end
 end
