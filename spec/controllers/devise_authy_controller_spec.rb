@@ -325,7 +325,7 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
     end
   end
 
-  describe "enabling disabling authy" do
+  describe "enabling/disabling authy" do
     describe "with no-one logged in" do
       it "GET #enable_authy should redirect to sign in" do
         get :GET_enable_authy
@@ -339,6 +339,11 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
 
       it "GET #verify_authy_installation should redirect to sign in" do
         get :GET_verify_authy_installation
+        expect(response).to redirect_to(new_user_session_path)
+      end
+
+      it "POST #verify_authy_installation should redirect to sign in" do
+        post :POST_verify_authy_installation
         expect(response).to redirect_to(new_user_session_path)
       end
     end
@@ -447,6 +452,57 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
         it "should render the authy installation page" do
           get :GET_verify_authy_installation
           expect(response).to render_template('verify_authy_installation')
+        end
+      end
+
+      describe "POST verify_authy_installation" do
+        let(:token) { "000000" }
+        before(:each) { user.update_attribute(:authy_enabled, false) }
+
+        describe "successful verification" do
+          before(:each) do
+            expect(Authy::API).to receive(:verify).with(
+              :id => user.authy_id,
+              :token => token,
+              :force => true
+            ).and_return(double("Authy::Response", :ok? => true))
+            post :POST_verify_authy_installation, :params => { :token => token }
+          end
+
+          it "should enable authy for user" do
+            user.reload
+            expect(user.authy_enabled).to be true
+          end
+
+          it "should set {resource}_authy_token_checked in the session" do
+            expect(session["user_authy_token_checked"]).to be true
+          end
+
+          it "should set a flash notice and redirect" do
+            expect(response).to redirect_to(root_path)
+            expect(flash[:notice]).to eq('Two factor authentication was enabled')
+          end
+        end
+
+        describe "unsuccessful verification" do
+          before(:each) do
+            expect(Authy::API).to receive(:verify).with(
+              :id => user.authy_id,
+              :token => token,
+              :force => true
+            ).and_return(double("Authy::Response", :ok? => false))
+            post :POST_verify_authy_installation, :params => { :token => token }
+          end
+
+          it "should not enable authy for user" do
+            user.reload
+            expect(user.authy_enabled).to be false
+          end
+
+          it "should set an error flash and render verify_authy_installation" do
+            expect(response).to render_template('verify_authy_installation')
+            expect(flash[:error]).to eq('Something went wrong while enabling two factor authentication')
+          end
         end
       end
     end
