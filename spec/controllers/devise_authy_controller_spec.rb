@@ -574,4 +574,100 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
       end
     end
   end
+
+  describe "requesting authentication tokens" do
+    describe "without a user" do
+      it "Should not request sms if user couldn't be found" do
+        expect(Authy::API).not_to receive(:request_sms)
+
+        post :request_sms
+
+        expect(response.media_type).to eq('application/json')
+        body = JSON.parse(response.body)
+        expect(body['sent']).to be false
+        expect(body['message']).to eq("User couldn't be found.")
+      end
+
+      it "Should not request a phone call if user couldn't be found" do
+        expect(Authy::API).not_to receive(:request_phone_call)
+
+        post :request_phone_call
+
+        expect(response.media_type).to eq('application/json')
+        body = JSON.parse(response.body)
+        expect(body['sent']).to be false
+        expect(body['message']).to eq("User couldn't be found.")
+      end
+    end
+
+    describe "#request_sms" do
+      before(:each) do
+        expect(Authy::API).to receive(:request_sms)
+          .with(:id => user.authy_id, :force => true)
+          .and_return(
+            double("Authy::Response", :ok? => true, :message => "Token was sent.")
+          )
+      end
+      describe "with a logged in user" do
+        before(:each) { sign_in user }
+
+        it "should send an SMS and respond with JSON" do
+          post :request_sms
+          expect(response.media_type).to eq('application/json')
+          body = JSON.parse(response.body)
+
+          expect(body['sent']).to be_truthy
+          expect(body['message']).to eq("Token was sent.")
+        end
+      end
+
+      describe "with a user_id in the session" do
+        before(:each) { session["user_id"] = user.id }
+
+        it "should send an SMS and respond with JSON" do
+          post :request_sms
+          expect(response.media_type).to eq('application/json')
+          body = JSON.parse(response.body)
+
+          expect(body['sent']).to be_truthy
+          expect(body['message']).to eq("Token was sent.")
+        end
+      end
+    end
+
+    describe "#request_phone_call" do
+      before(:each) do
+        expect(Authy::API).to receive(:request_phone_call)
+          .with(:id => user.authy_id, :force => true)
+          .and_return(
+            double("Authy::Response", :ok? => true, :message => "Token was sent.")
+          )
+      end
+      describe "with a logged in user" do
+        before(:each) { sign_in user }
+
+        it "should send an SMS and respond with JSON" do
+          post :request_phone_call
+          expect(response.media_type).to eq('application/json')
+          body = JSON.parse(response.body)
+
+          expect(body['sent']).to be_truthy
+          expect(body['message']).to eq("Token was sent.")
+        end
+      end
+
+      describe "with a user_id in the session" do
+        before(:each) { session["user_id"] = user.id }
+
+        it "should send an SMS and respond with JSON" do
+          post :request_phone_call
+          expect(response.media_type).to eq('application/json')
+          body = JSON.parse(response.body)
+
+          expect(body['sent']).to be_truthy
+          expect(body['message']).to eq("Token was sent.")
+        end
+      end
+    end
+  end
 end
