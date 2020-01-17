@@ -327,34 +327,115 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
 
   describe "enabling disabling authy" do
     describe "with no-one logged in" do
-      describe "GET #enable_authy" do
-        it "should redirect to sign in" do
-          get :GET_enable_authy
-          expect(response).to redirect_to(new_user_session_path)
-        end
+      it "GET #enable_authy should redirect to sign in" do
+        get :GET_enable_authy
+        expect(response).to redirect_to(new_user_session_path)
+      end
+
+      it "POST #enable_authy should redirect to sign in" do
+        post :POST_enable_authy
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
 
     describe "with a logged in user" do
       before(:each) { sign_in(user) }
 
-      it "should render enable authy view if user isn't enabled" do
-        user.update_attribute(:authy_enabled, false)
-        get :GET_enable_authy
-        expect(response).to render_template("enable_authy")
+      describe "GET #enable_authy" do
+        it "should render enable authy view if user isn't enabled" do
+          user.update_attribute(:authy_enabled, false)
+          get :GET_enable_authy
+          expect(response).to render_template("enable_authy")
+        end
+
+        it "should render enable authy view if user doens't have an authy_id" do
+          user.update_attribute(:authy_id, nil)
+          get :GET_enable_authy
+          expect(response).to render_template("enable_authy")
+        end
+
+        it "should redirect and set flash if authy is enabled" do
+          user.update_attribute(:authy_enabled, true)
+          get :GET_enable_authy
+          expect(response).to redirect_to(root_path)
+          expect(flash[:notice]).not_to be nil
+        end
       end
 
-      it "should render enable authy view if user doens't have an authy_id" do
-        user.update_attribute(:authy_id, nil)
-        get :GET_enable_authy
-        expect(response).to render_template("enable_authy")
-      end
+      describe "POST #enable_authy" do
+        let(:cellphone) { '3010008090' }
+        let(:country_code) { '57' }
 
-      it "should redirect and set flash if authy is enabled" do
-        user.update_attribute(:authy_enabled, true)
-        get :GET_enable_authy
-        expect(response).to redirect_to(root_path)
-        expect(flash[:notice]).not_to be nil
+        describe "with a successful registration to Authy" do
+          before(:each) do
+            expect(Authy::API).to receive(:register_user).with(
+              :email => user.email,
+              :cellphone => cellphone,
+              :country_code => country_code
+            ).and_return(double("Authy::User", :ok? => true, :id => "123"))
+            post :POST_enable_authy, :params => { :cellphone => cellphone, :country_code => country_code }
+          end
+
+          it "save the authy_id to the user" do
+            user.reload
+            expect(user.authy_id).to eq("123")
+          end
+
+          it "should set a flash notice" do
+            expect(flash.now[:notice]).to eq("Two factor authentication was enabled")
+          end
+
+          it "should redirect to the verification page" do
+            expect(response).to redirect_to(user_verify_authy_installation_path)
+          end
+        end
+
+        describe "but a user that can't be saved" do
+          before(:each) do
+            expect(user).to receive(:save).and_return(false)
+            expect(subject).to receive(:current_user).and_return(user)
+            expect(Authy::API).to receive(:register_user).with(
+              :email => user.email,
+              :cellphone => cellphone,
+              :country_code => country_code
+            ).and_return(double("Authy::User", :ok? => true, :id => "123"))
+            post :POST_enable_authy, :params => { :cellphone => cellphone, :country_code => country_code }
+          end
+
+          it "should set an error flash" do
+            expect(flash[:error]).not_to be nil
+          end
+
+          it "should redirect" do
+            expect(response).to redirect_to(root_path)
+          end
+        end
+
+        describe "with an unsuccessful registration to Authy" do
+          before(:each) do
+            expect(Authy::API).to receive(:register_user).with(
+              :email => user.email,
+              :cellphone => cellphone,
+              :country_code => country_code
+            ).and_return(double("Authy::User", :ok? => false))
+
+            post :POST_enable_authy, :params => { :cellphone => cellphone, :country_code => country_code }
+          end
+
+          it "does not update the authy_id" do
+            old_authy_id = user.authy_id
+            user.reload
+            expect(user.authy_id).to eq(old_authy_id)
+          end
+
+          it "shows an error flash" do
+            expect(flash[:error]).to eq("Something went wrong while enabling two factor authentication")
+          end
+
+          it "renders enable_authy page again" do
+            expect(response).to render_template('enable_authy')
+          end
+        end
       end
     end
   end
