@@ -336,6 +336,11 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
         post :POST_enable_authy
         expect(response).to redirect_to(new_user_session_path)
       end
+
+      it "GET #verify_authy_installation should redirect to sign in" do
+        get :GET_verify_authy_installation
+        expect(response).to redirect_to(new_user_session_path)
+      end
     end
 
     describe "with a logged in user" do
@@ -435,6 +440,13 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
           it "renders enable_authy page again" do
             expect(response).to render_template('enable_authy')
           end
+        end
+      end
+
+      describe "GET verify_authy_installation" do
+        it "should render the authy installation page" do
+          get :GET_verify_authy_installation
+          expect(response).to render_template('verify_authy_installation')
         end
       end
     end
