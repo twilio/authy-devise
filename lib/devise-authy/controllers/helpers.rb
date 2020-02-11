@@ -9,8 +9,7 @@ module DeviseAuthy
 
       private
 
-      def remember_device
-        id = @resource.id
+      def remember_device(id)
         cookies.signed[:remember_device] = {
           :value => {expires: Time.now.to_i, id: id}.to_json,
           :secure => !(Rails.env.test? || Rails.env.development?),
@@ -77,8 +76,8 @@ module DeviseAuthy
         send(:"#{scope}_verify_authy_path")
       end
 
-      def send_one_touch_request
-        Authy::OneTouch.send_approval_request(id: @authy_id, message: I18n.t('request_to_login', { :scope => 'devise' }))
+      def send_one_touch_request(authy_id)
+        Authy::OneTouch.send_approval_request(id: authy_id, message: I18n.t('request_to_login', { :scope => 'devise' }))
       end
 
       def record_authy_authentication

@@ -11,12 +11,12 @@ module ActiveRecord
 
       private
 
-      def rails5?
-        Rails.version.start_with? '5'
+      def versioned_migrations?
+        Rails::VERSION::MAJOR >= 5
       end
 
       def migration_version
-        "[#{Rails::VERSION::MAJOR}.#{Rails::VERSION::MINOR}]" if rails5?
+        "[#{Rails::VERSION::MAJOR}.#{Rails::VERSION::MINOR}]" if versioned_migrations?
       end
     end
   end
