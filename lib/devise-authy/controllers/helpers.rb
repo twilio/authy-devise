@@ -40,7 +40,7 @@ module DeviseAuthy
       end
 
       def is_signing_in?
-        if devise_controller? && signed_in?(resource_name) &&
+        if devise_controller? &&
           is_devise_sessions_controller? &&
           self.action_name == "create"
           return true
