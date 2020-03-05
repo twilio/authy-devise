@@ -120,6 +120,7 @@ class Devise::DeviseAuthyController < DeviseController
     when 'pending'
       head 202
     when 'approved'
+      remember_device(@resource.id) if params[:remember_device].to_i == 1
       record_authy_authentication
       render json: { redirect: after_sign_in_path_for(@resource) }
     when 'denied'

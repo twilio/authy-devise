@@ -22,11 +22,12 @@
     (function(){
       var onetouchInterval = setInterval(function(){
         var onetouchRequest = new XMLHttpRequest();
+        var rememberDevice = document.getElementById("remember_device").checked ? '1' : '0';
         onetouchRequest.addEventListener("load", function(){
           if(this.status != 202) clearInterval(onetouchInterval);
           if(this.status == 200) window.location = JSON.parse(this.responseText).redirect;
         });
-        onetouchRequest.open("GET", "#{polymorphic_path [resource_name, :authy_onetouch_status]}?onetouch_uuid=#{@onetouch_uuid}");
+        onetouchRequest.open("GET", "#{polymorphic_path [resource_name, :authy_onetouch_status]}?remember_device="+rememberDevice+"onetouch_uuid=#{@onetouch_uuid}");
         onetouchRequest.send();
       }, 3000);
     })();
