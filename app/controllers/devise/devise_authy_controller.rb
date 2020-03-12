@@ -31,9 +31,7 @@ class Devise::DeviseAuthyController < DeviseController
 
     if token.ok?
       remember_device(@resource.id) if params[:remember_device].to_i == 1
-      if session.delete("#{resource_name}_remember_me") == true && @resource.respond_to?(:remember_me=)
-        @resource.remember_me = true
-      end
+      remember_user
       record_authy_authentication
       respond_with resource, :location => after_sign_in_path_for(@resource)
     else
@@ -121,6 +119,7 @@ class Devise::DeviseAuthyController < DeviseController
       head 202
     when 'approved'
       remember_device(@resource.id) if params[:remember_device].to_i == 1
+      remember_user
       record_authy_authentication
       render json: { redirect: after_sign_in_path_for(@resource) }
     when 'denied'
@@ -203,5 +202,11 @@ class Devise::DeviseAuthyController < DeviseController
 
   def after_account_is_locked
     sign_out_and_redirect @resource
+  end
+
+  def remember_user
+    if session.delete("#{resource_name}_remember_me") == true && @resource.respond_to?(:remember_me=)
+      @resource.remember_me = true
+    end
   end
 end
