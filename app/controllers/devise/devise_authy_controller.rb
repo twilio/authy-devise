@@ -114,7 +114,7 @@ class Devise::DeviseAuthyController < DeviseController
   end
 
   def GET_authy_onetouch_status
-    response =  Authy::API.get_request("onetouch/json/approval_requests/#{params[:onetouch_uuid]}")
+    response = Authy::OneTouch.approval_request_status(:uuid => params[:onetouch_uuid])
     status = response.dig('approval_request', 'status')
     case status
     when 'pending'

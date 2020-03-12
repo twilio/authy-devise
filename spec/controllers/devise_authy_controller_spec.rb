@@ -37,7 +37,7 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
         end
 
         it "should not request the one touch status" do
-          expect(Authy::API).not_to receive(:get_request)
+          expect(Authy::OneTouch).not_to receive(:approval_request_status)
           get :GET_authy_onetouch_status
         end
       end
@@ -77,7 +77,7 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
         end
 
         it "should not request the one touch status" do
-          expect(Authy::API).not_to receive(:get_request)
+          expect(Authy::OneTouch).not_to receive(:approval_request_status)
           get :GET_authy_onetouch_status
         end
       end
@@ -271,24 +271,24 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
       let(:uuid) { SecureRandom.uuid }
 
       it "should return a 202 status code when pending" do
-        allow(Authy::API).to receive(:get_request)
-          .with("onetouch/json/approval_requests/#{uuid}")
+        allow(Authy::OneTouch).to receive(:approval_request_status)
+          .with(:uuid => uuid)
           .and_return({ 'approval_request' => { 'status' => 'pending' }})
         get :GET_authy_onetouch_status, params: { onetouch_uuid: uuid }
         expect(response.code).to eq("202")
       end
 
       it "should return a 401 status code when denied" do
-        allow(Authy::API).to receive(:get_request)
-          .with("onetouch/json/approval_requests/#{uuid}")
+        allow(Authy::OneTouch).to receive(:approval_request_status)
+        .with(:uuid => uuid)
           .and_return({ 'approval_request' => { 'status' => 'denied' }})
         get :GET_authy_onetouch_status, params: { onetouch_uuid: uuid }
         expect(response.code).to eq("401")
       end
 
       it "should return a 500 status code when something else happens" do
-        allow(Authy::API).to receive(:get_request)
-          .with("onetouch/json/approval_requests/#{uuid}")
+        allow(Authy::OneTouch).to receive(:approval_request_status)
+        .with(:uuid => uuid)
           .and_return({})
         get :GET_authy_onetouch_status, params: { onetouch_uuid: uuid }
         expect(response.code).to eq("500")
@@ -296,8 +296,8 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
 
       describe "when approved" do
         before(:each) do
-          allow(Authy::API).to receive(:get_request)
-            .with("onetouch/json/approval_requests/#{uuid}")
+          allow(Authy::OneTouch).to receive(:approval_request_status)
+            .with(:uuid => uuid)
             .and_return({ 'approval_request' => { 'status' => 'approved' }})
           get :GET_authy_onetouch_status, params: { onetouch_uuid: uuid, remember_device: '0' }
         end
@@ -324,8 +324,8 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
 
       describe "when approved and remembered" do
         before(:each) do
-          allow(Authy::API).to receive(:get_request)
-            .with("onetouch/json/approval_requests/#{uuid}")
+          allow(Authy::OneTouch).to receive(:approval_request_status)
+            .with(:uuid => uuid)
             .and_return({ 'approval_request' => { 'status' => 'approved' }})
           get :GET_authy_onetouch_status, params: { onetouch_uuid: uuid, remember_device: '1' }
         end
