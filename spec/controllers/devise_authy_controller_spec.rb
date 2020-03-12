@@ -152,10 +152,6 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
             expect(user.last_sign_in_with_authy).to be_within(1).of(Time.zone.now)
           end
 
-          it "should not remember the user" do
-            expect(cookies["remember_device"]).to be_nil
-          end
-
           it "should redirect to the root_path and set a flash notice" do
             expect(response).to redirect_to(root_path)
             expect(flash[:notice]).not_to be_nil
@@ -163,8 +159,7 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
           end
 
           it "should not set a remember_device cookie" do
-            cookie = cookies["remember_device"]
-            expect(cookie).to be_nil
+            expect(cookies["remember_device"]).to be_nil
           end
 
           it "should not remember the user" do
