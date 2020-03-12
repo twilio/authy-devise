@@ -304,7 +304,7 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
           allow(Authy::API).to receive(:get_request)
             .with("onetouch/json/approval_requests/#{uuid}")
             .and_return({ 'approval_request' => { 'status' => 'approved' }})
-          get :GET_authy_onetouch_status, params: { onetouch_uuid: uuid }
+          get :GET_authy_onetouch_status, params: { onetouch_uuid: uuid, remember_device: '0' }
         end
 
         it "should return a 200 status code" do
@@ -313,6 +313,42 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
 
         it "should render a JSON object with the redirect path" do
           expect(response.body).to eq({ redirect: root_path }.to_json)
+        end
+
+        it "should not remember the user" do
+          expect(cookies["remember_device"]).to be_nil
+        end
+
+        it "should sign the user in" do
+          expect(subject.current_user).to eq(user)
+          expect(session["user_authy_token_checked"]).to be true
+          user.reload
+          expect(user.last_sign_in_with_authy).to be_within(1).of(Time.zone.now)
+        end
+      end
+
+      describe "when approved and remembered" do
+        before(:each) do
+          allow(Authy::API).to receive(:get_request)
+            .with("onetouch/json/approval_requests/#{uuid}")
+            .and_return({ 'approval_request' => { 'status' => 'approved' }})
+          get :GET_authy_onetouch_status, params: { onetouch_uuid: uuid, remember_device: '1' }
+        end
+
+        it "should return a 200 status code" do
+          expect(response.code).to eq("200")
+        end
+
+        it "should render a JSON object with the redirect path" do
+          expect(response.body).to eq({ redirect: root_path }.to_json)
+        end
+
+        it "should set a signed remember_device cookie" do
+          jar = ActionDispatch::Cookies::CookieJar.build(request, cookies.to_hash)
+          cookie = jar.signed["remember_device"]
+          expect(cookie).not_to be_nil
+          parsed_cookie = JSON.parse(cookie)
+          expect(parsed_cookie["id"]).to eq(user.id)
         end
 
         it "should sign the user in" do
