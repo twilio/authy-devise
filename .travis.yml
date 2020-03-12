@@ -12,7 +12,6 @@ gemfile:
 matrix:
   allow_failures:
     - rvm: ruby-head
-jobs:
   exclude:
     - rvm: 2.4
       gemfile: gemfiles/rails_6.gemfile
