@@ -322,7 +322,7 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
         end
       end
 
-      describe "when approved and remembered" do
+      describe "when approved and 2fa remembered" do
         before(:each) do
           allow(Authy::API).to receive(:get_request)
             .with("onetouch/json/approval_requests/#{uuid}")
@@ -351,6 +351,21 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
           expect(session["user_authy_token_checked"]).to be true
           user.reload
           expect(user.last_sign_in_with_authy).to be_within(1).of(Time.zone.now)
+        end
+      end
+
+      describe "when approved and remember_me in the session" do
+        before(:each) do
+          request.session["user_remember_me"] = true
+          allow(Authy::API).to receive(:get_request)
+            .with("onetouch/json/approval_requests/#{uuid}")
+            .and_return({ 'approval_request' => { 'status' => 'approved' }})
+          get :GET_authy_onetouch_status, params: { onetouch_uuid: uuid, remember_device: '0' }
+        end
+
+        it "should remember the user" do
+          user.reload
+          expect(user.remember_created_at).to be_within(1).of(Time.zone.now)
         end
       end
     end
