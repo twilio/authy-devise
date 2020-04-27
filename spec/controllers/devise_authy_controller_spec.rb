@@ -424,6 +424,7 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
       end
 
       describe "POST #enable_authy" do
+        let(:user) { create(:user) }
         let(:cellphone) { '3010008090' }
         let(:country_code) { '57' }
 
@@ -442,8 +443,9 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
             expect(user.authy_id).to eq("123")
           end
 
-          it "should set a flash notice" do
-            expect(flash.now[:notice]).to eq("Two factor authentication was enabled")
+          it "should not enable the user yet" do
+            user.reload
+            expect(user.authy_enabled).to be(false)
           end
 
           it "should redirect to the verification page" do
