@@ -1,10 +1,10 @@
 # Authy Devise [![Build Status](https://travis-ci.org/twilio/authy-devise.svg?branch=master)](https://travis-ci.org/twilio/authy-devise)
 
-This is a [Devise](https://github.com/plataformatec/devise) extension to add Two-Factor Authentication with Authy to your rails application.
+This is a [Devise](https://github.com/plataformatec/devise) extension to add [Two-Factor Authentication with Authy](https://www.twilio.com/docs/authy) to your Rails application.
 
 ## Pre-requisites
 
-To use the Authy API you will need a Twilio Account, [sign up for a free account here](https://www.twilio.com/try-twilio).
+To use the Authy API you will need a Twilio Account, [sign up for a free Twilio account here](https://www.twilio.com/try-twilio).
 
 Create an [Authy Application in the Twilio console](https://www.twilio.com/console/authy/applications) and take note of the API key.
 
@@ -59,7 +59,7 @@ devise :authy_authenticatable, :database_authenticatable
 Also add a new migration. For example, if you are adding to the `User` model, use this migration:
 
 ```ruby
-class DeviseAuthyAddToUsers < ActiveRecord::Migration[5.2]
+class DeviseAuthyAddToUsers < ActiveRecord::Migration[6.0]
   def self.up
     change_table :users do |t|
       t.string    :authy_id
@@ -205,13 +205,6 @@ Now on the project root run the following commands:
 $ bundle exec rspec spec/
 ```
 
-## Backporting to Rails 3
-
-While we are not currently supporting Rails 3, there's an active fork that maintains the backwards compatibility.
-
-https://github.com/gcosta/authy-devise
-
 ## Copyright
 
-Copyright (c) 2012-2020 Authy Inc. See LICENSE.txt for
-further details.
+Copyright (c) 2012-2020 Authy Inc. See LICENSE.txt for further details.

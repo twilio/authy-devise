@@ -9,6 +9,27 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ...
 
+## [2.0.0] - 2020-04-28
+
+Releasing this as version 2 because there is a significant change in dependencies. Minimum version of Rails is now 5 and of Devise is now 4. Otherwise the gem should work as before.
+
+### Added
+
+- HTTP Only flag to remember_device cookie (#116 thanks @agronv)
+- Remembers device when user logs in with One Touch (#128 thanks @cplopez4)
+- Autocomplete attributes for HTML form (#130)
+
+### Changed
+
+- Mocked API calls in test suite (#123)
+- Full test suite refactor (#124)
+- Increased required version for Devise and Rails (#125)
+- Stopped calling `signed_in?` before it is needed (#126)
+
+### Fixes
+
+- Remembers user correctly when logging in with One Touch (#129)
+
 ## [1.11.1] - 2019-02-02
 
 ### Fixed
