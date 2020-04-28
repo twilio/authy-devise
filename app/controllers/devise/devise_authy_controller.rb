@@ -6,6 +6,14 @@ class Devise::DeviseAuthyController < DeviseController
     :GET_verify_authy, :POST_verify_authy, :GET_authy_onetouch_status
   ]
 
+  prepend_before_action :check_resource_has_authy_id, :only => [
+    :GET_verify_authy_installation, :POST_verify_authy_installation
+  ]
+
+  prepend_before_action :check_resource_not_authy_enabled, :only => [
+    :GET_verify_authy_installation, :POST_verify_authy_installation
+  ]
+
   prepend_before_action :authenticate_scope!, :only => [
     :GET_enable_authy, :POST_enable_authy, :GET_verify_authy_installation,
     :POST_verify_authy_installation, :POST_disable_authy
@@ -168,6 +176,16 @@ class Devise::DeviseAuthyController < DeviseController
 
     if @resource.nil? || session[:"#{resource_name}_password_checked"].to_s != "true"
       redirect_to invalid_resource_path
+    end
+  end
+
+  def check_resource_has_authy_id
+    redirect_to [resource_name, :enable_authy] if !resource.authy_id
+  end
+
+  def check_resource_not_authy_enabled
+    if resource.authy_id && resource.authy_enabled
+      redirect_to after_authy_verified_path_for(resource)
     end
   end
 
