@@ -109,6 +109,7 @@ class Devise::DeviseAuthyController < DeviseController
     self.resource.authy_enabled = token.ok?
 
     if token.ok? && self.resource.save
+      remember_device(@resource.id) if params[:remember_device].to_i == 1
       record_authy_authentication
       set_flash_message(:notice, :enabled)
       redirect_to after_authy_verified_path_for(resource)
