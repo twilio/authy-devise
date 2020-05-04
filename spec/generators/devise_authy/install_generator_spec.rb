@@ -43,7 +43,11 @@ RSpec.describe DeviseAuthy::Generators::InstallGenerator, type: :generator do
     end
 
     it "injects devise config" do
-      expect(File.read(File.join(destination_root, "config", "initializers", "devise.rb"))).to match("Devise Authy Authentication Extension")
+      devise_config = File.read(File.join(destination_root, "config", "initializers", "devise.rb"))
+      expect(devise_config).to match("Devise Authy Authentication Extension")
+      expect(devise_config).to match("# config.authy_remember_device = 1.month")
+      expect(devise_config).to match("# config.authy_enable_onetouch = false")
+      expect(devise_config).to match("# config.authy_enable_qr_code = false")
     end
 
     it "creates an authy initializer" do
