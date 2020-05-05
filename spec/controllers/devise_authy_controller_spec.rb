@@ -557,7 +557,7 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
                 :token => token,
                 :force => true
               ).and_return(double("Authy::Response", :ok? => true))
-              post :POST_verify_authy_installation, :params => { :token => token }
+              post :POST_verify_authy_installation, :params => { :token => token, :remember_device => '0' }
             end
 
             it "should enable authy for user" do
@@ -572,6 +572,41 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
             it "should set a flash notice and redirect" do
               expect(response).to redirect_to(root_path)
               expect(flash[:notice]).to eq('Two factor authentication was enabled')
+            end
+
+            it "should not set a remember_device cookie" do
+              expect(cookies["remember_device"]).to be_nil
+            end
+          end
+
+          describe "successful verification with remember device" do
+            before(:each) do
+              expect(Authy::API).to receive(:verify).with(
+                :id => user.authy_id,
+                :token => token,
+                :force => true
+              ).and_return(double("Authy::Response", :ok? => true))
+              post :POST_verify_authy_installation, :params => { :token => token, :remember_device => '1' }
+            end
+  
+            it "should enable authy for user" do
+              user.reload
+              expect(user.authy_enabled).to be true
+            end
+            it "should set {resource}_authy_token_checked in the session" do
+              expect(session["user_authy_token_checked"]).to be true
+            end
+            it "should set a flash notice and redirect" do
+              expect(response).to redirect_to(root_path)
+              expect(flash[:notice]).to eq('Two factor authentication was enabled')
+            end
+  
+            it "should set a signed remember_device cookie" do
+              jar = ActionDispatch::Cookies::CookieJar.build(request, cookies.to_hash)
+              cookie = jar.signed["remember_device"]
+              expect(cookie).not_to be_nil
+              parsed_cookie = JSON.parse(cookie)
+              expect(parsed_cookie["id"]).to eq(user.id)
             end
           end
 
