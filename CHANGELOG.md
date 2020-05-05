@@ -9,6 +9,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ...
 
+## [2.1.0] - 2020-05-05
+
+### Added
+
+- Support for generic authenticator tokens (#141)
+
+### Fixed
+
+- Can remember device when enabling 2FA for the first time (#139)
+
 ## [2.0.0] - 2020-04-28
 
 Releasing this as version 2 because there is a significant change in dependencies. Minimum version of Rails is now 5 and of Devise is now 4. Otherwise the gem should work as before.
