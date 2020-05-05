@@ -19,6 +19,7 @@ module DeviseAuthy
         "  # Should Authy OneTouch be enabled?\n" +
         "  # config.authy_enable_onetouch = false\n\n" +
         "  # Should generating QR codes for other authenticator apps be enabled?\n" +
+        "  # Note: you need to enable this in your Twilio console.\n"
         "  # config.authy_enable_qr_code = false\n\n", :after => "Devise.setup do |config|\n"
       end
 
