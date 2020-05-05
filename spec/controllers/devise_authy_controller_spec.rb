@@ -526,6 +526,26 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
             get :GET_verify_authy_installation
             expect(response).to render_template('verify_authy_installation')
           end
+
+          describe "with qr codes turned on" do
+            before(:each) do
+              Devise.authy_enable_qr_code = true
+            end
+    
+            after(:each) do
+              Devise.authy_enable_qr_code = false
+            end
+
+            it "should hit API for a QR code" do
+              expect(Authy::API).to receive(:request_qr_code).with(
+                :id => user.authy_id
+              ).and_return(double("Authy::Request", :qr_code => 'https://example.com/qr.png'))
+
+              get :GET_verify_authy_installation
+              expect(response).to render_template('verify_authy_installation')
+              expect(assigns[:authy_qr_code]).to eq('https://example.com/qr.png')
+            end
+          end
         end
       end
 

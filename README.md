@@ -2,6 +2,24 @@
 
 This is a [Devise](https://github.com/plataformatec/devise) extension to add [Two-Factor Authentication with Authy](https://www.twilio.com/docs/authy) to your Rails application.
 
+* [Pre-requisites](#pre-requisites)
+* [Demo](#demo)
+* [Getting started](#getting-started)
+  * [Configuring Models](#configuring-models)
+    * [With the generator](#with-the-generator)
+    * [Manually](#manually)
+    * [Final steps](#final-steps)
+* [Custom Views](#custom-views)
+  * [Request a phone call](#request-a-phone-call)
+* [Custom Redirect Paths (eg. using modules)](#custom-redirect-paths-eg-using-modules)
+* [I18n](#i18n)
+* [Session variables](#session-variables)
+* [OneTouch support](#onetouch-support)
+* [Generic authenticator token support](#generic-authenticator-token-support)
+* [Rails 5 CSRF protection](#rails-5-csrf-protection)
+* [Running Tests](#running-tests)
+* [Copyright](#copyright)
+
 ## Pre-requisites
 
 To use the Authy API you will need a Twilio Account, [sign up for a free Twilio account here](https://www.twilio.com/try-twilio).
@@ -176,6 +194,20 @@ To enable [Authy push authentication](https://www.twilio.com/authy/features/push
 ```
 config.authy_enable_onetouch = true
 ```
+
+## Generic authenticator token support
+
+Authy supports other authenticator apps by providing a QR code that your users can scan.
+
+> **To use this feature, you need to enable it in your [Twilio Console](https://www.twilio.com/console/authy/applications)**
+
+Once you have enabled generic authenticator tokens, you can enable this in devise-authy by modifying the Devise config file `config/initializers/devise.rb` and adding the configuration:
+
+```
+config.authy_enable_qr_code = true
+```
+
+This will display a QR code on the verification screen (you still need to take a user's phone number and country code). If you have implemented your own views, the QR code URL is available on the verification page as `@authy_qr_code`.
 
 ## Rails 5 CSRF protection
 

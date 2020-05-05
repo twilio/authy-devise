@@ -1,5 +1,10 @@
 <h2><%= I18n.t('authy_verify_installation_title', {:scope => 'devise'}) %></h2>
 
+<% if @authy_qr_code %>
+  <%= image_tag @authy_qr_code, :size => '256x256', :alt => I18n.t('authy_qr_code_alt', {:scope => 'devise'}) %>
+  <p><%= I18n.t('authy_qr_code_instructions', {:scope => 'devise'}) %></p>
+<% end %>
+
 <%= verify_authy_installation_form do %>
   <legend><%= I18n.t('submit_token_title', {:scope => 'devise'}) %></legend>
   <%= label_tag :token %>
@@ -11,4 +16,3 @@
   <%= authy_request_sms_link %>
   <%= submit_tag I18n.t('enable_my_account', {:scope => 'devise'}), :class => 'btn' %>
 <% end %>
-

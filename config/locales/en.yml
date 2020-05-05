@@ -14,6 +14,9 @@ en:
     authy_verify_installation_title: 'Verify your account'
     enable_my_account: 'Enable my account'
 
+    authy_qr_code_alt: 'QR code for scanning with your authenticator app.'
+    authy_qr_code_instructions: 'Scan this QR code with your authenticator application and enter the code below.'
+
     devise_authy:
       user:
         enabled: 'Two factor authentication was enabled'

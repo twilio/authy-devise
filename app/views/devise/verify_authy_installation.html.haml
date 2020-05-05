@@ -1,4 +1,9 @@
 %h2= I18n.t('authy_verify_installation_title', {:scope => 'devise'})
+
+- if @authy_qr_code
+  = image_tag @authy_qr_code, :size => '256x256', :alt => I18n.t('authy_qr_code_alt', {:scope => 'devise'})
+  %p= I18n.t('authy_qr_code_instructions', {:scope => 'devise'})
+
 = verify_authy_installation_form do
   %legend= I18n.t('submit_token_title', {:scope => 'devise'})
   = label_tag :token
