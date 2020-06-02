@@ -80,18 +80,31 @@ class Devise::DeviseAuthyController < DeviseController
 
   # Disable 2FA
   def POST_disable_authy
-    response = Authy::API.delete_user(:id => resource.authy_id)
+    authy_id = resource.authy_id
+    resource.assign_attributes(:authy_enabled => false, :authy_id => nil)
+    resource.save(:validate => false)
 
-    if response.ok?
-      resource.update_attribute(:authy_enabled, false)
-      resource.update_attribute(:authy_id, nil)
+    other_resource = resource.class.find_by(:authy_id => authy_id)
+    if other_resource
+      # If another resource has the same authy_id, do not delete the user from
+      # the API.
       forget_device
-
       set_flash_message(:notice, :disabled)
     else
-      set_flash_message(:error, :not_disabled)
+      response = Authy::API.delete_user(:id => authy_id)
+      if response.ok?
+        forget_device
+        set_flash_message(:notice, :disabled)
+      else
+        # If deleting the user from the API fails, set everything back to what
+        # it was before.
+        # I'm not sure this is a good idea, but it was existing behaviour.
+        # Could be changed in a major version bump.
+        resource.assign_attributes(:authy_enabled => true, :authy_id => authy_id)
+        resource.save(:validate => false)
+        set_flash_message(:error, :not_disabled)
+      end
     end
-
     redirect_to after_authy_disabled_path_for(resource)
   end
 
