@@ -684,6 +684,37 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
           end
         end
 
+        describe "with more than one user using the same authy_id" do
+          # It is valid for more than one user to share an authy_id
+          # https://github.com/twilio/authy-devise/issues/143
+          before(:each) do
+            @other_user = create(:authy_user, :authy_id => user.authy_id)
+            cookies.signed[:remember_device] = {
+              :value => {expires: Time.now.to_i, id: user.id}.to_json,
+              :secure => false,
+              :expires => User.authy_remember_device.from_now
+            }
+            expect(Authy::API).not_to receive(:delete_user)
+
+            post :POST_disable_authy
+          end
+
+          it "should disable 2FA" do
+            user.reload
+            expect(user.authy_id).to be nil
+            expect(user.authy_enabled).to be false
+          end
+
+          it "should forget the device cookie" do
+            expect(response.cookies[:remember_device]).to be nil
+          end
+
+          it "should set a flash notice and redirect" do
+            expect(flash.now[:notice]).to eq("Two factor authentication was disabled")
+            expect(response).to redirect_to(root_path)
+          end
+        end
+
         describe "unsuccessfully" do
           before(:each) do
             cookies.signed[:remember_device] = {
