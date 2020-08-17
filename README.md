@@ -60,19 +60,23 @@ You can add devise_authy to your user model in two ways.
 
 #### With the generator
 
-This is the easiest way and is recommended. Run the following command:
+Run the following command:
 
 ```bash
 rails g devise_authy [MODEL_NAME]
 ```
 
+To support account locking (recommended), you must add `:authy_lockable` to the `devise :authy_authenticatable, ...` configuration in your model as this is not yet supported by the generator.
+
 #### Manually
 
-Add `:authy_authenticatable` to the `devise` options in your Devise user model:
+Add `:authy_authenticatable` and `:authy_lockable` to the `devise` options in your Devise user model:
 
 ```ruby
-devise :authy_authenticatable, :database_authenticatable
+devise :authy_authenticatable, :authy_lockable, :database_authenticatable, :lockable
 ```
+
+(Note, `:authy_lockable` is optional but recommended. It should be used with Devise's own `:lockable` module).
 
 Also add a new migration. For example, if you are adding to the `User` model, use this migration:
 
