@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ...
 
+## [2.2.1] - 2020-10-13
+
+### Fixed
+
+- If the app offers a QR code scan and user fails to verify authy installation, the QR code wasn't shown again. Fixed in (#149)
+
 ## [2.2.0] - 2020-06-04
 
 ### Fixed
