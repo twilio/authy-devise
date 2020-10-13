@@ -517,8 +517,8 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
             get :GET_verify_authy_installation
             expect(response).to redirect_to root_path
           end
-        end      
-      
+        end
+
         describe "with a user with an authy id without authy enabled" do
           before(:each) { user.update_attribute(:authy_enabled, false) }
 
@@ -531,7 +531,7 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
             before(:each) do
               Devise.authy_enable_qr_code = true
             end
-    
+
             after(:each) do
               Devise.authy_enable_qr_code = false
             end
@@ -566,7 +566,7 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
             expect(response).to redirect_to(root_path)
           end
         end
-        
+
         describe "with a user that has an authy id but isn't enabled" do
           before(:each) { user.update_attribute(:authy_enabled, false) }
 
@@ -608,7 +608,7 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
               ).and_return(double("Authy::Response", :ok? => true))
               post :POST_verify_authy_installation, :params => { :token => token, :remember_device => '1' }
             end
-  
+
             it "should enable authy for user" do
               user.reload
               expect(user.authy_enabled).to be true
@@ -620,7 +620,7 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
               expect(response).to redirect_to(root_path)
               expect(flash[:notice]).to eq('Two factor authentication was enabled')
             end
-  
+
             it "should set a signed remember_device cookie" do
               jar = ActionDispatch::Cookies::CookieJar.build(request, cookies.to_hash)
               cookie = jar.signed["remember_device"]
@@ -648,6 +648,31 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
             it "should set an error flash and render verify_authy_installation" do
               expect(response).to render_template('verify_authy_installation')
               expect(flash[:error]).to eq('Something went wrong while enabling two factor authentication')
+            end
+          end
+
+          describe "unsuccessful verification with qr codes turned on" do
+            before(:each) do
+              Devise.authy_enable_qr_code = true
+            end
+
+            after(:each) do
+              Devise.authy_enable_qr_code = false
+            end
+
+            it "should hit API for a QR code" do
+              expect(Authy::API).to receive(:verify).with(
+                :id => user.authy_id,
+                :token => token,
+                :force => true
+              ).and_return(double("Authy::Response", :ok? => false))
+              expect(Authy::API).to receive(:request_qr_code).with(
+                :id => user.authy_id
+              ).and_return(double("Authy::Request", :qr_code => 'https://example.com/qr.png'))
+
+              post :POST_verify_authy_installation, :params => { :token => token }
+              expect(response).to render_template('verify_authy_installation')
+              expect(assigns[:authy_qr_code]).to eq('https://example.com/qr.png')
             end
           end
         end
