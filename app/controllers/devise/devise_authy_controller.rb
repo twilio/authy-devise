@@ -131,6 +131,10 @@ class Devise::DeviseAuthyController < DeviseController
       set_flash_message(:notice, :enabled)
       redirect_to after_authy_verified_path_for(resource)
     else
+      if resource_class.authy_enable_qr_code
+        response = Authy::API.request_qr_code(id: resource.authy_id)
+        @authy_qr_code = response.qr_code
+      end
       handle_invalid_token :verify_authy_installation, :not_enabled
     end
   end
