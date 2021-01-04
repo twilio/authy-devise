@@ -1,13 +1,13 @@
-%h2= I18n.t('authy_register_title', {:scope => 'devise'})
+%h2= I18n.t('authy_register_title', scope: 'devise')
 
 = verify_authy_form do
-  %legend= I18n.t('submit_token_title', {:scope => 'devise'})
+  %legend= I18n.t('submit_token_title', scope: 'devise')
   = hidden_field_tag :"#{resource_name}_id", @resource.id
   = label_tag 'authy-token'
   = text_field_tag :token, "", :autocomplete => "one-time-code", :inputmode => "numeric", :pattern => "[0-9]*", :id => 'authy-token'
   %label
     = check_box_tag :remember_device
-    %span= I18n.t('remember_device', {:scope => 'devise'})
+    %span= I18n.t('remember_device', scope: 'devise')
 
   / Help Tooltip
   / You need to configure a help message.
@@ -15,7 +15,7 @@
   / = link_to '?', '#', :id => 'authy-help', :'data-message' => 'a message'
 
   = authy_request_sms_link
-  = submit_tag I18n.t('submit_token', {:scope => 'devise'}), :class => 'btn'
+  = submit_tag I18n.t('submit_token', scope: 'devise'), :class => 'btn'
 
 - if @onetouch_uuid
   :javascript

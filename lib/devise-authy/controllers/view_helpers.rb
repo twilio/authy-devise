@@ -3,7 +3,7 @@ module DeviseAuthy
     module Helpers
       def authy_request_phone_call_link(opts = {})
         title = opts.delete(:title) do
-          I18n.t('request_phone_call', { :scope => 'devise' })
+          I18n.t('request_phone_call', scope: 'devise')
         end
         opts = {
           :id => "authy-request-phone-call-link",

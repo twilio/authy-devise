@@ -77,7 +77,7 @@ module DeviseAuthy
       end
 
       def send_one_touch_request(authy_id)
-        Authy::OneTouch.send_approval_request(id: authy_id, message: I18n.t('request_to_login', { :scope => 'devise' }))
+        Authy::OneTouch.send_approval_request(id: authy_id, message: I18n.t('request_to_login', scope: 'devise'))
       end
 
       def record_authy_authentication
