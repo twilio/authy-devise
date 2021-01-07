@@ -2,7 +2,6 @@
 
 source "https://rubygems.org"
 
-gem "sdoc", "~> 0.4.0", group: :doc
 gem "rails", "~> 6.0.0"
 gem "sqlite3", "~> 1.4"
 

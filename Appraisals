@@ -7,7 +7,7 @@ appraise "rails-5-2" do
     gem 'rspec-rails', "~>4.0.0.beta3", :require => false
     gem 'database_cleaner', :require => false
   end
-end
+end if RUBY_VERSION.to_f < 3.0
 
 appraise "rails-6" do
   gem "rails", "~> 6.0.0"
