@@ -227,20 +227,12 @@ end
 
 ## Running Tests
 
-To prepare the tests run the following commands:
+Run the following command:
 
 ```bash
-$ cd spec/rails-app
-$ bundle install
-$ RAILS_ENV=test bundle exec rake db:migrate
-```
-
-Now on the project root run the following commands:
-
-```bash
-$ bundle exec rspec spec/
+$ bundle exec rspec
 ```
 
 ## Copyright
 
-Copyright (c) 2012-2020 Authy Inc. See LICENSE.txt for further details.
+Copyright (c) 2012-2021 Authy Inc. See LICENSE.txt for further details.

@@ -9,6 +9,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ...
 
+## [2.3.0] - 2021-01-07
+
+### Fixed
+
+- Fixes calls to `I18n.t` with keyword arguments to support Ruby 3.0
+- Replaces Travis CI with GitHub Actions
+- Updates webmock development dependency
+- Removes sdoc from Gemfile
+
 ## [2.2.1] - 2020-10-13
 
 ### Fixed
