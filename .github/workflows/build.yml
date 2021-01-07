@@ -13,6 +13,8 @@ jobs:
         exclude:
           - ruby: 3.0
             gemfile: rails_5_2
+          - ruby: head
+            gemfile: rails_5_2
     continue-on-error: ${{ endsWith(matrix.ruby, 'head') }}
     env:
       BUNDLE_GEMFILE: gemfiles/${{ matrix.gemfile }}.gemfile
