@@ -41,7 +41,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "yard", "~> 0.9.11"
   spec.add_development_dependency "rdoc", "~> 4.3.0"
   spec.add_development_dependency "simplecov", "~> 0.17.1"
-  spec.add_development_dependency "webmock", "~> 3.7.6"
+  spec.add_development_dependency "webmock", "~> 3.11.0"
   spec.add_development_dependency "rails", ">= 5"
   spec.add_development_dependency "sqlite3"
   spec.add_development_dependency "generator_spec"
