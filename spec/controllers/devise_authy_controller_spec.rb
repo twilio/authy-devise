@@ -547,6 +547,33 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
             end
           end
         end
+
+        describe "when application still does not have Generic Tokens enabled" do
+          before(:each) { user.update_attribute(:authy_enabled, false) }
+
+          before(:each) do
+            Devise.authy_enable_qr_code = true
+          end
+
+          after(:each) do
+            Devise.authy_enable_qr_code = false
+          end
+
+          it "should hit API and get and error" do
+            expect(Authy::API).to receive(:request_qr_code).with(
+              :id => user.authy_id
+            ).and_return({
+              "error_code" => "60123",
+              "message" => "The application does not have Generic Tokens enabled",
+              "success" => false
+            })
+
+            get :GET_verify_authy_installation
+            
+            expect(response).to render_template('verify_authy_installation')
+            expect(assigns[:authy_qr_code]).to be_nil
+          end  
+        end
       end
 
       describe "POST verify_authy_installation" do
@@ -666,6 +693,7 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
                 :token => token,
                 :force => true
               ).and_return(double("Authy::Response", :ok? => false))
+
               expect(Authy::API).to receive(:request_qr_code).with(
                 :id => user.authy_id
               ).and_return(double("Authy::Request", :qr_code => 'https://example.com/qr.png'))
@@ -675,6 +703,39 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
               expect(assigns[:authy_qr_code]).to eq('https://example.com/qr.png')
             end
           end
+        end
+
+        describe "when application still does not have Generic Tokens enabled" do
+          before(:each) { user.update_attribute(:authy_enabled, false) }
+
+          before(:each) do
+            Devise.authy_enable_qr_code = true
+          end
+
+          after(:each) do
+            Devise.authy_enable_qr_code = false
+          end
+
+          it "should hit API and get and error" do
+            expect(Authy::API).to receive(:verify).with(
+              :id => user.authy_id,
+              :token => token,
+              :force => true
+            ).and_return(double("Authy::Response", :ok? => false))
+
+            expect(Authy::API).to receive(:request_qr_code).with(
+              :id => user.authy_id
+            ).and_return({
+              "error_code" => "60123",
+              "message" => "The application does not have Generic Tokens enabled",
+              "success" => false
+            })
+
+            post :POST_verify_authy_installation, :params => { :token => token }
+            
+            expect(response).to render_template('verify_authy_installation')
+            expect(assigns[:authy_qr_code]).to be_nil
+          end  
         end
       end
 

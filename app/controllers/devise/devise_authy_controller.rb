@@ -111,7 +111,7 @@ class Devise::DeviseAuthyController < DeviseController
   def GET_verify_authy_installation
     if resource_class.authy_enable_qr_code
       response = Authy::API.request_qr_code(id: resource.authy_id)
-      @authy_qr_code = response.qr_code
+      @authy_qr_code = response.try(:qr_code)
     end
     render :verify_authy_installation
   end
@@ -133,7 +133,7 @@ class Devise::DeviseAuthyController < DeviseController
     else
       if resource_class.authy_enable_qr_code
         response = Authy::API.request_qr_code(id: resource.authy_id)
-        @authy_qr_code = response.qr_code
+        @authy_qr_code = response.try(:qr_code)
       end
       handle_invalid_token :verify_authy_installation, :not_enabled
     end
