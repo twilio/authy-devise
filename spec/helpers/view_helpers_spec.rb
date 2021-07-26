@@ -60,6 +60,41 @@ RSpec.describe DeviseAuthy::Views::Helpers, type: :helper do
         expect(form).to match(%r|action="/users/verify_authy_installation"|)
       end
     end
+  end
 
+  describe "request links when resource_name is empty" do
+    before do
+      allow_any_instance_of(ApplicationHelper).to receive(:resource_name).and_return(nil)
+    end
+
+    it 'requests phone call link' do
+      expect {
+        helper.authy_request_phone_call_link
+      }.to raise_error(NoMethodError, /undefined method `_request_phone_call_path/)
+    end
+
+    it 'requests sms link' do
+      expect {
+        helper.authy_request_sms_link
+      }.to raise_error(NoMethodError, /undefined method `_request_sms_path/)
+    end
+
+    it 'verify authy form' do
+      expect {
+        helper.verify_authy_form { "I'm in a verify authy form" }
+      }.to raise_error(NoMethodError, /undefined method `_verify_authy_path/)
+    end
+
+    it 'enable authy form' do
+      expect {
+        helper.enable_authy_form { "I'm in a enable authy form" }
+      }.to raise_error(NoMethodError, /undefined method `_enable_authy_path/)
+    end
+
+    it 'verify authy installation form' do
+      expect {
+        helper.verify_authy_installation_form { "I'm in a verify authy installation form" }
+      }.to raise_error(NoMethodError, /undefined method `_verify_authy_installation_path/)
+    end
   end
 end

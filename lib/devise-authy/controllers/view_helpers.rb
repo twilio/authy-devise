@@ -13,7 +13,7 @@ module DeviseAuthy
 
         link_to(
           title,
-          url_for([resource_name, :request_phone_call]),
+          url_for([resource_name.to_s.to_sym, :request_phone_call]),
           opts
         )
       end
@@ -30,14 +30,14 @@ module DeviseAuthy
 
         link_to(
           title,
-          url_for([resource_name, :request_sms]),
+          url_for([resource_name.to_s.to_sym, :request_sms]),
           opts
         )
       end
 
       def verify_authy_form(opts = {}, &block)
         opts = default_opts.merge(:id => 'devise_authy').merge(opts)
-        form_tag([resource_name, :verify_authy], opts) do
+        form_tag([resource_name.to_s.to_sym, :verify_authy], opts) do
           buffer = hidden_field_tag(:"#{resource_name}_id", @resource.id)
           buffer << capture(&block)
         end
@@ -45,14 +45,14 @@ module DeviseAuthy
 
       def enable_authy_form(opts = {}, &block)
         opts = default_opts.merge(opts)
-        form_tag([resource_name, :enable_authy], opts) do
+        form_tag([resource_name.to_s.to_sym, :enable_authy], opts) do
           capture(&block)
         end
       end
 
       def verify_authy_installation_form(opts = {}, &block)
         opts = default_opts.merge(opts)
-        form_tag([resource_name, :verify_authy_installation], opts) do
+        form_tag([resource_name.to_s.to_sym, :verify_authy_installation], opts) do
           capture(&block)
         end
       end
