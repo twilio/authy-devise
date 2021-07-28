@@ -548,7 +548,7 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
           end
         end
 
-        describe "when application still does not have Generic Tokens enabled" do
+        describe "twilio application still does not have Generic Tokens enabled" do
           before(:each) { user.update_attribute(:authy_enabled, false) }
 
           before(:each) do
@@ -559,20 +559,46 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
             Devise.authy_enable_qr_code = false
           end
 
-          it "should hit API and get and error" do
-            expect(Authy::API).to receive(:request_qr_code).with(
-              :id => user.authy_id
-            ).and_return({
-              "error_code" => "60123",
-              "message" => "The application does not have Generic Tokens enabled",
-              "success" => false
-            })
+          context 'by default will raise an error' do
+            it "when hit API and get as return an error code" do
+              expect(Authy::API).to receive(:request_qr_code).with(
+                :id => user.authy_id
+              ).and_return({
+                "error_code" => "60123",
+                "message" => "The application does not have Generic Tokens enabled",
+                "success" => false
+              })
+  
+              expect {
+                post :GET_verify_authy_installation
+              }.to raise_error(NoMethodError)
+            end
+          end
 
-            get :GET_verify_authy_installation
-            
-            expect(response).to render_template('verify_authy_installation')
-            expect(assigns[:authy_qr_code]).to be_nil
-          end  
+          context "when configurated to not an raise error" do  
+            before(:each) do
+              Devise.authy_raise_qr_code_errors = false
+            end
+  
+            after(:each) do
+              Devise.authy_raise_qr_code_errors = true
+            end
+
+            it "should hit API, get as return an error code and not raise application error" do
+              expect(Authy::API).to receive(:request_qr_code).with(
+                :id => user.authy_id
+              ).and_return({
+                "error_code" => "60123",
+                "message" => "The application does not have Generic Tokens enabled",
+                "success" => false
+              })
+  
+              post :GET_verify_authy_installation
+ 
+              expect(response).to render_template('verify_authy_installation')
+              expect(assigns[:authy_qr_code]).to be_nil
+            end
+          end
         end
       end
 
@@ -705,7 +731,7 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
           end
         end
 
-        describe "when application still does not have Generic Tokens enabled" do
+        describe "twilio application still does not have Generic Tokens enabled" do
           before(:each) { user.update_attribute(:authy_enabled, false) }
 
           before(:each) do
@@ -716,26 +742,57 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
             Devise.authy_enable_qr_code = false
           end
 
-          it "should hit API and get and error" do
-            expect(Authy::API).to receive(:verify).with(
-              :id => user.authy_id,
-              :token => token,
-              :force => true
-            ).and_return(double("Authy::Response", :ok? => false))
+          context 'should raise an error' do  
+            it "should hit API and raise an error" do
+              expect(Authy::API).to receive(:verify).with(
+                :id => user.authy_id,
+                :token => token,
+                :force => true
+              ).and_return(double("Authy::Response", :ok? => false))
+  
+              expect(Authy::API).to receive(:request_qr_code).with(
+                :id => user.authy_id
+              ).and_return({
+                "error_code" => "60123",
+                "message" => "The application does not have Generic Tokens enabled",
+                "success" => false
+              })
+              expect {
+                post :POST_verify_authy_installation, :params => { :token => token }
+              }.to raise_error(NoMethodError)
+            end
+          end
 
-            expect(Authy::API).to receive(:request_qr_code).with(
-              :id => user.authy_id
-            ).and_return({
-              "error_code" => "60123",
-              "message" => "The application does not have Generic Tokens enabled",
-              "success" => false
-            })
+          context "configurated to not an raise error" do  
+            before(:each) do
+              Devise.authy_raise_qr_code_errors = false
+            end
+  
+            after(:each) do
+              Devise.authy_raise_qr_code_errors = true
+            end
 
-            post :POST_verify_authy_installation, :params => { :token => token }
-            
-            expect(response).to render_template('verify_authy_installation')
-            expect(assigns[:authy_qr_code]).to be_nil
-          end  
+            it "should hit API, get back an error code and not raise application error" do
+              expect(Authy::API).to receive(:verify).with(
+                :id => user.authy_id,
+                :token => token,
+                :force => true
+              ).and_return(double("Authy::Response", :ok? => false))
+  
+              expect(Authy::API).to receive(:request_qr_code).with(
+                :id => user.authy_id
+              ).and_return({
+                "error_code" => "60123",
+                "message" => "The application does not have Generic Tokens enabled",
+                "success" => false
+              })
+  
+              post :POST_verify_authy_installation, :params => { :token => token }
+              
+              expect(response).to render_template('verify_authy_installation')
+              expect(assigns[:authy_qr_code]).to be_nil
+            end  
+          end
         end
       end
 

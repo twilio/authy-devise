@@ -17,7 +17,7 @@ module Devise
           where(authy_id: authy_id).first
         end
 
-        Devise::Models.config(self, :authy_remember_device, :authy_enable_onetouch, :authy_enable_qr_code)
+        Devise::Models.config(self, :authy_remember_device, :authy_enable_onetouch, :authy_enable_qr_code, :authy_raise_qr_code_errors)
       end
     end
   end
