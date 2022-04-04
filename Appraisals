@@ -13,6 +13,8 @@ appraise "rails-6" do
   gem "rails", "~> 6.0.0"
   gem "sqlite3", "~> 1.4"
 
+  gem "net-smtp" if RUBY_VERSION.to_f > 3.0
+
   group :development, :test do
     gem 'factory_girl_rails', :require => false
     gem 'rspec-rails', "~>4.0.0.beta3", :require => false
