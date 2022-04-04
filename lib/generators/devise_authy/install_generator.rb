@@ -73,7 +73,7 @@ module DeviseAuthy
           }
         }.each do |extension, opts|
           file_path = File.join(destination_root, "app", "views", "layouts", "application.html.#{extension}")
-          if File.exists?(file_path) && !File.read(file_path).include?("form.authy.min.js")
+          if File.exist?(file_path) && !File.read(file_path).include?("form.authy.min.js")
             inject_into_file(file_path, opts.delete(:content), opts)
           end
         end
