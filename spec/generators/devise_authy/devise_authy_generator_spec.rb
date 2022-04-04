@@ -37,5 +37,4 @@ RSpec.describe DeviseAuthy::Generators::DeviseAuthyGenerator, type: :generator d
       end
     }
   end
-
 end

@@ -41,7 +41,7 @@ RSpec.describe DeviseAuthy::Views::Helpers, type: :helper do
         assign(:resource, user)
         form = helper.verify_authy_form { "I'm in a form" }
         expect(form).to match(%r|action="/users/verify_authy"|)
-        expect(form).to match(%|<input type="hidden" name="user_id" id="user_id" value="#{user.id}" />|)
+        expect(form).to match(%|<input type="hidden" name="user_id" id="user_id" value="#{user.id}"|)
       end
     end
 
