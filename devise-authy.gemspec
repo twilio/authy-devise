@@ -10,8 +10,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Authy Inc."]
   spec.email         = ["support@authy.com"]
 
-  spec.summary       = %q{Authy plugin for Devise.}
-  spec.description   = %q{Authy plugin to add two factor authentication to Devise.}
+  spec.summary       = %q{Deprecated: please see README for details}
+  spec.description   = %q{Authy plugin to add two factor authentication to Devise. This gem is deprecated, please see the README for details.}
   spec.homepage      = "https://github.com/twilio/authy-devise"
   spec.license       = "MIT"
 
