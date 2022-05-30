@@ -128,11 +128,11 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
 
       describe "with a valid token" do
         before(:each) {
-          expect(Authy::API).to receive(:verify).with(
+          expect(Authy::API).to receive(:verify).with({
             :id => user.authy_id,
             :token => valid_authy_token,
             :force => true
-          ).and_return(verify_success)
+          }).and_return(verify_success)
         }
 
         describe "without remembering" do
@@ -200,11 +200,11 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
 
       describe "with an invalid token" do
         before(:each) {
-          expect(Authy::API).to receive(:verify).with(
+          expect(Authy::API).to receive(:verify).with({
             :id => user.authy_id,
             :token => invalid_authy_token,
             :force => true
-          ).and_return(verify_failure)
+          }).and_return(verify_failure)
           post :POST_verify_authy, params: { :token => invalid_authy_token }
         }
 
@@ -232,11 +232,11 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
         end
 
         it 'locks the account when failed_attempts exceeds maximum' do
-          expect(Authy::API).to receive(:verify).exactly(Devise.maximum_attempts).times.with(
+          expect(Authy::API).to receive(:verify).exactly(Devise.maximum_attempts).times.with({
             :id => lockable_user.authy_id,
             :token => invalid_authy_token,
             :force => true
-          ).and_return(verify_failure)
+          }).and_return(verify_failure)
           (Devise.maximum_attempts).times do
             post :POST_verify_authy, params: { token: invalid_authy_token }
           end
@@ -251,11 +251,11 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
           request.session['user_id']               = user.id
           request.session['user_password_checked'] = true
 
-          expect(Authy::API).to receive(:verify).exactly(Devise.maximum_attempts).times.with(
+          expect(Authy::API).to receive(:verify).exactly(Devise.maximum_attempts).times.with({
             :id => user.authy_id,
             :token => invalid_authy_token,
             :force => true
-          ).and_return(verify_failure)
+          }).and_return(verify_failure)
 
           Devise.maximum_attempts.times do
             post :POST_verify_authy, params: { token: invalid_authy_token }
@@ -572,11 +572,11 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
 
           describe "successful verification" do
             before(:each) do
-              expect(Authy::API).to receive(:verify).with(
+              expect(Authy::API).to receive(:verify).with({
                 :id => user.authy_id,
                 :token => token,
                 :force => true
-              ).and_return(double("Authy::Response", :ok? => true))
+              }).and_return(double("Authy::Response", :ok? => true))
               post :POST_verify_authy_installation, :params => { :token => token, :remember_device => '0' }
             end
 
@@ -601,11 +601,11 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
 
           describe "successful verification with remember device" do
             before(:each) do
-              expect(Authy::API).to receive(:verify).with(
+              expect(Authy::API).to receive(:verify).with({
                 :id => user.authy_id,
                 :token => token,
                 :force => true
-              ).and_return(double("Authy::Response", :ok? => true))
+              }).and_return(double("Authy::Response", :ok? => true))
               post :POST_verify_authy_installation, :params => { :token => token, :remember_device => '1' }
             end
 
@@ -632,11 +632,11 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
 
           describe "unsuccessful verification" do
             before(:each) do
-              expect(Authy::API).to receive(:verify).with(
+              expect(Authy::API).to receive(:verify).with({
                 :id => user.authy_id,
                 :token => token,
                 :force => true
-              ).and_return(double("Authy::Response", :ok? => false))
+              }).and_return(double("Authy::Response", :ok? => false))
               post :POST_verify_authy_installation, :params => { :token => token }
             end
 
@@ -661,11 +661,11 @@ RSpec.describe Devise::DeviseAuthyController, type: :controller do
             end
 
             it "should hit API for a QR code" do
-              expect(Authy::API).to receive(:verify).with(
+              expect(Authy::API).to receive(:verify).with({
                 :id => user.authy_id,
                 :token => token,
                 :force => true
-              ).and_return(double("Authy::Response", :ok? => false))
+              }).and_return(double("Authy::Response", :ok? => false))
               expect(Authy::API).to receive(:request_qr_code).with(
                 :id => user.authy_id
               ).and_return(double("Authy::Request", :qr_code => 'https://example.com/qr.png'))
